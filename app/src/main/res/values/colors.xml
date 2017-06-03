@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/zh_dark_grey</color>
+    <color name="colorPrimaryDark">@color/zh_dark_grey</color>
+    <color name="colorAccent">@color/zh_dark_slate_gray</color>
+
+    <color name="zh_slate_grey">#3d636b</color>
+    <color name="zh_dark_grey">#10373e</color>
+    <color name="zh_silver_2">#c0c0c0</color>
+    <color name="zh_dark_slate_gray">#1e5761</color>
+
+    <color name="zh_dark_grey_divider">#1e5862</color>
+    <color name="lighter_gray">#F1F1F1</color>
+    <color name="zh_silver_3">#bfbfbf</color>
+    <color name="button_background">#a5c0c5</color>
+    <color name="lighter_green">#1ff2a5</color>
+
+    <color name="zh_white">#ffffff</color>
+
+
+    <!--alpha-->
+    <color name="zh_white_alpha_50">#80ffffff</color>
+    <color name="zh_white_alpha_80">#CCffffff</color>
+    <color name="zh_white_alpha_20">#33ffffff</color>
+    <color name="zh_dark_slate_gray_alpha_50">#801e5761</color>
+    <color name="zh_dark_slate_gray_alpha_85">#D91e5761</color>
+    <color name="zh_black_alpha_50">#80072429</color>
+</resources>

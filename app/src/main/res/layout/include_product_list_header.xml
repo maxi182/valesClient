@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/include_header"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/rel_header"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimaryDark">
+
+        <LinearLayout
+            android:id="@+id/linear_cant"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight=".2"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="CANT"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_detalle"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_weight=".6"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="DETALLE"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_precio"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_weight=".2"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="P.UNIT"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_total"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_weight=".2"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="TOTAL"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

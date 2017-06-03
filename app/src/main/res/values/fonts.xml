@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--System font-->
+    <string name="font_system_font">@string/font_lato_regular</string>
+
+    <!-- downloaded here:
+    https://fonts.google.com/?selection.family=Lato:400,700,900|Raleway:400,500,700|Roboto:300,400,500&query=roboto&selection.subset=latin-ext -->
+
+    <string name="font_lato_black">fonts/Lato-Black.ttf</string>
+    <string name="font_lato_bold">fonts/Lato-Bold.ttf</string>
+    <string name="font_lato_regular">fonts/Lato-Regular.ttf</string>
+
+    <string name="font_raleway_bold">fonts/Raleway-Bold.ttf</string>
+    <string name="font_raleway_medium">fonts/Raleway-Medium.ttf</string>
+
+
+</resources>
