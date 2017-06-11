@@ -2,20 +2,18 @@ package com.mcba.comandaclient.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * Created by mac on 29/05/2017.
+ * Created by mac on 05/06/2017.
  */
 
-public class Product extends RealmObject {
+public class ProductType extends RealmObject {
 
     @SerializedName("id")
     @PrimaryKey
-    public int productId;
+    public int productTypeId;
     public String name;
-    public RealmList<Provider> providers;
-
+    public Packaging packaging;
 }

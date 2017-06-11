@@ -7,5 +7,6 @@ package com.mcba.comandaclient.presenter;
 public interface IBasePresenter {
 
     void detachView();
+    void attachView();
 
 }

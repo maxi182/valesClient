@@ -2,6 +2,9 @@ package com.mcba.comandaclient;
 
 import android.app.Application;
 
+import com.mcba.comandaclient.api.RestClient;
+
+import io.realm.Realm;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
@@ -14,7 +17,11 @@ public class ComandaClientApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-       initializeCalligraphy();
+
+        RestClient.init(this);
+        Realm.init(this);
+
+        initializeCalligraphy();
     }
 
     private void initializeCalligraphy() {

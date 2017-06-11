@@ -5,4 +5,6 @@ package com.mcba.comandaclient.presenter;
  */
 
 public interface MainListPresenter extends IBasePresenter {
+
+    void getProducts();
 }

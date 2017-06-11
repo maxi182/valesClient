@@ -7,15 +7,13 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * Created by mac on 29/05/2017.
+ * Created by mac on 09/06/2017.
  */
 
-public class Product extends RealmObject {
+public class ProductList extends RealmObject {
 
-    @SerializedName("id")
     @PrimaryKey
-    public int productId;
-    public String name;
-    public RealmList<Provider> providers;
-
+    public int id;
+    @SerializedName("products")
+    public RealmList<Product> products;
 }

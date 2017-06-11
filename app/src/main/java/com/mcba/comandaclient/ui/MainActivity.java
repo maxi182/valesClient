@@ -11,19 +11,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.mcba.comandaclient.R;
+import com.mcba.comandaclient.model.Product;
 import com.mcba.comandaclient.presenter.MainListPresenter;
 import com.mcba.comandaclient.ui.fragment.MainListFragment;
 
+import io.realm.RealmList;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by mac on 25/05/2017.
  */
 
-public class MainActivity extends AppCompatActivity implements MainListFragment.MainListFragmentCallbacks {
+public class MainActivity extends AppCompatActivity implements ProductsListView, MainListFragment.MainListFragmentCallbacks {
 
     private static final String STACK_KEY = "stack";
-    private MainListPresenter mPresenter;
     private Toolbar mToolbar;
 
 
@@ -54,16 +55,14 @@ public class MainActivity extends AppCompatActivity implements MainListFragment.
 
     }
 
-    @Override
-    protected void onDestroy() {
-        mPresenter.detachView();
-        super.onDestroy();
-    }
+
 
     @Override
     public void onGoToSelectProduct() {
 
+
     }
+
 
     private void setupToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -82,6 +81,49 @@ public class MainActivity extends AppCompatActivity implements MainListFragment.
         actionBar.setDisplayShowHomeEnabled(true);
     }
 
+
+    @Override
+    public void showProductListResponse(RealmList<Product> data) {
+
+
+    }
+
+    @Override
+    public void showDetaiResponse(RealmList<Product> data) {
+
+    }
+
+    @Override
+    public void onResponseFailed() {
+
+    }
+
+    @Override
+    public void realmStoreCompleted() {
+
+    }
+
+    @Override
+    public void realmStoreFailed() {
+
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void onItemPress() {
+
+    }
+
+
     private void changeFragment(Fragment fragment, boolean addToBackStack, boolean animate) {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -97,5 +139,4 @@ public class MainActivity extends AppCompatActivity implements MainListFragment.
         }
         ft.commit();
     }
-
 }
