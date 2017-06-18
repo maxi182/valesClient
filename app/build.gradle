@@ -28,6 +28,7 @@ dependencies {
     })
 
     Map<String, String> dependencies = rootProject.ext.dependencies;
+
     compile dependencies.appCompat
     compile dependencies.design
     compile dependencies.cardView
@@ -42,6 +43,10 @@ dependencies {
 
 
 
+    compile 'br.com.mauker.materialsearchview:materialsearchview:1.2.2'
+
+
     testCompile 'junit:junit:4.12'
+
     compile 'com.android.support.test.espresso:espresso-core:2.2.2'
 }

@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.mcba.comandaclient.api.RestClient;
 import com.mcba.comandaclient.model.Product;
-import com.mcba.comandaclient.model.ProductList;
+import com.mcba.comandaclient.model.ProviderList;
 
 import io.realm.Realm;
 import io.realm.RealmAsyncTask;
@@ -25,10 +25,10 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
 
     public void fetchProductsFromServer(final RequestCallback callback) {
 
-        RestClient.getApiService().getProducts().enqueue(new Callback<ProductList>() {
+        RestClient.getApiService().getProducts().enqueue(new Callback<ProviderList>() {
 
             @Override
-            public void onResponse(Call<ProductList> call, Response<ProductList> response) {
+            public void onResponse(Call<ProviderList> call, Response<ProviderList> response) {
 
                 if (response.body() != null) {
 
@@ -43,7 +43,7 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
             }
 
             @Override
-            public void onFailure(Call<ProductList> call, Throwable t) {
+            public void onFailure(Call<ProviderList> call, Throwable t) {
 
                 callback.onFetchDataFailed(t.getMessage());
 
@@ -51,7 +51,7 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
         });
     }
 
-    private void storeLocal(final RequestCallback callback, final ProductList data) {
+    private void storeLocal(final RequestCallback callback, final ProviderList data) {
 
         mTransaction = mRealm.executeTransactionAsync(new Realm.Transaction() {
             @Override
@@ -91,11 +91,12 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
     private RealmList<Product> getRealmList() {
         RealmList<Product> list = new RealmList<>();
         list.addAll(getRealmData());
+
         return list;
 
     }
 
-    public void fetchShowsLocal(final RequestCallback callback) {
+    public void fetchProductsLocal(final RequestCallback callback) {
         callback.onFetchDataSuccess(getRealmList());
     }
 
@@ -103,7 +104,7 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
     public void fetchProducts(RequestCallback callback) {
 
         if (isRealmDBLoaded()) {
-            fetchShowsLocal(callback);
+            fetchProductsLocal(callback);
         } else {
             fetchProductsFromServer(callback);
         }

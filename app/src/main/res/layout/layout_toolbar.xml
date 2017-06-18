@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar_container"
+    android:layout_width="wrap_content"
+    android:layout_below="@id/toptoolbar"
+    android:layout_height="@dimen/toolbar_height"
+    android:background="@color/zh_dark_slate_gray">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+
+        <!-- Must be last for right layering display -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height"
+                android:layout_centerInParent="true" />
+
+            <br.com.mauker.materialsearchview.MaterialSearchView
+                android:id="@+id/search_view"
+                style="@style/MaterialSearchViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/txt_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:textSize="16dip"
+                android:layout_marginLeft="@dimen/general_margin_very_very_large"
+                android:textAppearance="@style/AppTheme.Text.LatoBold.darkgray.14.67"
+                android:text="cliente" />
+        </FrameLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

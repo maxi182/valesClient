@@ -4,10 +4,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:id="@+id/toptoolbar"
+        android:layout_width="wrap_content"
+        android:background="@color/zh_dark_grey"
+        android:layout_height="30dip">
 
-        <include
-            android:id="@+id/tool_bar"
-            layout="@layout/toolbar" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginRight="@dimen/general_margin"
+            android:layout_centerInParent="true"
+            android:text="N8P51/53" />
+
+        <TextView
+            android:id="@+id/current_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/general_margin"
+            android:text="28/05/2017" />
+
+
+    </RelativeLayout>
+
+    <include layout="@layout/layout_toolbar"/>
 
 
     <FrameLayout

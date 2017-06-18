@@ -4,6 +4,9 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by mac on 30/05/2017.
  */
@@ -19,4 +22,14 @@ public class Utils {
         return networkInfo.isConnectedOrConnecting();
     }
 
+
+    public static String getCurrentDate(String format) {
+
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat df = new SimpleDateFormat(format);
+        String formattedDate = df.format(c.getTime());
+
+        return formattedDate;
+    }
 }

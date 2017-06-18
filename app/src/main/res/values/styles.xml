@@ -23,6 +23,15 @@
         <item name="fontPath">@string/font_lato_bold</item>
     </style>
 
+    <style name="MaterialSearchViewStyle">
+        <item name="searchVoiceIcon">@drawable/ic_vector_mic</item>
+        <item name="searchCloseIcon">@drawable/ic_vector_close</item>
+        <item name="searchBackIcon">@drawable/ic_vector_arrow_back</item>
+        <item name="searchSuggestionBackground">@color/zh_white</item>
+        <item name="android:textColor">@color/zh_black_alpha_50</item>
+        <item name="android:textColorHint">@color/zh_dark_slate_gray</item>
+    </style>
+
 
     <style name="AppTheme.Button"></style>
 

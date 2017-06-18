@@ -10,10 +10,10 @@ import io.realm.annotations.PrimaryKey;
  * Created by mac on 09/06/2017.
  */
 
-public class ProductList extends RealmObject {
+public class ProviderList extends RealmObject {
 
     @PrimaryKey
     public int id;
-    @SerializedName("products")
-    public RealmList<Product> products;
+    @SerializedName("providers")
+    public RealmList<Provider> providers;
 }

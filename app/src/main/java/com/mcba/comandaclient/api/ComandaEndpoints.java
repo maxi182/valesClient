@@ -1,6 +1,6 @@
 package com.mcba.comandaclient.api;
 
-import com.mcba.comandaclient.model.ProductList;
+import com.mcba.comandaclient.model.ProviderList;
 
 
 import retrofit2.Call;
@@ -12,7 +12,7 @@ import retrofit2.http.GET;
 
 public interface ComandaEndpoints {
 
-    @GET("/css/products.json")
-    Call<ProductList> getProducts();
+    @GET("/css/providers.json")
+    Call<ProviderList> getProducts();
 
 }

@@ -2,19 +2,25 @@ package com.mcba.comandaclient.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.mcba.comandaclient.R;
 import com.mcba.comandaclient.model.Product;
 import com.mcba.comandaclient.presenter.MainListPresenter;
 import com.mcba.comandaclient.ui.fragment.MainListFragment;
+import com.mcba.comandaclient.utils.Utils;
 
+import br.com.mauker.materialsearchview.MaterialSearchView;
 import io.realm.RealmList;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -22,10 +28,11 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * Created by mac on 25/05/2017.
  */
 
-public class MainActivity extends AppCompatActivity implements ProductsListView, MainListFragment.MainListFragmentCallbacks {
+public class MainActivity extends MainSearchActivity implements MainListFragment.MainListFragmentCallbacks {
 
     private static final String STACK_KEY = "stack";
     private Toolbar mToolbar;
+    private TextView mCurrentDate;
 
 
     public static Intent getNewIntent(Context context) {
@@ -38,15 +45,43 @@ public class MainActivity extends AppCompatActivity implements ProductsListView,
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void searchByTerm(String searchTerm) {
+
+    }
+
+    @Override
+    public void setSearchHint(MaterialSearchView searchView) {
+
+    }
+
+    @Override
+    public void getProgressSearch(ProgressBar progressSearch) {
+
+    }
+
+    @Override
+    public void setOnSearchviewClose() {
+
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
         setupToolbar();
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        setDate();
 
         openMainListFragment();
 
+    }
+
+    private void setDate() {
+
+        mCurrentDate = (TextView) findViewById(R.id.current_date);
+
+        mCurrentDate.setText(Utils.getCurrentDate("dd/MM/yyyy"));
     }
 
     private void openMainListFragment() {
@@ -54,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements ProductsListView,
         changeFragment(MainListFragment.newInstance(), true, false);
 
     }
-
 
 
     @Override
@@ -68,10 +102,13 @@ public class MainActivity extends AppCompatActivity implements ProductsListView,
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         if (mToolbar != null) {
+            Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_vector_person);
+            mToolbar.setNavigationIcon(drawable);
             setSupportActionBar(mToolbar);
             setupActionBar(getSupportActionBar());
-         }
+        }
     }
+
     public Toolbar getToolbar() {
         return mToolbar;
     }
@@ -80,49 +117,6 @@ public class MainActivity extends AppCompatActivity implements ProductsListView,
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
     }
-
-
-    @Override
-    public void showProductListResponse(RealmList<Product> data) {
-
-
-    }
-
-    @Override
-    public void showDetaiResponse(RealmList<Product> data) {
-
-    }
-
-    @Override
-    public void onResponseFailed() {
-
-    }
-
-    @Override
-    public void realmStoreCompleted() {
-
-    }
-
-    @Override
-    public void realmStoreFailed() {
-
-    }
-
-    @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
-    @Override
-    public void onItemPress() {
-
-    }
-
 
     private void changeFragment(Fragment fragment, boolean addToBackStack, boolean animate) {
 

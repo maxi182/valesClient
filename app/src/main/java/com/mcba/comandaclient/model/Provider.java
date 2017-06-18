@@ -16,6 +16,6 @@ public class Provider extends RealmObject {
     @PrimaryKey
     public int productId;
     public String name;
-    public RealmList<ProductType> types;
+    public RealmList<Product> products;
 
 }

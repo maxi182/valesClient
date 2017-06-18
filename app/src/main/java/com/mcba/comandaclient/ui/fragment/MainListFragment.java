@@ -104,6 +104,8 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     @Override
     public void showProductListResponse(RealmList<Product> data) {
 
+        String name = data.get(0).name;
+
     }
 
     @Override
