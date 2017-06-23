@@ -9,26 +9,24 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mcba.comandaclient.R;
-import com.mcba.comandaclient.model.Product;
-import com.mcba.comandaclient.presenter.MainListPresenter;
 import com.mcba.comandaclient.ui.fragment.MainListFragment;
+import com.mcba.comandaclient.ui.fragment.ProductSelectionFragment;
+import com.mcba.comandaclient.ui.fragment.ProviderSelectionFragment;
 import com.mcba.comandaclient.utils.Utils;
 
 import br.com.mauker.materialsearchview.MaterialSearchView;
-import io.realm.RealmList;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by mac on 25/05/2017.
  */
 
-public class MainActivity extends MainSearchActivity implements MainListFragment.MainListFragmentCallbacks {
+public class MainActivity extends MainSearchActivity implements MainListFragment.MainListFragmentCallbacks, ProductSelectionFragment.ProductSelectionFragmentCallbacks {
 
     private static final String STACK_KEY = "stack";
     private Toolbar mToolbar;
@@ -86,17 +84,24 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
 
     private void openMainListFragment() {
 
-        changeFragment(MainListFragment.newInstance(), true, false);
+        changeFragment(MainListFragment.newInstance(), false, false);
 
     }
-
 
     @Override
     public void onGoToSelectProduct() {
 
+        changeFragment(ProductSelectionFragment.newInstance(), true, false);
+
 
     }
 
+    @Override
+    public void onGoToSelectProvider(int productId) {
+
+        changeFragment(ProviderSelectionFragment.newInstance(productId), true, false);
+
+    }
 
     private void setupToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -133,4 +138,7 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
         }
         ft.commit();
     }
+
+
+
 }

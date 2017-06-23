@@ -4,12 +4,12 @@ package com.mcba.comandaclient.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.mcba.comandaclient.R;
 import com.mcba.comandaclient.model.Product;
-import com.mcba.comandaclient.presenter.MainListPresenter;
-import com.mcba.comandaclient.presenter.MainListPresenterImpl;
-import com.mcba.comandaclient.ui.ProductsListView;
+import com.mcba.comandaclient.presenter.ProductListPresenter;
 import com.mcba.comandaclient.ui.adapter.MainListAdapter;
 
 import java.util.ArrayList;
@@ -20,11 +20,13 @@ import io.realm.RealmList;
  * Created by mac on 25/05/2017.
  */
 
-public class MainListFragment extends BaseNavigationFragment<MainListFragment.MainListFragmentCallbacks> implements ProductsListView, MainListAdapter.AdapterCallbacks {
+public class MainListFragment extends BaseNavigationFragment<MainListFragment.MainListFragmentCallbacks> implements MainListAdapter.AdapterCallbacks, View.OnClickListener {
 
     private RecyclerView mRecyclerview;
     private MainListAdapter mAdapter;
-    private MainListPresenter mPresenter;
+    private ProductListPresenter mPresenter;
+    private RealmList<Product> mProducts;
+    private TextView mBtnGreen;
 
 
     public static MainListFragment newInstance() {
@@ -42,9 +44,9 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     protected void setViewReferences() {
 
         mRecyclerview = (RecyclerView) findViewById(R.id.recycler_selection);
+        mBtnGreen = (TextView) findViewById(R.id.btn_green);
 
     }
-
 
     @Override
     protected void setupFragment(Bundle savedInstanceState) {
@@ -53,11 +55,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         mRecyclerview.setAdapter(mAdapter);
         mRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mPresenter = new MainListPresenterImpl(this);
-        mPresenter.attachView();
-
-
-        mPresenter.getProducts();
+        mBtnGreen.setOnClickListener(this);
 
         Product product = new Product();
         product.name = "Banana";
@@ -79,12 +77,6 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         produtlist.add(product);
         mAdapter.setItems(produtlist);
 
-     }
-
-    @Override
-    public void onDestroy() {
-        mPresenter.detachView();
-        super.onDestroy();
     }
 
     @Override
@@ -92,54 +84,24 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         return new MainListFragmentCallbacks() {
             @Override
             public void onGoToSelectProduct() {
+
             }
         };
     }
 
     @Override
-    public void onItemPress(int pos) {
+    public void onClick(View v) {
 
+        switch (v.getId()) {
+            case R.id.btn_green:
+                mCallbacks.onGoToSelectProduct();
+                break;
+            default:
+        }
     }
 
     @Override
-    public void showProductListResponse(RealmList<Product> data) {
-
-        String name = data.get(0).name;
-
-    }
-
-    @Override
-    public void showDetaiResponse(RealmList<Product> data) {
-
-    }
-
-    @Override
-    public void onResponseFailed() {
-
-    }
-
-    @Override
-    public void realmStoreCompleted() {
-
-    }
-
-    @Override
-    public void realmStoreFailed() {
-
-    }
-
-    @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
-    @Override
-    public void onItemPress() {
+    public void onItemPress(Product product) {
 
     }
 

@@ -9,22 +9,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mcba.comandaclient.R;
-import com.mcba.comandaclient.model.Product;
+import com.mcba.comandaclient.model.Provider;
 
 import java.util.Collections;
 import java.util.List;
+
 /**
- * Created by mac on 01/06/2017.
+ * Created by mac on 22/06/2017.
  */
 
-public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainListAdapterHolder> {
+public class ProviderSelectionAdapter extends RecyclerView.Adapter<ProviderSelectionAdapter.ProviderListAdapterHolder> {
 
     private Context mContext;
-    private List<Product> mList;
+    private List<Provider> mList;
     private AdapterCallbacks mCallbacks;
 
-
-    public MainListAdapter(Context context, AdapterCallbacks callbacks) {
+    public ProviderSelectionAdapter(Context context, AdapterCallbacks callbacks) {
         this.mContext = context;
         this.mCallbacks = callbacks;
         this.mList = Collections.emptyList();
@@ -32,30 +32,31 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
     }
 
     public interface AdapterCallbacks {
-        void onItemPress(Product product);
+        void onItemPress(Provider provider);
 
     }
 
-    public void setItems(List<Product> products) {
-        this.mList = products;
+    public void setItems(List<Provider> providers) {
+        this.mList = providers;
     }
 
 
     @Override
-    public MainListAdapterHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ProviderSelectionAdapter.ProviderListAdapterHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_list, parent, false);
-        return new MainListAdapterHolder(itemView);
+        return new ProviderSelectionAdapter.ProviderListAdapterHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(MainListAdapterHolder holder, final int position) {
-        final Product product = mList.get(position);
+    public void onBindViewHolder(ProviderSelectionAdapter.ProviderListAdapterHolder holder, final int position) {
+        final Provider provider = mList.get(position);
 
-        holder.text_name.setText(product.name);
+        holder.text_name.setText(provider.name);
         holder.item_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 mCallbacks.onItemPress(mList.get(position));
             }
         });
@@ -67,15 +68,17 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
         return mList == null ? 0 : mList.size();
     }
 
-    public static class MainListAdapterHolder extends RecyclerView.ViewHolder {
+    public static class ProviderListAdapterHolder extends RecyclerView.ViewHolder {
         public TextView text_name;
         public RelativeLayout item_container;
 
-        public MainListAdapterHolder(View itemView) {
+        public ProviderListAdapterHolder(View itemView) {
             super(itemView);
             item_container = (RelativeLayout) itemView.findViewById(R.id.item_container);
             text_name = (TextView) itemView.findViewById(R.id.txt_name);
+
         }
     }
+
 
 }

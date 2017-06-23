@@ -1,6 +1,10 @@
 package com.mcba.comandaclient.ui;
 
 import com.mcba.comandaclient.model.Product;
+import com.mcba.comandaclient.model.Provider;
+import com.mcba.comandaclient.model.ProviderList;
+
+import java.util.List;
 
 import io.realm.RealmList;
 
@@ -10,9 +14,9 @@ import io.realm.RealmList;
 
 public interface ProductsListView {
 
-    void showProductListResponse(RealmList<Product> data);
+    void showDataResponse(RealmList<ProviderList> providers, RealmList<Product> products);
 
-    void showDetaiResponse(RealmList<Product> data);
+    void showProvidersResponse(List<Provider> providers);
 
     void onResponseFailed();
 

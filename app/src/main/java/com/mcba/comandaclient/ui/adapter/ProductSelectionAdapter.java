@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -13,18 +15,20 @@ import com.mcba.comandaclient.model.Product;
 
 import java.util.Collections;
 import java.util.List;
+
+import io.realm.RealmList;
+
 /**
  * Created by mac on 01/06/2017.
  */
 
-public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainListAdapterHolder> {
+public class ProductSelectionAdapter extends RecyclerView.Adapter<ProductSelectionAdapter.MainListAdapterHolder> {
 
     private Context mContext;
     private List<Product> mList;
     private AdapterCallbacks mCallbacks;
 
-
-    public MainListAdapter(Context context, AdapterCallbacks callbacks) {
+    public ProductSelectionAdapter(Context context, AdapterCallbacks callbacks) {
         this.mContext = context;
         this.mCallbacks = callbacks;
         this.mList = Collections.emptyList();
@@ -56,6 +60,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
         holder.item_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 mCallbacks.onItemPress(mList.get(position));
             }
         });
@@ -75,7 +80,9 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
             super(itemView);
             item_container = (RelativeLayout) itemView.findViewById(R.id.item_container);
             text_name = (TextView) itemView.findViewById(R.id.txt_name);
+
         }
     }
+
 
 }

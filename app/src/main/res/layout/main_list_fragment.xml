@@ -14,12 +14,13 @@
 
     </RelativeLayout>
 
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_selection"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_below="@id/container_header"
-        android:background="@color/cardview_shadow_start_color" />
+       />
 
 
     <RelativeLayout

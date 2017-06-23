@@ -4,7 +4,11 @@ import android.util.Log;
 
 import com.mcba.comandaclient.api.RestClient;
 import com.mcba.comandaclient.model.Product;
+import com.mcba.comandaclient.model.Provider;
 import com.mcba.comandaclient.model.ProviderList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmAsyncTask;
@@ -23,7 +27,7 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
     private RealmAsyncTask mTransaction;
 
 
-    public void fetchProductsFromServer(final RequestCallback callback) {
+    public void fetchDataFromServer(final RequestCallback callback) {
 
         RestClient.getApiService().getProducts().enqueue(new Callback<ProviderList>() {
 
@@ -64,7 +68,7 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
             @Override
             public void onSuccess() {
                 callback.onStoreCompleted(true);
-                callback.onFetchDataSuccess(getRealmList());
+                callback.onFetchDataSuccess(getRealmProviderList(), getRealmProductList());
             }
         }, new Realm.Transaction.OnError() {
             @Override
@@ -78,37 +82,73 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
 
     private boolean isRealmDBLoaded() {
 
-        return (getRealmData() != null && !getRealmData().isEmpty()) ? true : false;
+        return (getRealmProviderData() != null && !getRealmProviderData().isEmpty()) ? true : false;
 
     }
 
-    private RealmResults<Product> getRealmData() {
+    private RealmResults<ProviderList> getRealmProvider() {
+
+        return mRealm.where(ProviderList.class).equalTo("providers.products.productId", 20).findAll();
+    }
+
+    private RealmResults<ProviderList> getRealmProviderData() {
+
+        return mRealm.where(ProviderList.class).findAll();
+
+    }
+
+    private RealmResults<Product> getRealmProductData() {
 
         return mRealm.where(Product.class).findAll();
 
     }
 
-    private RealmList<Product> getRealmList() {
-        RealmList<Product> list = new RealmList<>();
-        list.addAll(getRealmData());
+    private RealmList<ProviderList> getRealmProviderList() {
+        RealmList<ProviderList> list = new RealmList<>();
+        list.addAll(getRealmProviderData());
 
         return list;
-
     }
 
-    public void fetchProductsLocal(final RequestCallback callback) {
-        callback.onFetchDataSuccess(getRealmList());
+    private RealmList<Product> getRealmProductList() {
+        RealmList<Product> list = new RealmList<>();
+        list.addAll(getRealmProductData());
+
+        return list;
+    }
+
+    public void fetchDataLocal(final RequestCallback callback) {
+        callback.onFetchDataSuccess(getRealmProviderList(), getRealmProductList());
+
     }
 
     @Override
     public void fetchProducts(RequestCallback callback) {
 
         if (isRealmDBLoaded()) {
-            fetchProductsLocal(callback);
+            fetchDataLocal(callback);
         } else {
-            fetchProductsFromServer(callback);
+            fetchDataFromServer(callback);
         }
 
+    }
+
+    @Override
+    public void parseProviders(RequestCallback callback, RealmList<ProviderList> providers, int productId) {
+
+        List<Provider> prov = new ArrayList<>();
+
+        for (int i = 0; i < providers.get(0).providers.size(); i++) {
+
+            for (int j = 0; j < providers.get(0).providers.get(i).products.size(); j++) {
+
+                if (providers.get(0).providers.get(i).products.get(j).productId == productId) {
+                    prov.add(providers.get(0).providers.get(i));
+                }
+            }
+        }
+
+        callback.onProvidersParsed(prov);
     }
 
     @Override
