@@ -4,6 +4,7 @@ package com.mcba.comandaclient.presenter;
 import com.mcba.comandaclient.interactor.ProductInteractorCallbacks;
 import com.mcba.comandaclient.interactor.ProductInteractorImpl;
 import com.mcba.comandaclient.model.Product;
+import com.mcba.comandaclient.model.ProductType;
 import com.mcba.comandaclient.model.Provider;
 import com.mcba.comandaclient.model.ProviderList;
 import com.mcba.comandaclient.ui.ProductsListView;
@@ -47,6 +48,16 @@ public class ProductListPresenterImpl implements ProductListPresenter, ProductIn
 
     }
 
+    @Override
+    public void parseProductsTypeByProvider(RealmList<ProviderList> providers, RealmList<Product> products, int providerId, int productId) {
+
+        if (productsListView != null) {
+            getView().showProgress();
+        }
+        mProductInteractorCallback.parseProductsTypeByProvider(this, providers, products, providerId, productId);
+
+    }
+
     private ProductsListView getView() {
         return (productsListView != null) ? productsListView.get() : null;
     }
@@ -63,6 +74,14 @@ public class ProductListPresenterImpl implements ProductListPresenter, ProductIn
     public void onProvidersParsed(List<Provider> providers) {
         if (productsListView != null) {
             getView().showProvidersResponse(providers);
+            getView().hideProgress();
+        }
+    }
+
+    @Override
+    public void onTypesParsed(List<ProductType> types) {
+        if (productsListView != null) {
+            getView().showTypesResponse(types);
             getView().hideProgress();
         }
     }
@@ -90,7 +109,6 @@ public class ProductListPresenterImpl implements ProductListPresenter, ProductIn
     public void onItemPress() {
 
     }
-
 
     @Override
     public void detachView() {

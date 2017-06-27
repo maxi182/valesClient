@@ -1,7 +1,9 @@
 package com.mcba.comandaclient.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,12 +12,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.mcba.comandaclient.R;
+import com.mcba.comandaclient.ui.fragment.EntryFragment;
 import com.mcba.comandaclient.ui.fragment.MainListFragment;
 import com.mcba.comandaclient.ui.fragment.ProductSelectionFragment;
+import com.mcba.comandaclient.ui.fragment.ProductTypeSelectionFragment;
 import com.mcba.comandaclient.ui.fragment.ProviderSelectionFragment;
 import com.mcba.comandaclient.utils.Utils;
 
@@ -26,9 +33,17 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * Created by mac on 25/05/2017.
  */
 
-public class MainActivity extends MainSearchActivity implements MainListFragment.MainListFragmentCallbacks, ProductSelectionFragment.ProductSelectionFragmentCallbacks {
+public class MainActivity extends MainSearchActivity implements MainListFragment.MainListFragmentCallbacks, ProductSelectionFragment.ProductSelectionFragmentCallbacks, ProviderSelectionFragment.ProviderSelectionFragmentCallbacks, ProductTypeSelectionFragment.ProductTypeSelectionFragmentCallbacks, EntryFragment.EntryFragmentCallbacks {
 
     private static final String STACK_KEY = "stack";
+    private static final String ENTRY_FRAGMENT = "entry_fragment";
+    private static final String MAIN_LIST_FRAGMENT = "main_list_fragment";
+    private static final String PRODUCT_LIST_FRAGMENT = "product_list_fragment";
+    private static final String PROVIDER_LIST_FRAGMENT = "provider_list_fragment";
+    private static final String TYPE_LIST_FRAGMENT = "type_list_fragment";
+
+    private FloatingActionsMenu menuMultipleActions;
+
     private Toolbar mToolbar;
     private TextView mCurrentDate;
 
@@ -70,10 +85,35 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
         setupToolbar();
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         setDate();
+        menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
+        setFABButtons(this);
 
-        openMainListFragment();
+        //handlele fist fragment
+        openEntryFragment();
 
     }
+
+    /**
+     * FABS Creation and adding to view.
+     */
+    private void setFABButtons(Activity activity) {
+
+        menuMultipleActions = (FloatingActionsMenu) activity.findViewById(R.id.multiple_actions);
+
+
+        final FloatingActionButton actionCalendar = (FloatingActionButton) activity.findViewById(R.id.action_delete);
+        actionCalendar.setIcon(R.drawable.ic_vector_close);
+        actionCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuMultipleActions.collapse();
+                //showFacebookEvents();
+
+            }
+        });
+
+    }
+
 
     private void setDate() {
 
@@ -82,16 +122,29 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
         mCurrentDate.setText(Utils.getCurrentDate("dd/MM/yyyy"));
     }
 
-    private void openMainListFragment() {
+    private void openEntryFragment(){
 
-        changeFragment(MainListFragment.newInstance(), false, false);
+        changeFragment(EntryFragment.newInstance(), false, false, ENTRY_FRAGMENT);
 
     }
 
     @Override
+    public void onGoToMainListFromEntryFragment() {
+
+        changeFragment(MainListFragment.newInstance(), false, false, MAIN_LIST_FRAGMENT);
+
+    }
+
+//    @Override
+//    public void onGoToMainList() {
+//        changeFragment(MainListFragment.newInstance(), false, false, MAIN_LIST_FRAGMENT);
+//
+//    }
+
+    @Override
     public void onGoToSelectProduct() {
 
-        changeFragment(ProductSelectionFragment.newInstance(), true, false);
+        changeFragment(ProductSelectionFragment.newInstance(), true, false, PRODUCT_LIST_FRAGMENT);
 
 
     }
@@ -99,7 +152,20 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
     @Override
     public void onGoToSelectProvider(int productId) {
 
-        changeFragment(ProviderSelectionFragment.newInstance(productId), true, false);
+        changeFragment(ProviderSelectionFragment.newInstance(productId), true, false, PROVIDER_LIST_FRAGMENT);
+
+    }
+
+    @Override
+    public void onGoToSelectProductType(int providerId, int productId) {
+
+        changeFragment(ProductTypeSelectionFragment.newInstance(productId, providerId), true, false, TYPE_LIST_FRAGMENT);
+
+
+    }
+
+    @Override
+    public void onGoToSetPriceAndQty(int providerId, int productId) {
 
     }
 
@@ -109,10 +175,19 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
         if (mToolbar != null) {
             Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_vector_person);
             mToolbar.setNavigationIcon(drawable);
+
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //open activity client
+                }
+            });
+
             setSupportActionBar(mToolbar);
             setupActionBar(getSupportActionBar());
         }
     }
+
 
     public Toolbar getToolbar() {
         return mToolbar;
@@ -123,7 +198,7 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
         actionBar.setDisplayShowHomeEnabled(true);
     }
 
-    private void changeFragment(Fragment fragment, boolean addToBackStack, boolean animate) {
+    private void changeFragment(Fragment fragment, boolean addToBackStack, boolean animate, String tag) {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -131,12 +206,24 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
         if (animate) {
             ft.setCustomAnimations(R.anim.slide_right, R.anim.slide_left, R.anim.slide_right, R.anim.slide_left);
         }
-        ft.replace(R.id.container_body, fragment);
+        ft.replace(R.id.container_body, fragment, tag);
 
         if ((addToBackStack)) {
             ft.addToBackStack(STACK_KEY);
         }
         ft.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(MAIN_LIST_FRAGMENT);
+
+        if (currentFragment != null && currentFragment.isVisible()) {
+            super.onBackPressed();
+        } else {
+            return;
+        }
     }
 
 

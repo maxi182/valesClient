@@ -3,6 +3,7 @@ package com.mcba.comandaclient;
 import android.app.Application;
 
 import com.mcba.comandaclient.api.RestClient;
+import com.mcba.comandaclient.utils.StorageProvider;
 
 import io.realm.Realm;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -17,7 +18,7 @@ public class ComandaClientApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-
+        StorageProvider.init(this);
         RestClient.init(this);
         Realm.init(this);
 

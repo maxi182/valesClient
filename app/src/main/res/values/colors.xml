@@ -25,4 +25,9 @@
     <color name="zh_dark_slate_gray_alpha_50">#801e5761</color>
     <color name="zh_dark_slate_gray_alpha_85">#D91e5761</color>
     <color name="zh_black_alpha_50">#80072429</color>
+    <color name="zh_green_yellow_2">#b2df06</color>
+    <color name="zh_crimson">#990000</color>
+
+
+
 </resources>

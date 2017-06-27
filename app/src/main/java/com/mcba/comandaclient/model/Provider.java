@@ -14,7 +14,7 @@ public class Provider extends RealmObject {
 
     @SerializedName("id")
     @PrimaryKey
-    public int productId;
+    public int providerId;
     public String name;
     public RealmList<Product> products;
 

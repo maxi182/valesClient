@@ -1,6 +1,7 @@
 package com.mcba.comandaclient.interactor;
 
 import com.mcba.comandaclient.model.Product;
+import com.mcba.comandaclient.model.ProductType;
 import com.mcba.comandaclient.model.Provider;
 import com.mcba.comandaclient.model.ProviderList;
 
@@ -18,6 +19,8 @@ public interface ProductInteractorCallbacks {
 
     void parseProviders(RequestCallback callback, RealmList<ProviderList> providers, int productId);
 
+    void parseProductsTypeByProvider(RequestCallback callback, RealmList<ProviderList> provider, RealmList<Product> products, int providerId, int productId);
+
     void attachView();
 
     void detachView();
@@ -27,6 +30,8 @@ public interface ProductInteractorCallbacks {
         void onFetchDataSuccess(RealmList<ProviderList> providers, RealmList<Product> products);
 
         void onProvidersParsed(List<Provider> providers);
+
+        void onTypesParsed(List<ProductType> types);
 
         void onFetchDataFailed(String error);
 

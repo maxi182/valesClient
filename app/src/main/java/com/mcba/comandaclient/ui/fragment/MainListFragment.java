@@ -35,6 +35,13 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         return fragment;
     }
 
+
+    public static MainListFragment newInstance(int productId, int providerId) {
+
+        MainListFragment fragment = new MainListFragment();
+        return fragment;
+    }
+
     @Override
     protected int getLayoutResource() {
         return R.layout.main_list_fragment;
@@ -66,12 +73,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         produtlist.add(product);
         produtlist.add(product);
         produtlist.add(product);
-        produtlist.add(product);
-        produtlist.add(product);
-        produtlist.add(product);
-        produtlist.add(product);
-        produtlist.add(product);
-        produtlist.add(product);
+
 
         produtlist.add(product);
         produtlist.add(product);

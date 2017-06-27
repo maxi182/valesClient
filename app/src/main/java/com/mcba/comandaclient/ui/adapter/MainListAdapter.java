@@ -13,6 +13,7 @@ import com.mcba.comandaclient.model.Product;
 
 import java.util.Collections;
 import java.util.List;
+
 /**
  * Created by mac on 01/06/2017.
  */
@@ -44,7 +45,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
     @Override
     public MainListAdapterHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_list, parent, false);
+                .inflate(R.layout.item_item, parent, false);
         return new MainListAdapterHolder(itemView);
     }
 
@@ -52,14 +53,10 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
     public void onBindViewHolder(MainListAdapterHolder holder, final int position) {
         final Product product = mList.get(position);
 
-        holder.text_name.setText(product.name);
-        holder.item_container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCallbacks.onItemPress(mList.get(position));
-            }
-        });
-
+        holder.text_qty.setText("2");
+        holder.text_detail.setText("Manzana Red delicius caja Negra");
+        holder.text_price.setText("250");
+        holder.text_total.setText("500");
     }
 
     @Override
@@ -68,13 +65,19 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
     }
 
     public static class MainListAdapterHolder extends RecyclerView.ViewHolder {
-        public TextView text_name;
-        public RelativeLayout item_container;
+        public TextView text_qty;
+        public TextView text_price;
+        public TextView text_detail;
+        public TextView text_total;
+
 
         public MainListAdapterHolder(View itemView) {
             super(itemView);
-            item_container = (RelativeLayout) itemView.findViewById(R.id.item_container);
-            text_name = (TextView) itemView.findViewById(R.id.txt_name);
+            text_qty = (TextView) itemView.findViewById(R.id.txt_qty);
+            text_price = (TextView) itemView.findViewById(R.id.txt_price);
+            text_detail = (TextView) itemView.findViewById(R.id.txt_detail);
+            text_total = (TextView) itemView.findViewById(R.id.txt_total);
+
         }
     }
 

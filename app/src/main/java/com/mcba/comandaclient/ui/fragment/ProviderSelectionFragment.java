@@ -1,18 +1,23 @@
 package com.mcba.comandaclient.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.mcba.comandaclient.R;
 import com.mcba.comandaclient.model.Product;
+import com.mcba.comandaclient.model.ProductType;
 import com.mcba.comandaclient.model.Provider;
 import com.mcba.comandaclient.model.ProviderList;
 import com.mcba.comandaclient.presenter.ProductListPresenter;
 import com.mcba.comandaclient.presenter.ProductListPresenterImpl;
 import com.mcba.comandaclient.ui.ProductsListView;
 import com.mcba.comandaclient.ui.adapter.ProviderSelectionAdapter;
+import com.mcba.comandaclient.utils.Constants;
+import com.mcba.comandaclient.utils.StorageProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +35,8 @@ public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSe
     private RecyclerView mRecyclerview;
     private ProviderSelectionAdapter mAdapter;
     private ProductListPresenter mPresenter;
+    private TextView mTxtPosProvider;
+    private TextView mTxtPosProduct;
     private int mProductId;
 
 
@@ -52,6 +59,8 @@ public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSe
     protected void setViewReferences() {
 
         mRecyclerview = (RecyclerView) findViewById(R.id.recycler_provider_selection);
+        mTxtPosProvider = (TextView) findViewById(R.id.txt_pos_provider);
+        mTxtPosProduct = (TextView) findViewById(R.id.txt_pos_product);
 
     }
 
@@ -65,6 +74,9 @@ public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSe
         mRecyclerview.setAdapter(mAdapter);
         mRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        mTxtPosProvider.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.bg_green));
+        mTxtPosProduct.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.bg_green));
+
         mProductId = getArguments().getInt(PRODUCT_ID);
 
         mPresenter.getProducts();
@@ -73,7 +85,8 @@ public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSe
     @Override
     public void onItemPress(Provider provider) {
 
-        mCallbacks.onGoToSelectProductType(provider.productId);
+        StorageProvider.savePreferences(Constants.PROVIDER_ID, provider.providerId);
+        mCallbacks.onGoToSelectProductType(provider.providerId, mProductId);
     }
 
     @Override
@@ -88,6 +101,11 @@ public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSe
 
         mAdapter.setItems(providers);
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showTypesResponse(List<ProductType> types) {
+
     }
 
     @Override
@@ -128,14 +146,14 @@ public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSe
 
 
     public interface ProviderSelectionFragmentCallbacks {
-        void onGoToSelectProductType(int providerId);
+        void onGoToSelectProductType(int providerId, int productId);
     }
 
     @Override
     public ProviderSelectionFragment.ProviderSelectionFragmentCallbacks getDummyCallbacks() {
         return new ProviderSelectionFragment.ProviderSelectionFragmentCallbacks() {
             @Override
-            public void onGoToSelectProductType(int providerId) {
+            public void onGoToSelectProductType(int providerId, int productId) {
 
             }
         };

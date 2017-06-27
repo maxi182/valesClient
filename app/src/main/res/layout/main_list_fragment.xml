@@ -11,16 +11,14 @@
 
         <include layout="@layout/include_product_list_header"/>
 
-
     </RelativeLayout>
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_selection"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/container_header"
-       />
+        android:layout_below="@id/container_header" />
 
 
     <RelativeLayout

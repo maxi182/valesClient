@@ -41,8 +41,7 @@ dependencies {
     compile dependencies.okhttpInterceptor
     compile dependencies.okhttp
 
-
-
+    compile 'com.getbase:floatingactionbutton:1.10.1'
     compile 'br.com.mauker.materialsearchview:materialsearchview:1.2.2'
 
 

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.mcba.comandaclient.api.RestClient;
 import com.mcba.comandaclient.model.Product;
+import com.mcba.comandaclient.model.ProductType;
 import com.mcba.comandaclient.model.Provider;
 import com.mcba.comandaclient.model.ProviderList;
 
@@ -149,6 +150,30 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
         }
 
         callback.onProvidersParsed(prov);
+    }
+
+    @Override
+    public void parseProductsTypeByProvider(RequestCallback callback, RealmList<ProviderList> providers, RealmList<Product> products, int providerId, int productId) {
+
+        List<ProductType> types = new ArrayList<>();
+
+        RealmList<Provider> mProviders = providers.get(0).providers;
+
+        for (int i = 0; i < mProviders.size(); i++) {
+
+            if (mProviders.get(i).providerId == providerId) {
+
+                for (int j = 0; j < mProviders.get(i).products.size(); j++) {
+
+                    if (mProviders.get(i).products.get(j).productId == productId) {
+
+                        types.addAll(mProviders.get(i).products.get(j).types);
+                    }
+                }
+            }
+        }
+        callback.onTypesParsed(types);
+
     }
 
     @Override

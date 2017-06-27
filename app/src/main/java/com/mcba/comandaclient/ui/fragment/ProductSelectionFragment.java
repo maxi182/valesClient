@@ -1,20 +1,24 @@
 package com.mcba.comandaclient.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.mcba.comandaclient.R;
 import com.mcba.comandaclient.model.Product;
+import com.mcba.comandaclient.model.ProductType;
 import com.mcba.comandaclient.model.Provider;
 import com.mcba.comandaclient.model.ProviderList;
 import com.mcba.comandaclient.presenter.ProductListPresenter;
 import com.mcba.comandaclient.presenter.ProductListPresenterImpl;
 import com.mcba.comandaclient.ui.ProductsListView;
 import com.mcba.comandaclient.ui.adapter.ProductSelectionAdapter;
+import com.mcba.comandaclient.utils.Constants;
+import com.mcba.comandaclient.utils.StorageProvider;
 
 import java.util.List;
 
@@ -30,6 +34,7 @@ public class ProductSelectionFragment extends BaseNavigationFragment<ProductSele
     private ProductSelectionAdapter mAdapter;
     private ProductListPresenter mPresenter;
     private FrameLayout mProgress;
+    private TextView mTxtPosProduct;
 
 
     public static ProductSelectionFragment newInstance() {
@@ -49,6 +54,7 @@ public class ProductSelectionFragment extends BaseNavigationFragment<ProductSele
 
         mRecyclerview = (RecyclerView) findViewById(R.id.recycler_product_selection);
         mProgress = (FrameLayout) findViewById(R.id.progress);
+        mTxtPosProduct = (TextView) findViewById(R.id.txt_pos_product);
 
     }
 
@@ -61,6 +67,8 @@ public class ProductSelectionFragment extends BaseNavigationFragment<ProductSele
         mAdapter = new ProductSelectionAdapter(getActivity(), this);
         mRecyclerview.setAdapter(mAdapter);
         mRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mTxtPosProduct.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.bg_green));
 
         mPresenter.getProducts();
 
@@ -76,6 +84,11 @@ public class ProductSelectionFragment extends BaseNavigationFragment<ProductSele
 
     @Override
     public void showProvidersResponse(List<Provider> providers) {
+
+    }
+
+    @Override
+    public void showTypesResponse(List<ProductType> types) {
 
     }
 
@@ -118,6 +131,7 @@ public class ProductSelectionFragment extends BaseNavigationFragment<ProductSele
     @Override
     public void onItemPress(Product product) {
 
+        StorageProvider.savePreferences(Constants.PRODUCT_ID, product.productId);
         mCallbacks.onGoToSelectProvider(product.productId);
 
     }

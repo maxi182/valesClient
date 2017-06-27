@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -7,40 +8,73 @@
     <RelativeLayout
         android:id="@+id/toptoolbar"
         android:layout_width="wrap_content"
-        android:background="@color/zh_dark_grey"
-        android:layout_height="30dip">
+        android:layout_height="30dip"
+        android:background="@color/zh_dark_grey">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:layout_marginRight="@dimen/general_margin"
             android:layout_centerInParent="true"
-            android:text="N8P51/53" />
+            android:layout_marginRight="@dimen/general_margin"
+            android:text="N8P51/53"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/current_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:textColor="@color/white"
             android:layout_centerVertical="true"
             android:paddingRight="@dimen/general_margin"
-            android:text="28/05/2017" />
-
+            android:text="28/05/2017"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 
-    <include layout="@layout/layout_toolbar"/>
-
-
     <FrameLayout
+        android:id="@+id/frame_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toptoolbar">
+
+        <include layout="@layout/layout_toolbar" />
+
+    </FrameLayout>
+
+    <RelativeLayout
         android:id="@+id/container_body"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" >
+        android:layout_below="@id/frame_toolbar"
+        android:layout_weight="1">
 
-    <include layout="@layout/layout_progress_bar"/>
+        <include layout="@layout/layout_progress_bar" />
 
- </FrameLayout>
-</LinearLayout>
+    </RelativeLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/multiple_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="@dimen/general_margin"
+        android:layout_marginEnd="@dimen/general_margin"
+        android:layout_marginRight="@dimen/general_margin"
+        fab:fab_addButtonColorNormal="@color/zh_slate_grey"
+        fab:fab_addButtonColorPressed="@color/zh_dark_slate_gray"
+        fab:fab_addButtonPlusIconColor="@color/white">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/zh_crimson"
+            fab:fab_colorPressed="@color/zh_crimson"
+            />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
+</RelativeLayout>

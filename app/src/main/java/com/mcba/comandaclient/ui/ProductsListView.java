@@ -1,6 +1,7 @@
 package com.mcba.comandaclient.ui;
 
 import com.mcba.comandaclient.model.Product;
+import com.mcba.comandaclient.model.ProductType;
 import com.mcba.comandaclient.model.Provider;
 import com.mcba.comandaclient.model.ProviderList;
 
@@ -17,6 +18,8 @@ public interface ProductsListView {
     void showDataResponse(RealmList<ProviderList> providers, RealmList<Product> products);
 
     void showProvidersResponse(List<Provider> providers);
+
+    void showTypesResponse(List<ProductType> types);
 
     void onResponseFailed();
 
