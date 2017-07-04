@@ -23,7 +23,7 @@ import retrofit2.Response;
  * Created by mac on 06/06/2017.
  */
 
-public class ProductInteractorImpl extends RealmManager implements ProductInteractorCallbacks {
+public class ProductInteractorImpl extends RealmManager implements ProductInteractorCallbacks, CantPriceInteractorCallbacks {
 
     private RealmAsyncTask mTransaction;
 
@@ -87,9 +87,13 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
 
     }
 
-    private RealmResults<ProviderList> getRealmProvider() {
+    private String getRealmProductById() {
 
-        return mRealm.where(ProviderList.class).equalTo("providers.products.productId", 20).findAll();
+        RealmResults<Product> products = mRealm.where(Product.class).equalTo("productId", 20).findAll();
+
+        return products.get(0).name;
+
+
     }
 
     private RealmResults<ProviderList> getRealmProviderData() {
@@ -173,6 +177,12 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
             }
         }
         callback.onTypesParsed(types);
+
+    }
+
+    @Override
+    public void getProductNameById(RequestCallback callback) {
+        callback.onProductNameFetched(getRealmProductById());
 
     }
 

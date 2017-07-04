@@ -13,6 +13,8 @@ public interface ProductListPresenter extends IBasePresenter {
 
     void getProducts();
 
+    void getProductNameById(int productId);
+
     void parseProviders(RealmList<ProviderList> providers, int productId);
 
     void parseProductsTypeByProvider(RealmList<ProviderList> providers, RealmList<Product> products, int providerId, int productId);

@@ -7,6 +7,7 @@ import com.mcba.comandaclient.model.Product;
 import com.mcba.comandaclient.model.ProductType;
 import com.mcba.comandaclient.model.Provider;
 import com.mcba.comandaclient.model.ProviderList;
+import com.mcba.comandaclient.ui.CantPriceView;
 import com.mcba.comandaclient.ui.ProductsListView;
 
 import java.lang.ref.WeakReference;
@@ -28,7 +29,6 @@ public class ProductListPresenterImpl implements ProductListPresenter, ProductIn
     public ProductListPresenterImpl(ProductsListView productsListView) {
         this.mProductInteractorCallback = new ProductInteractorImpl();
         this.productsListView = new WeakReference<>(productsListView);
-
     }
 
     @Override
@@ -37,6 +37,14 @@ public class ProductListPresenterImpl implements ProductListPresenter, ProductIn
             getView().showProgress();
         }
         mProductInteractorCallback.fetchProducts(this);
+    }
+
+    @Override
+    public void getProductNameById(int productId) {
+        if (productsListView != null) {
+            getView().showProgress();
+        }
+        mProductInteractorCallback.getProductNameById(this);
     }
 
     @Override
@@ -74,6 +82,14 @@ public class ProductListPresenterImpl implements ProductListPresenter, ProductIn
     public void onProvidersParsed(List<Provider> providers) {
         if (productsListView != null) {
             getView().showProvidersResponse(providers);
+            getView().hideProgress();
+        }
+    }
+
+    @Override
+    public void onProductNameFetched(String name) {
+        if (productsListView != null) {
+            getView().showProductName(name);
             getView().hideProgress();
         }
     }

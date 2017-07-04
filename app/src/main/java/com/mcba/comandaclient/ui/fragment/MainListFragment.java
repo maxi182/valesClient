@@ -35,7 +35,6 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         return fragment;
     }
 
-
     public static MainListFragment newInstance(int productId, int providerId) {
 
         MainListFragment fragment = new MainListFragment();
@@ -78,6 +77,8 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         produtlist.add(product);
         produtlist.add(product);
         mAdapter.setItems(produtlist);
+
+        //consultar comandas
 
     }
 

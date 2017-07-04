@@ -3,7 +3,6 @@ package com.mcba.comandaclient.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,11 +18,14 @@ import android.widget.TextView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.mcba.comandaclient.R;
+import com.mcba.comandaclient.ui.fragment.CantPriceSelectionFragment;
 import com.mcba.comandaclient.ui.fragment.EntryFragment;
 import com.mcba.comandaclient.ui.fragment.MainListFragment;
 import com.mcba.comandaclient.ui.fragment.ProductSelectionFragment;
 import com.mcba.comandaclient.ui.fragment.ProductTypeSelectionFragment;
 import com.mcba.comandaclient.ui.fragment.ProviderSelectionFragment;
+import com.mcba.comandaclient.utils.Constants;
+import com.mcba.comandaclient.utils.StorageProvider;
 import com.mcba.comandaclient.utils.Utils;
 
 import br.com.mauker.materialsearchview.MaterialSearchView;
@@ -33,14 +35,18 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * Created by mac on 25/05/2017.
  */
 
-public class MainActivity extends MainSearchActivity implements MainListFragment.MainListFragmentCallbacks, ProductSelectionFragment.ProductSelectionFragmentCallbacks, ProviderSelectionFragment.ProviderSelectionFragmentCallbacks, ProductTypeSelectionFragment.ProductTypeSelectionFragmentCallbacks, EntryFragment.EntryFragmentCallbacks {
+public class MainActivity extends MainSearchActivity implements MainListFragment.MainListFragmentCallbacks, ProductSelectionFragment.ProductSelectionFragmentCallbacks, ProviderSelectionFragment.ProviderSelectionFragmentCallbacks, ProductTypeSelectionFragment.ProductTypeSelectionFragmentCallbacks, EntryFragment.EntryFragmentCallbacks, CantPriceSelectionFragment.CantPriceSelectionFragmentallbacks {
 
     private static final String STACK_KEY = "stack";
     private static final String ENTRY_FRAGMENT = "entry_fragment";
     private static final String MAIN_LIST_FRAGMENT = "main_list_fragment";
+    private static final String MAIN_LIST_FROM_ENTRY_FRAGMENT = "main_list_from_entry_fragment";
     private static final String PRODUCT_LIST_FRAGMENT = "product_list_fragment";
     private static final String PROVIDER_LIST_FRAGMENT = "provider_list_fragment";
     private static final String TYPE_LIST_FRAGMENT = "type_list_fragment";
+    private static final String CANT_PRICE_FRAGMENT = "cant_price_fragment";
+
+
 
     private FloatingActionsMenu menuMultipleActions;
 
@@ -77,6 +83,7 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
 
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,8 +95,66 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
         menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
         setFABButtons(this);
 
-        //handlele fist fragment
+        StorageProvider.getPreferencesString(Constants.RESTORE_FRAGMENT_TAG);
+        //handleFragment();
+
         openEntryFragment();
+
+        //handlele fist fragment
+
+    }
+
+    private void handleFragment() {
+
+        String tag = StorageProvider.getPreferencesString(Constants.RESTORE_FRAGMENT_TAG);
+
+        if (tag == null) {
+            openEntryFragment();
+        } else {
+
+            switch (tag) {
+                case ENTRY_FRAGMENT:
+                    openEntryFragment();
+                    break;
+                case MAIN_LIST_FROM_ENTRY_FRAGMENT:
+                    onGoToMainListFromEntryFragment();
+                    break;
+                case PRODUCT_LIST_FRAGMENT:
+                    onGoToSelectProduct();
+                    break;
+                case PROVIDER_LIST_FRAGMENT:
+                    onGoToSelectProvider(10);
+                    break;
+                case TYPE_LIST_FRAGMENT:
+                    onGoToSelectProductType(1, 10);
+                    break;
+
+            }
+        }
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        //  StorageProvider.deletePreferences(Constants.RESTORE_FRAGMENT_TAG);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container_body);
+        StorageProvider.savePreferences(Constants.RESTORE_FRAGMENT_TAG, fragment.getTag());
 
     }
 
@@ -122,7 +187,7 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
         mCurrentDate.setText(Utils.getCurrentDate("dd/MM/yyyy"));
     }
 
-    private void openEntryFragment(){
+    private void openEntryFragment() {
 
         changeFragment(EntryFragment.newInstance(), false, false, ENTRY_FRAGMENT);
 
@@ -131,15 +196,15 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
     @Override
     public void onGoToMainListFromEntryFragment() {
 
-        changeFragment(MainListFragment.newInstance(), false, false, MAIN_LIST_FRAGMENT);
+        changeFragment(MainListFragment.newInstance(), false, false, MAIN_LIST_FROM_ENTRY_FRAGMENT);
 
     }
 
-//    @Override
-//    public void onGoToMainList() {
-//        changeFragment(MainListFragment.newInstance(), false, false, MAIN_LIST_FRAGMENT);
-//
-//    }
+    @Override
+    public void onGoToMainList(int providerId, int productId) {
+        changeFragment(MainListFragment.newInstance(productId, providerId), false, false, MAIN_LIST_FRAGMENT);
+
+    }
 
     @Override
     public void onGoToSelectProduct() {
@@ -164,11 +229,13 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
 
     }
 
+
     @Override
-    public void onGoToSetPriceAndQty(int providerId, int productId) {
+    public void onGoToSetPriceAndQty(int providerId, int productId, int productTypeId) {
+
+        changeFragment(CantPriceSelectionFragment.newInstance(productId, providerId, productTypeId),true, false, CANT_PRICE_FRAGMENT);
 
     }
-
     private void setupToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -214,6 +281,7 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
         ft.commit();
     }
 
+
     @Override
     public void onBackPressed() {
 
@@ -225,7 +293,6 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
             return;
         }
     }
-
 
 
 }

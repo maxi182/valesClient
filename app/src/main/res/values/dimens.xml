@@ -17,6 +17,9 @@
     <dimen name="rounded_corner_radius">4dp</dimen>
     <dimen name="rounded_corner_radius_small">2dp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="top_margin_form">3dp</dimen>
+    <dimen name="sign_up_edit_text_translation">3dp</dimen>
+
 
     <dimen name="general_elevation">4dp</dimen>
 

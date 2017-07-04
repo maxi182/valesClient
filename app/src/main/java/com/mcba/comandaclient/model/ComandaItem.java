@@ -7,10 +7,13 @@ import io.realm.annotations.PrimaryKey;
  * Created by mac on 26/06/2017.
  */
 
-public class ComandaItem  extends RealmObject{
+public class ComandaItem extends RealmObject {
 
     @PrimaryKey
     public int itemId;
-    public Provider mProvider;
+    public ComandaProductItem mProductItem;
+    public double mCant;
+    public double mPrice;
+    public double mTotal;
 
 }

@@ -21,6 +21,8 @@ public interface ProductInteractorCallbacks {
 
     void parseProductsTypeByProvider(RequestCallback callback, RealmList<ProviderList> provider, RealmList<Product> products, int providerId, int productId);
 
+    void getProductNameById(RequestCallback callback);
+
     void attachView();
 
     void detachView();
@@ -30,6 +32,8 @@ public interface ProductInteractorCallbacks {
         void onFetchDataSuccess(RealmList<ProviderList> providers, RealmList<Product> products);
 
         void onProvidersParsed(List<Provider> providers);
+
+        void onProductNameFetched(String name);
 
         void onTypesParsed(List<ProductType> types);
 

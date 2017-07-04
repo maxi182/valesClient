@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mcba.comandaclient.R;
 import com.mcba.comandaclient.model.Product;
@@ -85,6 +86,12 @@ public class ProductSelectionFragment extends BaseNavigationFragment<ProductSele
     @Override
     public void showProvidersResponse(List<Provider> providers) {
 
+    }
+
+    @Override
+    public void showProductName(String name) {
+
+        Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
     }
 
     @Override

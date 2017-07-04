@@ -14,7 +14,6 @@ import com.mcba.comandaclient.model.ProviderList;
 import com.mcba.comandaclient.presenter.ProductListPresenter;
 import com.mcba.comandaclient.presenter.ProductListPresenterImpl;
 import com.mcba.comandaclient.ui.ProductsListView;
-import com.mcba.comandaclient.ui.adapter.ProductSelectionAdapter;
 import com.mcba.comandaclient.ui.adapter.ProductTypeSelectionAdapter;
 import com.mcba.comandaclient.utils.Constants;
 import com.mcba.comandaclient.utils.StorageProvider;
@@ -50,7 +49,6 @@ public class ProductTypeSelectionFragment extends BaseNavigationFragment<Product
         return fragment;
 
     }
-
 
     @Override
     protected int getLayoutResource() {
@@ -98,6 +96,11 @@ public class ProductTypeSelectionFragment extends BaseNavigationFragment<Product
     }
 
     @Override
+    public void showProductName(String name) {
+
+    }
+
+    @Override
     public void showTypesResponse(List<ProductType> types) {
 
         mAdapter.setItems(types);
@@ -109,6 +112,7 @@ public class ProductTypeSelectionFragment extends BaseNavigationFragment<Product
     public void onItemPress(ProductType type) {
 
         StorageProvider.savePreferences(Constants.PRODUCTTYPE_ID, type.productTypeId);
+        mCallbacks.onGoToSetPriceAndQty(mProviderId, mProductId, type.productTypeId);
 
     }
 
@@ -144,14 +148,14 @@ public class ProductTypeSelectionFragment extends BaseNavigationFragment<Product
 
 
     public interface ProductTypeSelectionFragmentCallbacks {
-        void onGoToSetPriceAndQty(int providerId, int productId);
+        void onGoToSetPriceAndQty(int providerId, int productId, int productTypeId);
     }
 
     @Override
     public ProductTypeSelectionFragment.ProductTypeSelectionFragmentCallbacks getDummyCallbacks() {
         return new ProductTypeSelectionFragment.ProductTypeSelectionFragmentCallbacks() {
             @Override
-            public void onGoToSetPriceAndQty(int providerId, int productId) {
+            public void onGoToSetPriceAndQty(int providerId, int productId, int productTypeId) {
 
             }
         };

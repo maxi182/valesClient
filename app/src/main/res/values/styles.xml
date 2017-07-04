@@ -86,7 +86,7 @@
     </style>
 
     <style name="AppTheme.Text.LatoBold.white.14.67" parent="AppTheme.Text.LatoBold.white">
-        <item name="android:textSize">14.67sp</item>
+        <item name="android:textSize">25.67sp</item>
     </style>
 
 

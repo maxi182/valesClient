@@ -19,6 +19,8 @@ public interface ProductsListView {
 
     void showProvidersResponse(List<Provider> providers);
 
+    void showProductName(String name);
+
     void showTypesResponse(List<ProductType> types);
 
     void onResponseFailed();

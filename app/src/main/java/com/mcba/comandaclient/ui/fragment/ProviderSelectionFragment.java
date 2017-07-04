@@ -104,6 +104,13 @@ public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSe
     }
 
     @Override
+    public void showProductName(String name) {
+
+
+
+    }
+
+    @Override
     public void showTypesResponse(List<ProductType> types) {
 
     }
