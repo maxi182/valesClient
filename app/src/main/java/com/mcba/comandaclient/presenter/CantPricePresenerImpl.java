@@ -1,5 +1,6 @@
 package com.mcba.comandaclient.presenter;
 
+import com.mcba.comandaclient.interactor.CantPriceInteractorCallbacks;
 import com.mcba.comandaclient.interactor.ProductInteractorCallbacks;
 import com.mcba.comandaclient.interactor.ProductInteractorImpl;
 import com.mcba.comandaclient.model.Product;
@@ -17,7 +18,7 @@ import io.realm.RealmList;
  * Created by mac on 30/06/2017.
  */
 
-public class CantPricePresenerImpl implements CantPricePresenter, ProductInteractorCallbacks.RequestCallback {
+public class CantPricePresenerImpl implements CantPricePresenter, ProductInteractorCallbacks.RequestCallback, CantPriceInteractorCallbacks.CantPriceRequestCallback {
 
 
     private ProductInteractorCallbacks mProductInteractorCallback;
@@ -38,6 +39,24 @@ public class CantPricePresenerImpl implements CantPricePresenter, ProductInterac
     }
 
     @Override
+    public void getPackaging(RealmList<ProviderList> providers, RealmList<Product> products, int providerId, int productId, int typeId) {
+
+        mProductInteractorCallback.parsePackaging(this, providers, products, providerId, productId, typeId);
+    }
+
+    @Override
+    public void onPacakgeParsed(boolean isFree, double value) {
+
+
+        if (cantPriceView != null) {
+
+            getView().showPackagingResponse(isFree, value);
+
+        }
+
+    }
+
+    @Override
     public void setQtyText(int currentValue, boolean operation) {
 
         if (cantPriceView != null) {
@@ -48,6 +67,14 @@ public class CantPricePresenerImpl implements CantPricePresenter, ProductInterac
                     getView().updateQtyText(operation ? currentValue + 1 : currentValue - 1);
                 }
             }
+        }
+    }
+
+    @Override
+    public void setPriceText(double currentValue, double addValue, boolean operation) {
+        if (cantPriceView != null) {
+            getView().updatePriceText(operation ? currentValue + addValue : currentValue - addValue);
+
         }
     }
 
@@ -107,4 +134,6 @@ public class CantPricePresenerImpl implements CantPricePresenter, ProductInterac
         mProductInteractorCallback.attachView();
 
     }
+
+
 }

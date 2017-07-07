@@ -13,16 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mcba.comandaclient.R;
+import com.mcba.comandaclient.model.Packaging;
 import com.mcba.comandaclient.model.Product;
 import com.mcba.comandaclient.model.ProductType;
-import com.mcba.comandaclient.model.Provider;
 import com.mcba.comandaclient.model.ProviderList;
 import com.mcba.comandaclient.presenter.CantPricePresenerImpl;
 import com.mcba.comandaclient.presenter.CantPricePresenter;
-import com.mcba.comandaclient.presenter.ProductListPresenter;
-import com.mcba.comandaclient.presenter.ProductListPresenterImpl;
 import com.mcba.comandaclient.ui.CantPriceView;
-import com.mcba.comandaclient.ui.ProductsListView;
 
 import java.util.List;
 
@@ -37,6 +34,10 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
 
     public static final String PRODUCT_ID = "productId";
     public static final String PROVIDER_ID = "providerId";
+    public static final String TYPE_ID = "type_id";
+    public static final String INITIAL_QTY = "1";
+    public static final String INITIAL_PRICE = "100";
+
 
     private TextInputLayout mCantTextInputLayout;
     private AppCompatEditText mCantEditText;
@@ -54,6 +55,12 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
     private LinearLayout mLinear50;
     private LinearLayout mLinear100;
 
+    private int mProductId;
+    private int mProviderId;
+    private int mTypeId;
+
+    private int mSelectedResourceId;
+
     private CantPricePresenter mCantPricePresenter;
 
 
@@ -62,6 +69,7 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
         Bundle args = new Bundle();
         args.putInt(PRODUCT_ID, productId);
         args.putInt(PROVIDER_ID, providerId);
+        args.putInt(TYPE_ID, typeId);
         CantPriceSelectionFragment fragment = new CantPriceSelectionFragment();
         fragment.setArguments(args);
         return fragment;
@@ -76,16 +84,19 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
 
     @Override
     protected void setViewReferences() {
+
         mCantEditText = (AppCompatEditText) findViewById(R.id.cant_edit_text);
         mPriceEditText = (AppCompatEditText) findViewById(R.id.price_edit_text);
         mImageButtonAdd = (ImageButton) findViewById(R.id.img_btn_add);
         mImageButtonMinus = (ImageButton) findViewById(R.id.img_btn_minus);
+        mImageButtonAddPrice = (ImageButton) findViewById(R.id.img_btn_add_price);
+        mImageButtonMinusPrice = (ImageButton) findViewById(R.id.img_btn_minus_price);
+
         mLinear1 = (LinearLayout) findViewById(R.id.linear_1);
         mLinear5 = (LinearLayout) findViewById(R.id.linear_5);
         mLinear25 = (LinearLayout) findViewById(R.id.linear_25);
         mLinear50 = (LinearLayout) findViewById(R.id.linear_50);
         mLinear100 = (LinearLayout) findViewById(R.id.linear_100);
-
 
     }
 
@@ -95,19 +106,29 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
         mCantPricePresenter = new CantPricePresenerImpl(this);
         mCantPricePresenter.attachView();
 
+        mProductId = getArguments().getInt(PRODUCT_ID);
+        mProviderId = getArguments().getInt(PROVIDER_ID);
+        mTypeId = getArguments().getInt(TYPE_ID);
+
+
         mCantPricePresenter.getProducts();
         mImageButtonAdd.setOnClickListener(this);
         mImageButtonMinus.setOnLongClickListener(this);
         mImageButtonMinus.setOnClickListener(this);
+        mImageButtonAddPrice.setOnClickListener(this);
+        mImageButtonMinusPrice.setOnClickListener(this);
         mLinear1.setOnClickListener(this);
         mLinear5.setOnClickListener(this);
         mLinear25.setOnClickListener(this);
         mLinear50.setOnClickListener(this);
         mLinear100.setOnClickListener(this);
 
+
+
         validateNotZero();
-        mCantEditText.setText("1");
-        mPriceEditText.setText("100");
+        mCantEditText.setText(INITIAL_QTY);
+        mPriceEditText.setText(INITIAL_PRICE);
+        mSelectedResourceId = R.id.linear_100;
         mLinear100.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
 
     }
@@ -124,7 +145,7 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                 if (charSequence.toString().equals("") || charSequence.toString().substring(0, 1).equals("0")) {
-                    mCantEditText.setText("1");
+                    mCantEditText.setText(INITIAL_QTY);
                 }
             }
 
@@ -143,6 +164,7 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
         LinearLayout button = (LinearLayout) findViewById(resourceId);
 
         button.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
+        mSelectedResourceId = resourceId;
 
     }
 
@@ -154,12 +176,49 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
         mLinear100.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
     }
 
+    private void handleBtnPrice(boolean add) {
+        switch (mSelectedResourceId) {
+            case R.id.linear_1:
+
+                mCantPricePresenter.setPriceText(Double.valueOf(mPriceEditText.getText().toString()), 1, add ? true : false);
+
+                break;
+            case R.id.linear_5:
+
+                mCantPricePresenter.setPriceText(Double.valueOf(mPriceEditText.getText().toString()), 5, add ? true : false);
+
+                break;
+            case R.id.linear_25:
+
+                mCantPricePresenter.setPriceText(Double.valueOf(mPriceEditText.getText().toString()), 25, add ? true : false);
+
+                break;
+            case R.id.linear_50:
+
+                mCantPricePresenter.setPriceText(Double.valueOf(mPriceEditText.getText().toString()), 50, add ? true : false);
+
+                break;
+            case R.id.linear_100:
+
+                mCantPricePresenter.setPriceText(Double.valueOf(mPriceEditText.getText().toString()), 100, add ? true : false);
+
+                break;
+        }
+
+    }
+
     @Override
     public void showDataResponse(RealmList<ProviderList> providers, RealmList<Product> products) {
 
-        Toast.makeText(getActivity(), providers.get(0).providers.get(0).name, Toast.LENGTH_SHORT).show();
-
+        mCantPricePresenter.getPackaging(providers, products, mProviderId, mProductId, mTypeId);
     }
+
+    @Override
+    public void showPackagingResponse(boolean isFree, double value) {
+
+        Toast.makeText(getActivity(), String.valueOf(value), Toast.LENGTH_SHORT).show();
+    }
+
 
     @Override
     public void showTypesResponse(List<ProductType> types) {
@@ -173,6 +232,13 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
 
     }
 
+    @Override
+    public void updatePriceText(double value) {
+
+        mPriceEditText.setText(String.valueOf(value));
+
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -182,7 +248,7 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
                 if (mCantEditText.getText().length() > 0) {
                     mCantPricePresenter.setQtyText(Integer.valueOf(mCantEditText.getText().toString()), true);
                 } else {
-                    mCantEditText.setText("1");
+                    mCantEditText.setText(INITIAL_QTY);
                 }
                 break;
             case R.id.img_btn_minus:
@@ -212,10 +278,12 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
                 break;
 
             case R.id.img_btn_add_price:
+                handleBtnPrice(true);
 
                 break;
 
             case R.id.img_btn_minus_price:
+                handleBtnPrice(false);
 
                 break;
             default:
@@ -231,7 +299,7 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
     public boolean onLongClick(View v) {
         switch (v.getId()) {
             case R.id.img_btn_minus:
-                mCantEditText.setText("1");
+                mCantEditText.setText(INITIAL_QTY);
                 break;
 
             default:

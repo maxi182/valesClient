@@ -19,6 +19,8 @@ public interface ProductInteractorCallbacks {
 
     void parseProviders(RequestCallback callback, RealmList<ProviderList> providers, int productId);
 
+    void parsePackaging(CantPriceInteractorCallbacks.CantPriceRequestCallback callback, RealmList<ProviderList> provider, RealmList<Product> products, int providerId, int productId, int typeId);
+
     void parseProductsTypeByProvider(RequestCallback callback, RealmList<ProviderList> provider, RealmList<Product> products, int providerId, int productId);
 
     void getProductNameById(RequestCallback callback);

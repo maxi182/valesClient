@@ -73,6 +73,7 @@ public class ProductSelectionFragment extends BaseNavigationFragment<ProductSele
 
         mPresenter.getProducts();
 
+
     }
 
     @Override
@@ -80,6 +81,8 @@ public class ProductSelectionFragment extends BaseNavigationFragment<ProductSele
 
         mAdapter.setItems(products);
         mAdapter.notifyDataSetChanged();
+
+        mPresenter.getProductNameById(10);
 
     }
 

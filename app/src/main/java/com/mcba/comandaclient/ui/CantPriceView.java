@@ -18,9 +18,13 @@ public interface CantPriceView {
 
     void showDataResponse(RealmList<ProviderList> providers, RealmList<Product> products);
 
+    void showPackagingResponse(boolean isFree, double value);
+
     void showTypesResponse(List<ProductType> types);
 
     void updateQtyText(int value);
+
+    void updatePriceText(double value);
 
 
 }
