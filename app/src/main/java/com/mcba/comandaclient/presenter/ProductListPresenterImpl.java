@@ -3,6 +3,7 @@ package com.mcba.comandaclient.presenter;
 
 import com.mcba.comandaclient.interactor.ProductInteractorCallbacks;
 import com.mcba.comandaclient.interactor.ProductInteractorImpl;
+import com.mcba.comandaclient.model.ItemFullName;
 import com.mcba.comandaclient.model.Product;
 import com.mcba.comandaclient.model.ProductType;
 import com.mcba.comandaclient.model.Provider;
@@ -40,29 +41,29 @@ public class ProductListPresenterImpl implements ProductListPresenter, ProductIn
     }
 
     @Override
-    public void getProductNameById(int productId) {
+    public void getProductNameById(int productId, int providerId, int typeId) {
         if (productsListView != null) {
             getView().showProgress();
         }
-        mProductInteractorCallback.getProductNameById(this);
+        mProductInteractorCallback.getProductNameById(this, productId, providerId, typeId);
     }
 
     @Override
-    public void parseProviders(RealmList<ProviderList> providers, int productId) {
+    public void parseProviders(int productId) {
         if (productsListView != null) {
             getView().showProgress();
         }
-        mProductInteractorCallback.parseProviders(this, providers, productId);
+        mProductInteractorCallback.parseProviders(this, productId);
 
     }
 
     @Override
-    public void parseProductsTypeByProvider(RealmList<ProviderList> providers, RealmList<Product> products, int providerId, int productId) {
+    public void parseProductsTypeByProvider(int providerId, int productId) {
 
         if (productsListView != null) {
             getView().showProgress();
         }
-        mProductInteractorCallback.parseProductsTypeByProvider(this, providers, products, providerId, productId);
+        mProductInteractorCallback.parseProductsTypeByProvider(this, providerId, productId);
 
     }
 
@@ -87,12 +88,13 @@ public class ProductListPresenterImpl implements ProductListPresenter, ProductIn
     }
 
     @Override
-    public void onProductNameFetched(String name) {
+    public void onProductNameFetched(ItemFullName itemFullName) {
         if (productsListView != null) {
-            getView().showProductName(name);
+            getView().showProductName(itemFullName);
             getView().hideProgress();
         }
     }
+
 
     @Override
     public void onTypesParsed(List<ProductType> types) {

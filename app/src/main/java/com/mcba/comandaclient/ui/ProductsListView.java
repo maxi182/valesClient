@@ -1,5 +1,6 @@
 package com.mcba.comandaclient.ui;
 
+import com.mcba.comandaclient.model.ItemFullName;
 import com.mcba.comandaclient.model.Product;
 import com.mcba.comandaclient.model.ProductType;
 import com.mcba.comandaclient.model.Provider;
@@ -19,7 +20,7 @@ public interface ProductsListView {
 
     void showProvidersResponse(List<Provider> providers);
 
-    void showProductName(String name);
+    void showProductName(ItemFullName name);
 
     void showTypesResponse(List<ProductType> types);
 

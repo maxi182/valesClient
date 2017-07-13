@@ -117,7 +117,7 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
                     openEntryFragment();
                     break;
                 case MAIN_LIST_FROM_ENTRY_FRAGMENT:
-                    onGoToMainListFromEntryFragment();
+                    onGoToMainListFromEntryFragment(0);
                     break;
                 case PRODUCT_LIST_FRAGMENT:
                     onGoToSelectProduct();
@@ -194,14 +194,14 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
     }
 
     @Override
-    public void onGoToMainListFromEntryFragment() {
+    public void onGoToMainListFromEntryFragment(int nextComandaId) {
 
-        changeFragment(MainListFragment.newInstance(), false, false, MAIN_LIST_FROM_ENTRY_FRAGMENT);
+        changeFragment(MainListFragment.newInstance(nextComandaId), false, false, MAIN_LIST_FROM_ENTRY_FRAGMENT);
 
     }
 
     @Override
-    public void onGoToMainList(int providerId, int productId) {
+    public void onGoToMainList(int providerId, int productId, int typeId) {
         changeFragment(MainListFragment.newInstance(productId, providerId), false, false, MAIN_LIST_FRAGMENT);
 
     }

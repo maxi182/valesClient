@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mcba.comandaclient.R;
+import com.mcba.comandaclient.model.ItemFullName;
 import com.mcba.comandaclient.model.Packaging;
 import com.mcba.comandaclient.model.Product;
 import com.mcba.comandaclient.model.ProductType;
@@ -46,8 +47,10 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
     private ImageButton mImageButtonMinus;
     private ImageButton mImageButtonAddPrice;
     private ImageButton mImageButtonMinusPrice;
-    private TextView mProductDesc;
-
+    private TextView mProductName;
+    private TextView mProviderName;
+    private TextView mProductTypeName;
+    private TextView mConfirmBtn;
 
     private LinearLayout mLinear1;
     private LinearLayout mLinear5;
@@ -92,6 +95,12 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
         mImageButtonAddPrice = (ImageButton) findViewById(R.id.img_btn_add_price);
         mImageButtonMinusPrice = (ImageButton) findViewById(R.id.img_btn_minus_price);
 
+        mProductName = (TextView) findViewById(R.id.txt_productName);
+        mProviderName = (TextView) findViewById(R.id.txt_providerName);
+        mProductTypeName = (TextView) findViewById(R.id.txt_productTypeName);
+        mConfirmBtn = (TextView) findViewById(R.id.btn_green_item_confirm);
+
+
         mLinear1 = (LinearLayout) findViewById(R.id.linear_1);
         mLinear5 = (LinearLayout) findViewById(R.id.linear_5);
         mLinear25 = (LinearLayout) findViewById(R.id.linear_25);
@@ -122,7 +131,11 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
         mLinear25.setOnClickListener(this);
         mLinear50.setOnClickListener(this);
         mLinear100.setOnClickListener(this);
+        mConfirmBtn.setOnClickListener(this);
 
+
+        mCantPricePresenter.getItemNameById(mProductId, mProviderId, mTypeId);
+        mCantPricePresenter.getPackaging(mProviderId, mProductId, mTypeId);
 
 
         validateNotZero();
@@ -208,9 +221,18 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
     }
 
     @Override
+    public void showProductName(ItemFullName name) {
+
+        if (name != null) {
+            mProductName.setText(name.productName != null ? name.productName : "");
+            mProviderName.setText(name.providerName != null ? name.providerName : "");
+            mProductTypeName.setText(name.productTypeName != null ? name.productTypeName : "");
+        }
+    }
+
+    @Override
     public void showDataResponse(RealmList<ProviderList> providers, RealmList<Product> products) {
 
-        mCantPricePresenter.getPackaging(providers, products, mProviderId, mProductId, mTypeId);
     }
 
     @Override
@@ -256,6 +278,10 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
                     mCantPricePresenter.setQtyText(Integer.valueOf(mCantEditText.getText().toString()), false);
                 }
                 break;
+
+            case R.id.btn_green_item_confirm:
+                mCallbacks.onGoToMainList(mProviderId, mProductId, mTypeId);
+                break;
             case R.id.linear_1:
                 setBackgroundColor(v.getId());
 
@@ -291,11 +317,6 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
     }
 
     @Override
-    public void getProviderName() {
-
-    }
-
-    @Override
     public boolean onLongClick(View v) {
         switch (v.getId()) {
             case R.id.img_btn_minus:
@@ -308,7 +329,7 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
     }
 
     public interface CantPriceSelectionFragmentallbacks {
-        void onGoToMainList(int providerId, int productId);
+        void onGoToMainList(int providerId, int productId, int typeId);
     }
 
 
@@ -316,7 +337,7 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
     public CantPriceSelectionFragment.CantPriceSelectionFragmentallbacks getDummyCallbacks() {
         return new CantPriceSelectionFragment.CantPriceSelectionFragmentallbacks() {
             @Override
-            public void onGoToMainList(int providerId, int productId) {
+            public void onGoToMainList(int providerId, int productId, int typeId) {
 
             }
         };

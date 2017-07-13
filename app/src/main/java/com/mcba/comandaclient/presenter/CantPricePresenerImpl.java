@@ -3,6 +3,7 @@ package com.mcba.comandaclient.presenter;
 import com.mcba.comandaclient.interactor.CantPriceInteractorCallbacks;
 import com.mcba.comandaclient.interactor.ProductInteractorCallbacks;
 import com.mcba.comandaclient.interactor.ProductInteractorImpl;
+import com.mcba.comandaclient.model.ItemFullName;
 import com.mcba.comandaclient.model.Product;
 import com.mcba.comandaclient.model.ProductType;
 import com.mcba.comandaclient.model.Provider;
@@ -39,9 +40,15 @@ public class CantPricePresenerImpl implements CantPricePresenter, ProductInterac
     }
 
     @Override
-    public void getPackaging(RealmList<ProviderList> providers, RealmList<Product> products, int providerId, int productId, int typeId) {
+    public void getItemNameById(int productId, int providerId, int typeId) {
 
-        mProductInteractorCallback.parsePackaging(this, providers, products, providerId, productId, typeId);
+        mProductInteractorCallback.getProductNameById(this, productId, providerId, typeId);
+    }
+
+    @Override
+    public void getPackaging(int providerId, int productId, int typeId) {
+
+        mProductInteractorCallback.parsePackaging(this,providerId, productId, typeId);
     }
 
     @Override
@@ -95,7 +102,11 @@ public class CantPricePresenerImpl implements CantPricePresenter, ProductInterac
     }
 
     @Override
-    public void onProductNameFetched(String name) {
+    public void onProductNameFetched(ItemFullName itemFullName) {
+
+        if (cantPriceView != null) {
+            getView().showProductName(itemFullName);
+        }
 
     }
 

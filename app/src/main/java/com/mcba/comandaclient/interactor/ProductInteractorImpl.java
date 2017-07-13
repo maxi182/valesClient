@@ -3,13 +3,11 @@ package com.mcba.comandaclient.interactor;
 import android.util.Log;
 
 import com.mcba.comandaclient.api.RestClient;
+import com.mcba.comandaclient.model.ItemFullName;
 import com.mcba.comandaclient.model.Product;
 import com.mcba.comandaclient.model.ProductType;
 import com.mcba.comandaclient.model.Provider;
 import com.mcba.comandaclient.model.ProviderList;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmAsyncTask;
@@ -87,13 +85,13 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
 
     }
 
-    private String getRealmProductById() {
+    private ItemFullName getRealmProductById(int productId, int providerId, int typeId) {
 
-        RealmResults<Product> products = mRealm.where(Product.class).findAll();
-        RealmResults<Product> results = products.where().equalTo("productId", 10).findAllAsync();
+        Product productName = mRealm.where(Product.class).equalTo("productId", productId).findFirst();
+        Provider providerName = mRealm.where(Provider.class).equalTo("providerId", providerId).findFirst();
+        ProductType typeName = mRealm.where(ProductType.class).equalTo("productTypeId", typeId).findFirst();
 
-        return results.get(0).name;
-
+        return new ItemFullName(productName.name, providerName.name, typeName.name);
 
     }
 
@@ -136,77 +134,41 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
         } else {
             fetchDataFromServer(callback);
         }
-
-    }
-
-    @Override
-    public void parsePackaging(CantPriceRequestCallback callback, RealmList<ProviderList> providers, RealmList<Product> products, int providerId, int productId, int typeId) {
-
-        RealmList<Provider> mProviders = providers.get(0).providers;
-
-        for (int i = 0; i < mProviders.size(); i++) {
-
-            if (mProviders.get(i).providerId == providerId) {
-
-                for (int j = 0; j < mProviders.get(i).products.size(); j++) {
-
-                    if (mProviders.get(i).products.get(j).productId == productId) {
-
-                        for (int k = 0; k < mProviders.get(i).products.get(j).types.size(); k++) {
-                            if (mProviders.get(i).products.get(j).types.get(k).productTypeId == typeId) {
-
-                                callback.onPacakgeParsed(mProviders.get(i).products.get(j).types.get(k).packaging.isFree,
-                                        mProviders.get(i).products.get(j).types.get(k).packaging.value);
-
-                            }
-
-                        }
-                    }
-                }
-            }
-        }
-
     }
 
 
     @Override
-    public void parseProviders(RequestCallback callback, RealmList<ProviderList> providers, int productId) {
-
+    public void parsePackaging(CantPriceRequestCallback callback, int providerId, int productId, int typeId) {
 
         RealmResults<Provider> results = mRealm.where(Provider.class).equalTo("products.productId", productId).findAll();
+        Product product = results.where().equalTo("providerId", providerId).findFirst().products.where().equalTo("productId", productId).findFirst();
+        ProductType type = product.types.where().equalTo("productTypeId", typeId).findFirst();
 
+        callback.onPacakgeParsed(type.packaging.isFree, type.packaging.value);
+
+    }
+
+    @Override
+    public void parseProviders(RequestCallback callback, int productId) {
+
+        RealmResults<Provider> results = mRealm.where(Provider.class).equalTo("products.productId", productId).findAll();
         callback.onProvidersParsed(results);
     }
 
-
     @Override
-    public void parseProductsTypeByProvider(RequestCallback callback, RealmList<ProviderList> providers, RealmList<Product> products, int providerId, int productId) {
+    public void parseProductsTypeByProvider(RequestCallback callback, int providerId, int productId) {
 
-        List<ProductType> types = new ArrayList<>();
+        RealmResults<Provider> results = mRealm.where(Provider.class).equalTo("products.productId", productId).findAll();
+        Product product = results.where().equalTo("providerId", providerId).findFirst().products.where().equalTo("productId", productId).findFirst();
+        RealmList<ProductType> types = product.types;
 
-        RealmList<Provider> mProviders = providers.get(0).providers;
-
-        for (int i = 0; i < mProviders.size(); i++) {
-
-            if (mProviders.get(i).providerId == providerId) {
-
-                for (int j = 0; j < mProviders.get(i).products.size(); j++) {
-
-                    if (mProviders.get(i).products.get(j).productId == productId) {
-
-                        types.addAll(mProviders.get(i).products.get(j).types);
-                    }
-                }
-            }
-        }
         callback.onTypesParsed(types);
 
     }
 
     @Override
-    public void getProductNameById(RequestCallback callback) {
-        callback.onProductNameFetched(getRealmProductById());
-
+    public void getProductNameById(RequestCallback callback, int productId, int providerId, int typeId) {
+        callback.onProductNameFetched(getRealmProductById(productId, providerId, typeId));
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.mcba.comandaclient.R;
+import com.mcba.comandaclient.model.ItemFullName;
 import com.mcba.comandaclient.model.Product;
 import com.mcba.comandaclient.model.ProductType;
 import com.mcba.comandaclient.model.Provider;
@@ -15,6 +16,7 @@ import com.mcba.comandaclient.model.ProviderList;
 import com.mcba.comandaclient.presenter.ProductListPresenter;
 import com.mcba.comandaclient.presenter.ProductListPresenterImpl;
 import com.mcba.comandaclient.ui.ProductsListView;
+import com.mcba.comandaclient.ui.ProviderSelectionView;
 import com.mcba.comandaclient.ui.adapter.ProviderSelectionAdapter;
 import com.mcba.comandaclient.utils.Constants;
 import com.mcba.comandaclient.utils.StorageProvider;
@@ -28,7 +30,7 @@ import io.realm.RealmList;
  * Created by mac on 21/06/2017.
  */
 
-public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSelectionFragment.ProviderSelectionFragmentCallbacks> implements ProductsListView, ProviderSelectionAdapter.AdapterCallbacks {
+public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSelectionFragment.ProviderSelectionFragmentCallbacks> implements ProviderSelectionView, ProductsListView, ProviderSelectionAdapter.AdapterCallbacks {
 
     public static final String PRODUCT_ID = "productId";
 
@@ -79,7 +81,7 @@ public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSe
 
         mProductId = getArguments().getInt(PRODUCT_ID);
 
-        mPresenter.getProducts();
+        mPresenter.parseProviders(mProductId);
     }
 
     @Override
@@ -92,8 +94,6 @@ public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSe
     @Override
     public void showDataResponse(RealmList<ProviderList> providers, RealmList<Product> products) {
 
-        mPresenter.parseProviders(providers, mProductId);
-
     }
 
     @Override
@@ -104,9 +104,12 @@ public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSe
     }
 
     @Override
-    public void showProductName(String name) {
+    public void showProductName(ItemFullName name) {
 
+    }
 
+    @Override
+    public void showProviderList(int productId) {
 
     }
 
@@ -150,6 +153,8 @@ public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSe
         mPresenter.detachView();
         super.onDestroy();
     }
+
+
 
 
     public interface ProviderSelectionFragmentCallbacks {

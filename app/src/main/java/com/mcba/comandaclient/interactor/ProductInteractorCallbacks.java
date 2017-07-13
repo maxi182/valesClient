@@ -1,5 +1,6 @@
 package com.mcba.comandaclient.interactor;
 
+import com.mcba.comandaclient.model.ItemFullName;
 import com.mcba.comandaclient.model.Product;
 import com.mcba.comandaclient.model.ProductType;
 import com.mcba.comandaclient.model.Provider;
@@ -17,13 +18,13 @@ public interface ProductInteractorCallbacks {
 
     void fetchProducts(RequestCallback callback);
 
-    void parseProviders(RequestCallback callback, RealmList<ProviderList> providers, int productId);
+    void parseProviders(RequestCallback callback, int productId);
 
-    void parsePackaging(CantPriceInteractorCallbacks.CantPriceRequestCallback callback, RealmList<ProviderList> provider, RealmList<Product> products, int providerId, int productId, int typeId);
+    void parsePackaging(CantPriceInteractorCallbacks.CantPriceRequestCallback callback, int providerId, int productId, int typeId);
 
-    void parseProductsTypeByProvider(RequestCallback callback, RealmList<ProviderList> provider, RealmList<Product> products, int providerId, int productId);
+    void parseProductsTypeByProvider(RequestCallback callback, int providerId, int productId);
 
-    void getProductNameById(RequestCallback callback);
+    void getProductNameById(RequestCallback callback, int productId, int providerId, int typeId);
 
     void attachView();
 
@@ -35,7 +36,7 @@ public interface ProductInteractorCallbacks {
 
         void onProvidersParsed(List<Provider> providers);
 
-        void onProductNameFetched(String name);
+        void onProductNameFetched(ItemFullName itemFullName);
 
         void onTypesParsed(List<ProductType> types);
 

@@ -8,8 +8,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.mcba.comandaclient.R;
+import com.mcba.comandaclient.model.Comanda;
+import com.mcba.comandaclient.model.ComandaItem;
+import com.mcba.comandaclient.model.ComandaProductItem;
 import com.mcba.comandaclient.model.Product;
-import com.mcba.comandaclient.presenter.ProductListPresenter;
+import com.mcba.comandaclient.presenter.ComandaListPresenter;
+import com.mcba.comandaclient.presenter.ComandaListPresenterImpl;
+import com.mcba.comandaclient.ui.ComandaListView;
 import com.mcba.comandaclient.ui.adapter.MainListAdapter;
 
 import java.util.ArrayList;
@@ -20,19 +25,30 @@ import io.realm.RealmList;
  * Created by mac on 25/05/2017.
  */
 
-public class MainListFragment extends BaseNavigationFragment<MainListFragment.MainListFragmentCallbacks> implements MainListAdapter.AdapterCallbacks, View.OnClickListener {
+public class MainListFragment extends BaseNavigationFragment<MainListFragment.MainListFragmentCallbacks> implements ComandaListView, MainListAdapter.AdapterCallbacks, View.OnClickListener {
+
+    public static final String COMANDA_ID = "comandaId";
 
     private RecyclerView mRecyclerview;
     private MainListAdapter mAdapter;
-    private ProductListPresenter mPresenter;
+    private ComandaListPresenter mPresenter;
     private RealmList<Product> mProducts;
-    private TextView mBtnGreen;
+    private TextView mBtnAddItem;
+    private TextView mBtnFinish;
+    private int mComandaId;
 
 
-    public static MainListFragment newInstance() {
+    private Comanda mComanda;
 
+    public static MainListFragment newInstance(int nextComandaId) {
+
+
+        Bundle args = new Bundle();
+        args.putInt(COMANDA_ID, nextComandaId);
         MainListFragment fragment = new MainListFragment();
+        fragment.setArguments(args);
         return fragment;
+
     }
 
     public static MainListFragment newInstance(int productId, int providerId) {
@@ -50,7 +66,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     protected void setViewReferences() {
 
         mRecyclerview = (RecyclerView) findViewById(R.id.recycler_selection);
-        mBtnGreen = (TextView) findViewById(R.id.btn_green);
+        mBtnAddItem = (TextView) findViewById(R.id.btn_add_item);
 
     }
 
@@ -61,7 +77,13 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         mRecyclerview.setAdapter(mAdapter);
         mRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mBtnGreen.setOnClickListener(this);
+        mPresenter = new ComandaListPresenterImpl(this);
+        mPresenter.attachView();
+
+        mComandaId = getArguments().getInt(COMANDA_ID);
+
+
+        mBtnAddItem.setOnClickListener(this);
 
         Product product = new Product();
         product.name = "Banana";
@@ -73,13 +95,54 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         produtlist.add(product);
         produtlist.add(product);
 
-
         produtlist.add(product);
         produtlist.add(product);
         mAdapter.setItems(produtlist);
 
+        mPresenter.fetchComandaById(1);
+
         //consultar comandas
 
+    }
+
+
+    @Override
+    public void showItemsComanda(Comanda comanda) {
+
+        mComanda = comanda;
+    }
+
+    @Override
+    public void showLastComandaId(int id) {
+
+
+    }
+
+    private void storeComanda() {
+
+        //Enviar todos los ids al interactor para guardar y los datos del nuevo item
+        Comanda comanda = new Comanda();
+        comanda.comandaId = 1;
+
+        ComandaItem comandaItem = new ComandaItem();
+        comandaItem.itemId = 2;
+        comandaItem.mCant = 2;
+        comandaItem.mPrice = 200;
+        comandaItem.mTotal = 400;
+
+
+        ComandaProductItem comandaProductItem = new ComandaProductItem();
+        comandaProductItem.productId = 1;
+        comandaItem.mProductItem = comandaProductItem;
+
+        comanda.comandaItemList = new RealmList<>();
+
+        if (mComanda != null) {
+            comanda.comandaItemList.addAll(mComanda.comandaItemList);
+        }
+        comanda.comandaItemList.add(comandaItem);
+
+        mPresenter.storeComanda(comanda);
     }
 
     @Override
@@ -96,11 +159,20 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.btn_green:
+            case R.id.btn_finish:
                 mCallbacks.onGoToSelectProduct();
+                break;
+            case R.id.btn_add_item:
+                storeComanda();
                 break;
             default:
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        mPresenter.detachView();
+        super.onDestroy();
     }
 
     @Override

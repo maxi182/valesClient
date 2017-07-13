@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mcba.comandaclient.R;
+import com.mcba.comandaclient.model.ItemFullName;
 import com.mcba.comandaclient.model.Product;
 import com.mcba.comandaclient.model.ProductType;
 import com.mcba.comandaclient.model.Provider;
@@ -82,7 +83,7 @@ public class ProductSelectionFragment extends BaseNavigationFragment<ProductSele
         mAdapter.setItems(products);
         mAdapter.notifyDataSetChanged();
 
-        mPresenter.getProductNameById(10);
+       // mPresenter.getProductNameById(10);
 
     }
 
@@ -92,9 +93,9 @@ public class ProductSelectionFragment extends BaseNavigationFragment<ProductSele
     }
 
     @Override
-    public void showProductName(String name) {
+    public void showProductName(ItemFullName name) {
 
-        Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), name.productName, Toast.LENGTH_SHORT).show();
     }
 
     @Override

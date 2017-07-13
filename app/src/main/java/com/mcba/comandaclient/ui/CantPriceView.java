@@ -1,5 +1,6 @@
 package com.mcba.comandaclient.ui;
 
+import com.mcba.comandaclient.model.ItemFullName;
 import com.mcba.comandaclient.model.Product;
 import com.mcba.comandaclient.model.ProductType;
 import com.mcba.comandaclient.model.ProviderList;
@@ -14,7 +15,7 @@ import io.realm.RealmList;
 
 public interface CantPriceView {
 
-    void getProviderName();
+    void showProductName(ItemFullName name);
 
     void showDataResponse(RealmList<ProviderList> providers, RealmList<Product> products);
 

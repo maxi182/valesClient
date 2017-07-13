@@ -1,10 +1,5 @@
 package com.mcba.comandaclient.presenter;
 
-import com.mcba.comandaclient.model.Product;
-import com.mcba.comandaclient.model.ProviderList;
-
-import io.realm.RealmList;
-
 /**
  * Created by mac on 25/05/2017.
  */
@@ -13,10 +8,10 @@ public interface ProductListPresenter extends IBasePresenter {
 
     void getProducts();
 
-    void getProductNameById(int productId);
+    void getProductNameById(int productId, int providerId, int typeId);
 
-    void parseProviders(RealmList<ProviderList> providers, int productId);
+    void parseProviders(int productId);
 
-    void parseProductsTypeByProvider(RealmList<ProviderList> providers, RealmList<Product> products, int providerId, int productId);
+    void parseProductsTypeByProvider(int providerId, int productId);
 
 }

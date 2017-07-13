@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.mcba.comandaclient.R;
+import com.mcba.comandaclient.model.ItemFullName;
 import com.mcba.comandaclient.model.Product;
 import com.mcba.comandaclient.model.ProductType;
 import com.mcba.comandaclient.model.Provider;
@@ -78,15 +79,14 @@ public class ProductTypeSelectionFragment extends BaseNavigationFragment<Product
         mProductId = getArguments().getInt(PRODUCT_ID);
         mProviderId = getArguments().getInt(PROVIDER_ID);
 
-        mPresenter.getProducts();
+        mPresenter.parseProductsTypeByProvider(mProviderId, mProductId);
+
 
     }
 
 
     @Override
     public void showDataResponse(RealmList<ProviderList> providers, RealmList<Product> products) {
-
-        mPresenter.parseProductsTypeByProvider(providers, products, mProviderId, mProductId);
 
     }
 
@@ -96,9 +96,10 @@ public class ProductTypeSelectionFragment extends BaseNavigationFragment<Product
     }
 
     @Override
-    public void showProductName(String name) {
+    public void showProductName(ItemFullName name) {
 
     }
+
 
     @Override
     public void showTypesResponse(List<ProductType> types) {
