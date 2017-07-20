@@ -12,5 +12,7 @@ public interface ComandaListView {
 
     void showLastComandaId(int id);
 
+    void onStoreItemSuccess(boolean isSuccess);
+
 
 }

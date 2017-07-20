@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.mcba.comandaclient.R;
+import com.mcba.comandaclient.model.ItemFullName;
 import com.mcba.comandaclient.ui.fragment.CantPriceSelectionFragment;
 import com.mcba.comandaclient.ui.fragment.EntryFragment;
 import com.mcba.comandaclient.ui.fragment.MainListFragment;
@@ -45,7 +46,6 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
     private static final String PROVIDER_LIST_FRAGMENT = "provider_list_fragment";
     private static final String TYPE_LIST_FRAGMENT = "type_list_fragment";
     private static final String CANT_PRICE_FRAGMENT = "cant_price_fragment";
-
 
 
     private FloatingActionsMenu menuMultipleActions;
@@ -120,13 +120,13 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
                     onGoToMainListFromEntryFragment(0);
                     break;
                 case PRODUCT_LIST_FRAGMENT:
-                    onGoToSelectProduct();
+                    onGoToSelectProduct(0);
                     break;
                 case PROVIDER_LIST_FRAGMENT:
-                    onGoToSelectProvider(10);
+                    onGoToSelectProvider(10, 0);
                     break;
                 case TYPE_LIST_FRAGMENT:
-                    onGoToSelectProductType(1, 10);
+                    onGoToSelectProductType(1, 10, 0);
                     break;
 
             }
@@ -201,41 +201,42 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
     }
 
     @Override
-    public void onGoToMainList(int providerId, int productId, int typeId) {
-        changeFragment(MainListFragment.newInstance(productId, providerId), false, false, MAIN_LIST_FRAGMENT);
+    public void onGoToMainList(int providerId, int productId, int typeId, double price, int cant, int currentComandaId, int lastItemId, double packagePrice, ItemFullName itemFullName) {
+        changeFragment(MainListFragment.newInstance(productId, providerId, typeId, price, cant, currentComandaId, lastItemId, packagePrice, itemFullName), false, false, MAIN_LIST_FRAGMENT);
 
     }
 
     @Override
-    public void onGoToSelectProduct() {
+    public void onGoToSelectProduct(int currentComandaId) {
 
-        changeFragment(ProductSelectionFragment.newInstance(), true, false, PRODUCT_LIST_FRAGMENT);
+        changeFragment(ProductSelectionFragment.newInstance(currentComandaId), true, false, PRODUCT_LIST_FRAGMENT);
 
 
     }
 
     @Override
-    public void onGoToSelectProvider(int productId) {
+    public void onGoToSelectProvider(int productId, int currentComandaId) {
 
-        changeFragment(ProviderSelectionFragment.newInstance(productId), true, false, PROVIDER_LIST_FRAGMENT);
+        changeFragment(ProviderSelectionFragment.newInstance(productId, currentComandaId), true, false, PROVIDER_LIST_FRAGMENT);
 
     }
 
     @Override
-    public void onGoToSelectProductType(int providerId, int productId) {
+    public void onGoToSelectProductType(int providerId, int productId, int mCurrentComandaId) {
 
-        changeFragment(ProductTypeSelectionFragment.newInstance(productId, providerId), true, false, TYPE_LIST_FRAGMENT);
+        changeFragment(ProductTypeSelectionFragment.newInstance(productId, providerId, mCurrentComandaId), true, false, TYPE_LIST_FRAGMENT);
 
 
     }
 
 
     @Override
-    public void onGoToSetPriceAndQty(int providerId, int productId, int productTypeId) {
+    public void onGoToSetPriceAndQty(int providerId, int productId, int productTypeId, int mCurrentComandaId) {
 
-        changeFragment(CantPriceSelectionFragment.newInstance(productId, providerId, productTypeId),true, false, CANT_PRICE_FRAGMENT);
+        changeFragment(CantPriceSelectionFragment.newInstance(productId, providerId, productTypeId, mCurrentComandaId), true, false, CANT_PRICE_FRAGMENT);
 
     }
+
     private void setupToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 

@@ -12,7 +12,10 @@ public class ComandaProductItem extends RealmObject {
     @PrimaryKey
     public int productItemId;
     public int productId;
+    public String productName;
     public int providerId;
+    public String providerName;
     public int productTypeId;
+    public String typeName;
     public Packaging packaging;
 }

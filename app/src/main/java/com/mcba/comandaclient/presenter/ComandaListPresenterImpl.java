@@ -85,7 +85,9 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
 
     @Override
     public void onStoreCompleted(boolean isSuccess) {
-
+        if (comandaListView != null) {
+            getView().onStoreItemSuccess(isSuccess);
+        }
     }
 
     @Override

@@ -32,16 +32,22 @@ import io.realm.RealmList;
 
 public class ProductSelectionFragment extends BaseNavigationFragment<ProductSelectionFragment.ProductSelectionFragmentCallbacks> implements ProductsListView, ProductSelectionAdapter.AdapterCallbacks {
 
+    public static final String COMANDA_ID = "comandaId";
+
     private RecyclerView mRecyclerview;
     private ProductSelectionAdapter mAdapter;
     private ProductListPresenter mPresenter;
     private FrameLayout mProgress;
     private TextView mTxtPosProduct;
+    private int mCurrentComandaId;
 
 
-    public static ProductSelectionFragment newInstance() {
+    public static ProductSelectionFragment newInstance(int currentComandaId) {
 
+        Bundle args = new Bundle();
+        args.putInt(COMANDA_ID, currentComandaId);
         ProductSelectionFragment fragment = new ProductSelectionFragment();
+        fragment.setArguments(args);
         return fragment;
 
     }
@@ -66,6 +72,9 @@ public class ProductSelectionFragment extends BaseNavigationFragment<ProductSele
         mPresenter = new ProductListPresenterImpl(this);
         mPresenter.attachView();
 
+        mCurrentComandaId = getArguments().getInt(COMANDA_ID);
+
+
         mAdapter = new ProductSelectionAdapter(getActivity(), this);
         mRecyclerview.setAdapter(mAdapter);
         mRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -83,7 +92,7 @@ public class ProductSelectionFragment extends BaseNavigationFragment<ProductSele
         mAdapter.setItems(products);
         mAdapter.notifyDataSetChanged();
 
-       // mPresenter.getProductNameById(10);
+        // mPresenter.getProductNameById(10);
 
     }
 
@@ -143,20 +152,20 @@ public class ProductSelectionFragment extends BaseNavigationFragment<ProductSele
     public void onItemPress(Product product) {
 
         StorageProvider.savePreferences(Constants.PRODUCT_ID, product.productId);
-        mCallbacks.onGoToSelectProvider(product.productId);
+        mCallbacks.onGoToSelectProvider(product.productId, mCurrentComandaId);
 
     }
 
 
     public interface ProductSelectionFragmentCallbacks {
-        void onGoToSelectProvider(int pId);
+        void onGoToSelectProvider(int pId, int currentComandaId);
     }
 
     @Override
     public ProductSelectionFragment.ProductSelectionFragmentCallbacks getDummyCallbacks() {
         return new ProductSelectionFragment.ProductSelectionFragmentCallbacks() {
             @Override
-            public void onGoToSelectProvider(int pId) {
+            public void onGoToSelectProvider(int pId, int currentComandaId) {
 
             }
         };

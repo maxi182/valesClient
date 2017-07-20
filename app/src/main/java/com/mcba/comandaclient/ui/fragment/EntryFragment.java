@@ -73,6 +73,11 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
 
     }
 
+    @Override
+    public void onStoreItemSuccess(boolean isSuccess) {
+
+    }
+
     public interface EntryFragmentCallbacks {
         void onGoToMainListFromEntryFragment(int nextComandaId);
     }

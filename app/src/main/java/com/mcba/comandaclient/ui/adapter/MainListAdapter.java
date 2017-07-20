@@ -9,6 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mcba.comandaclient.R;
+import com.mcba.comandaclient.model.Comanda;
+import com.mcba.comandaclient.model.ComandaItem;
 import com.mcba.comandaclient.model.Product;
 
 import java.util.Collections;
@@ -21,7 +23,7 @@ import java.util.List;
 public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainListAdapterHolder> {
 
     private Context mContext;
-    private List<Product> mList;
+    private List<ComandaItem> mList;
     private AdapterCallbacks mCallbacks;
 
 
@@ -37,7 +39,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
 
     }
 
-    public void setItems(List<Product> products) {
+    public void setItems(List<ComandaItem> products) {
         this.mList = products;
     }
 
@@ -51,10 +53,10 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
 
     @Override
     public void onBindViewHolder(MainListAdapterHolder holder, final int position) {
-        final Product product = mList.get(position);
+        final ComandaItem comandaItem = mList.get(position);
 
-        holder.text_qty.setText("2");
-        holder.text_detail.setText("Manzana Red delicius caja Negra");
+     //   holder.text_qty.setText(String.valueOf(comandaItem.mCant));
+       // holder.text_detail.setText(comandaItem.mProductItem.productId);
         holder.text_price.setText("250");
         holder.text_total.setText("500");
     }

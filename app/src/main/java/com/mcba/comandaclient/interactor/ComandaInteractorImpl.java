@@ -86,8 +86,7 @@ public class ComandaInteractorImpl extends RealmManager implements ComandaIntera
             @Override
             public void onSuccess() {
                 callback.onStoreCompleted(true);
-                // callback.onFetchDataSuccess(getRealmProviderList(), getRealmProductList());
-            }
+             }
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
@@ -116,22 +115,6 @@ public class ComandaInteractorImpl extends RealmManager implements ComandaIntera
         return mRealm.where(Comanda.class).findAll();
 
     }
-
-//    @Override
-//    public int getLastComandaId() {
-//
-//        Number nextID = mRealm.where(Comanda.class).max("comandaId");
-//
-//        return nextID.intValue() + 1;
-//    }
-
-//    private ComandaList getRealmProductList() {
-//        RealmList<Product> list = new RealmList<>();
-//        list.addAll(getRealmProductData());
-//
-//        return list;
-//    }
-
 
     private boolean isRealmDBLoaded() {
 

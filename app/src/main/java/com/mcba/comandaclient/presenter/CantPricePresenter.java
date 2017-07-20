@@ -9,6 +9,8 @@ public interface CantPricePresenter extends IBasePresenter {
 
     void getProducts();
 
+    void getLastItemId();
+
     void getItemNameById(int productId, int providerId, int typeId);
 
     void getPackaging(int providerId, int productId, int typeId);

@@ -8,9 +8,11 @@ package com.mcba.comandaclient.interactor;
 
 public interface CantPriceInteractorCallbacks {
 
+
     interface CantPriceRequestCallback {
 
         void onPacakgeParsed(boolean isFree, double value);
+        void onLastItemIdFetched(int id);
     }
 
 }

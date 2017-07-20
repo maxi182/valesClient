@@ -31,6 +31,8 @@ public class ProductTypeSelectionFragment extends BaseNavigationFragment<Product
 
     public static final String PRODUCT_ID = "productId";
     public static final String PROVIDER_ID = "providerId";
+    public static final String COMANDA_ID = "comandaId";
+
 
     private ProductListPresenter mPresenter;
     private ProductTypeSelectionAdapter mAdapter;
@@ -38,13 +40,15 @@ public class ProductTypeSelectionFragment extends BaseNavigationFragment<Product
     private TextView mTxtPosProductType;
     private int mProductId;
     private int mProviderId;
+    private int mCurrentComandaId;
 
 
-    public static ProductTypeSelectionFragment newInstance(int productId, int providerId) {
+    public static ProductTypeSelectionFragment newInstance(int productId, int providerId, int currentComandaId) {
 
         Bundle args = new Bundle();
         args.putInt(PRODUCT_ID, productId);
         args.putInt(PROVIDER_ID, providerId);
+        args.putInt(COMANDA_ID, currentComandaId);
         ProductTypeSelectionFragment fragment = new ProductTypeSelectionFragment();
         fragment.setArguments(args);
         return fragment;
@@ -78,6 +82,8 @@ public class ProductTypeSelectionFragment extends BaseNavigationFragment<Product
 
         mProductId = getArguments().getInt(PRODUCT_ID);
         mProviderId = getArguments().getInt(PROVIDER_ID);
+
+        mCurrentComandaId = getArguments().getInt(COMANDA_ID);
 
         mPresenter.parseProductsTypeByProvider(mProviderId, mProductId);
 
@@ -113,7 +119,7 @@ public class ProductTypeSelectionFragment extends BaseNavigationFragment<Product
     public void onItemPress(ProductType type) {
 
         StorageProvider.savePreferences(Constants.PRODUCTTYPE_ID, type.productTypeId);
-        mCallbacks.onGoToSetPriceAndQty(mProviderId, mProductId, type.productTypeId);
+        mCallbacks.onGoToSetPriceAndQty(mProviderId, mProductId, type.productTypeId, mCurrentComandaId);
 
     }
 
@@ -149,14 +155,14 @@ public class ProductTypeSelectionFragment extends BaseNavigationFragment<Product
 
 
     public interface ProductTypeSelectionFragmentCallbacks {
-        void onGoToSetPriceAndQty(int providerId, int productId, int productTypeId);
+        void onGoToSetPriceAndQty(int providerId, int productId, int productTypeId, int mCurrentComandaId);
     }
 
     @Override
     public ProductTypeSelectionFragment.ProductTypeSelectionFragmentCallbacks getDummyCallbacks() {
         return new ProductTypeSelectionFragment.ProductTypeSelectionFragmentCallbacks() {
             @Override
-            public void onGoToSetPriceAndQty(int providerId, int productId, int productTypeId) {
+            public void onGoToSetPriceAndQty(int providerId, int productId, int productTypeId, int mCurrentComandaId) {
 
             }
         };

@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.mcba.comandaclient.R;
 import com.mcba.comandaclient.model.ItemFullName;
-import com.mcba.comandaclient.model.Packaging;
 import com.mcba.comandaclient.model.Product;
 import com.mcba.comandaclient.model.ProductType;
 import com.mcba.comandaclient.model.ProviderList;
@@ -35,11 +34,13 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
 
     public static final String PRODUCT_ID = "productId";
     public static final String PROVIDER_ID = "providerId";
+    public static final String COMANDA_ID = "comandaId";
     public static final String TYPE_ID = "type_id";
     public static final String INITIAL_QTY = "1";
     public static final String INITIAL_PRICE = "100";
 
 
+    private LinearLayout mLinearContainer;
     private TextInputLayout mCantTextInputLayout;
     private AppCompatEditText mCantEditText;
     private AppCompatEditText mPriceEditText;
@@ -61,18 +62,23 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
     private int mProductId;
     private int mProviderId;
     private int mTypeId;
-
+    private int mLastItemId;
+    private int mCurrentComandaId;
     private int mSelectedResourceId;
+    private double mPackagePrice;
+    private ItemFullName mItemFullName;
 
     private CantPricePresenter mCantPricePresenter;
 
 
-    public static CantPriceSelectionFragment newInstance(int productId, int providerId, int typeId) {
+    public static CantPriceSelectionFragment newInstance(int productId, int providerId, int typeId, int currentComandaId) {
 
         Bundle args = new Bundle();
         args.putInt(PRODUCT_ID, productId);
         args.putInt(PROVIDER_ID, providerId);
         args.putInt(TYPE_ID, typeId);
+        args.putInt(COMANDA_ID, currentComandaId);
+
         CantPriceSelectionFragment fragment = new CantPriceSelectionFragment();
         fragment.setArguments(args);
         return fragment;
@@ -94,6 +100,8 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
         mImageButtonMinus = (ImageButton) findViewById(R.id.img_btn_minus);
         mImageButtonAddPrice = (ImageButton) findViewById(R.id.img_btn_add_price);
         mImageButtonMinusPrice = (ImageButton) findViewById(R.id.img_btn_minus_price);
+
+        mLinearContainer = (LinearLayout) findViewById(R.id.linear_container);
 
         mProductName = (TextView) findViewById(R.id.txt_productName);
         mProviderName = (TextView) findViewById(R.id.txt_providerName);
@@ -118,9 +126,9 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
         mProductId = getArguments().getInt(PRODUCT_ID);
         mProviderId = getArguments().getInt(PROVIDER_ID);
         mTypeId = getArguments().getInt(TYPE_ID);
+        mCurrentComandaId = getArguments().getInt(COMANDA_ID);
 
-
-        mCantPricePresenter.getProducts();
+        mCantPricePresenter.getLastItemId();
         mImageButtonAdd.setOnClickListener(this);
         mImageButtonMinus.setOnLongClickListener(this);
         mImageButtonMinus.setOnClickListener(this);
@@ -135,8 +143,6 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
 
 
         mCantPricePresenter.getItemNameById(mProductId, mProviderId, mTypeId);
-        mCantPricePresenter.getPackaging(mProviderId, mProductId, mTypeId);
-
 
         validateNotZero();
         mCantEditText.setText(INITIAL_QTY);
@@ -222,12 +228,13 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
 
     @Override
     public void showProductName(ItemFullName name) {
-
         if (name != null) {
             mProductName.setText(name.productName != null ? name.productName : "");
             mProviderName.setText(name.providerName != null ? name.providerName : "");
             mProductTypeName.setText(name.productTypeName != null ? name.productTypeName : "");
         }
+        mItemFullName = name;
+        mCantPricePresenter.getPackaging(mProviderId, mProductId, mTypeId);
     }
 
     @Override
@@ -239,6 +246,15 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
     public void showPackagingResponse(boolean isFree, double value) {
 
         Toast.makeText(getActivity(), String.valueOf(value), Toast.LENGTH_SHORT).show();
+        mPackagePrice = value;
+        mLinearContainer.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showLastItemId(int id) {
+
+        mLastItemId = id;
+        // Toast.makeText(getActivity(), String.valueOf(id).toString(), Toast.LENGTH_SHORT).show();
     }
 
 
@@ -280,7 +296,7 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
                 break;
 
             case R.id.btn_green_item_confirm:
-                mCallbacks.onGoToMainList(mProviderId, mProductId, mTypeId);
+                mCallbacks.onGoToMainList(mProviderId, mProductId, mTypeId, Double.valueOf(mPriceEditText.getText().toString()), Integer.valueOf(mCantEditText.getText().toString()), mCurrentComandaId, mLastItemId, mPackagePrice, mItemFullName);
                 break;
             case R.id.linear_1:
                 setBackgroundColor(v.getId());
@@ -329,7 +345,7 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
     }
 
     public interface CantPriceSelectionFragmentallbacks {
-        void onGoToMainList(int providerId, int productId, int typeId);
+        void onGoToMainList(int providerId, int productId, int typeId, double price, int cant, int currentComandaId, int lastItemId, double packagePrice, ItemFullName mItemFullName);
     }
 
 
@@ -337,7 +353,7 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
     public CantPriceSelectionFragment.CantPriceSelectionFragmentallbacks getDummyCallbacks() {
         return new CantPriceSelectionFragment.CantPriceSelectionFragmentallbacks() {
             @Override
-            public void onGoToMainList(int providerId, int productId, int typeId) {
+            public void onGoToMainList(int providerId, int productId, int typeId, double price, int cant, int currentComandaId, int lastItemId, double packagePrice, ItemFullName mItemFullName) {
 
             }
         };

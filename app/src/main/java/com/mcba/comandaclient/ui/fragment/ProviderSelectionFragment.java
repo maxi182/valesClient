@@ -33,6 +33,8 @@ import io.realm.RealmList;
 public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSelectionFragment.ProviderSelectionFragmentCallbacks> implements ProviderSelectionView, ProductsListView, ProviderSelectionAdapter.AdapterCallbacks {
 
     public static final String PRODUCT_ID = "productId";
+    public static final String COMANDA_ID = "comandaId";
+
 
     private RecyclerView mRecyclerview;
     private ProviderSelectionAdapter mAdapter;
@@ -40,12 +42,14 @@ public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSe
     private TextView mTxtPosProvider;
     private TextView mTxtPosProduct;
     private int mProductId;
+    private int mCurrentComandaId;
 
 
-    public static ProviderSelectionFragment newInstance(int productId) {
+    public static ProviderSelectionFragment newInstance(int productId, int currentComandaId) {
 
         Bundle args = new Bundle();
         args.putInt(PRODUCT_ID, productId);
+        args.putInt(COMANDA_ID, currentComandaId);
         ProviderSelectionFragment fragment = new ProviderSelectionFragment();
         fragment.setArguments(args);
         return fragment;
@@ -80,6 +84,7 @@ public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSe
         mTxtPosProduct.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.bg_green));
 
         mProductId = getArguments().getInt(PRODUCT_ID);
+        mCurrentComandaId = getArguments().getInt(COMANDA_ID);
 
         mPresenter.parseProviders(mProductId);
     }
@@ -88,7 +93,7 @@ public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSe
     public void onItemPress(Provider provider) {
 
         StorageProvider.savePreferences(Constants.PROVIDER_ID, provider.providerId);
-        mCallbacks.onGoToSelectProductType(provider.providerId, mProductId);
+        mCallbacks.onGoToSelectProductType(provider.providerId, mProductId, mCurrentComandaId);
     }
 
     @Override
@@ -155,17 +160,15 @@ public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSe
     }
 
 
-
-
     public interface ProviderSelectionFragmentCallbacks {
-        void onGoToSelectProductType(int providerId, int productId);
+        void onGoToSelectProductType(int providerId, int productId, int mCurrentComandaId);
     }
 
     @Override
     public ProviderSelectionFragment.ProviderSelectionFragmentCallbacks getDummyCallbacks() {
         return new ProviderSelectionFragment.ProviderSelectionFragmentCallbacks() {
             @Override
-            public void onGoToSelectProductType(int providerId, int productId) {
+            public void onGoToSelectProductType(int providerId, int productId, int mCurrentComandaId) {
 
             }
         };

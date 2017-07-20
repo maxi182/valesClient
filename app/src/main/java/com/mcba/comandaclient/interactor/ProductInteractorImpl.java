@@ -3,6 +3,7 @@ package com.mcba.comandaclient.interactor;
 import android.util.Log;
 
 import com.mcba.comandaclient.api.RestClient;
+import com.mcba.comandaclient.model.ComandaItem;
 import com.mcba.comandaclient.model.ItemFullName;
 import com.mcba.comandaclient.model.Product;
 import com.mcba.comandaclient.model.ProductType;
@@ -85,6 +86,13 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
 
     }
 
+
+    private boolean isRealmDBComandaItemLoaded() {
+
+        return (getRealmComandaItemData() != null && !getRealmComandaItemData().isEmpty()) ? true : false;
+
+    }
+
     private ItemFullName getRealmProductById(int productId, int providerId, int typeId) {
 
         Product productName = mRealm.where(Product.class).equalTo("productId", productId).findFirst();
@@ -98,6 +106,12 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
     private RealmResults<ProviderList> getRealmProviderData() {
 
         return mRealm.where(ProviderList.class).findAll();
+
+    }
+
+    private RealmResults<ComandaItem> getRealmComandaItemData() {
+
+        return mRealm.where(ComandaItem.class).findAll();
 
     }
 
@@ -149,6 +163,18 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
     }
 
     @Override
+    public void getLastItemId(CantPriceRequestCallback callback) {
+
+        if (isRealmDBComandaItemLoaded()) {
+            int lastItem = mRealm.where(ComandaItem.class).max("itemId").intValue();
+            callback.onLastItemIdFetched(lastItem);
+        }else{
+            callback.onLastItemIdFetched(0);
+
+        }
+    }
+
+    @Override
     public void parseProviders(RequestCallback callback, int productId) {
 
         RealmResults<Provider> results = mRealm.where(Provider.class).equalTo("products.productId", productId).findAll();
@@ -190,4 +216,6 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
         closeRealm();
 
     }
+
+
 }

@@ -40,6 +40,12 @@ public class CantPricePresenerImpl implements CantPricePresenter, ProductInterac
     }
 
     @Override
+    public void getLastItemId() {
+
+        mProductInteractorCallback.getLastItemId(this);
+    }
+
+    @Override
     public void getItemNameById(int productId, int providerId, int typeId) {
 
         mProductInteractorCallback.getProductNameById(this, productId, providerId, typeId);
@@ -48,19 +54,23 @@ public class CantPricePresenerImpl implements CantPricePresenter, ProductInterac
     @Override
     public void getPackaging(int providerId, int productId, int typeId) {
 
-        mProductInteractorCallback.parsePackaging(this,providerId, productId, typeId);
+        mProductInteractorCallback.parsePackaging(this, providerId, productId, typeId);
     }
 
     @Override
     public void onPacakgeParsed(boolean isFree, double value) {
 
+        if (cantPriceView != null) {
+            getView().showPackagingResponse(isFree, value);
+        }
+    }
+
+    @Override
+    public void onLastItemIdFetched(int id) {
 
         if (cantPriceView != null) {
-
-            getView().showPackagingResponse(isFree, value);
-
+            getView().showLastItemId(id);
         }
-
     }
 
     @Override

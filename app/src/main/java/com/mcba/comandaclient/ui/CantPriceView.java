@@ -21,6 +21,8 @@ public interface CantPriceView {
 
     void showPackagingResponse(boolean isFree, double value);
 
+    void showLastItemId(int id);
+
     void showTypesResponse(List<ProductType> types);
 
     void updateQtyText(int value);

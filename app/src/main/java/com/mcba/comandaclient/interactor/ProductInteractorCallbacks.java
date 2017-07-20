@@ -22,6 +22,8 @@ public interface ProductInteractorCallbacks {
 
     void parsePackaging(CantPriceInteractorCallbacks.CantPriceRequestCallback callback, int providerId, int productId, int typeId);
 
+    void getLastItemId(CantPriceInteractorCallbacks.CantPriceRequestCallback callback);
+
     void parseProductsTypeByProvider(RequestCallback callback, int providerId, int productId);
 
     void getProductNameById(RequestCallback callback, int productId, int providerId, int typeId);

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -13,12 +14,22 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/txtcomanda_id"
+        android:layout_below="@id/container_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:paddingRight="@dimen/general_margin"
+        tools:text="67686"
+        />
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_selection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/container_header" />
+        android:layout_below="@id/txtcomanda_id" />
 
 
     <LinearLayout
@@ -29,7 +40,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/btn_add_item"
+            android:id="@+id/btn_finish"
             style="@style/AppTheme.Button.Large.DarkSlategray"
             android:layout_width="0dip"
             android:layout_weight=".5"
@@ -40,7 +51,7 @@
             android:text="Finalizar  " />
 
         <TextView
-            android:id="@+id/btn_finish"
+            android:id="@+id/btn_add_item"
             style="@style/AppTheme.Button.Large.DarkSlategray"
             android:layout_width="0dip"
             android:layout_weight=".6"
