@@ -3,10 +3,12 @@ package com.mcba.comandaclient.interactor;
 import android.util.Log;
 
 import com.mcba.comandaclient.model.Comanda;
+import com.mcba.comandaclient.model.ComandaItem;
 import com.mcba.comandaclient.model.ComandaList;
 
 import io.realm.Realm;
 import io.realm.RealmAsyncTask;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 /**
@@ -30,6 +32,17 @@ public class ComandaInteractorImpl extends RealmManager implements ComandaIntera
     }
 
     @Override
+    public void fetchComandaItems(RequestCallback requestCallback, int id) {
+
+            if (checkItemsByComanda(id).size() > 0) {
+                requestCallback.onFetchComandaItems(getComandaItemsFromDB(id));
+            }
+            else{
+                requestCallback.onFetchItemsFail();
+            }
+    }
+
+    @Override
     public void fetchComandaById(RequestCallback requestCallback, int id) {
 
         if (isRealmDBLoaded()) {
@@ -43,6 +56,18 @@ public class ComandaInteractorImpl extends RealmManager implements ComandaIntera
     private Comanda getComandaFromDB(int id) {
 
         return mRealm.where(Comanda.class).equalTo("comandaId", id).findFirst();
+
+    }
+
+    private RealmList<ComandaItem> getComandaItemsFromDB(int id) {
+
+        return mRealm.where(Comanda.class).equalTo("comandaId", id).findFirst().comandaItemList;
+
+    }
+
+    private RealmResults<ComandaItem> checkItemsByComanda(int id) {
+
+        return mRealm.where(ComandaItem.class).equalTo("comandaId", id).findAll();
 
     }
 
@@ -86,7 +111,7 @@ public class ComandaInteractorImpl extends RealmManager implements ComandaIntera
             @Override
             public void onSuccess() {
                 callback.onStoreCompleted(true);
-             }
+            }
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
@@ -114,6 +139,11 @@ public class ComandaInteractorImpl extends RealmManager implements ComandaIntera
 
         return mRealm.where(Comanda.class).findAll();
 
+    }
+
+    private boolean isItemListLoaded(int id) {
+
+        return (getComandaItemsFromDB(id) != null && !getComandaItemsFromDB(id).isEmpty()) ? true : false;
     }
 
     private boolean isRealmDBLoaded() {

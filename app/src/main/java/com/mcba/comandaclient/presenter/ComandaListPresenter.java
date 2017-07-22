@@ -12,6 +12,7 @@ public interface ComandaListPresenter extends IBasePresenter {
     void storeComandas(ComandaList comandas);
     void storeComanda(Comanda comandas);
     void fetchComandaById(int id);
+    void fetchItemsComanda(int id);
     void fetchLastComanda();
 
 }

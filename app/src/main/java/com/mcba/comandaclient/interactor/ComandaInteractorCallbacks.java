@@ -1,6 +1,7 @@
 package com.mcba.comandaclient.interactor;
 
 import com.mcba.comandaclient.model.Comanda;
+import com.mcba.comandaclient.model.ComandaItem;
 import com.mcba.comandaclient.model.ComandaList;
 
 import io.realm.RealmList;
@@ -14,6 +15,8 @@ public interface ComandaInteractorCallbacks {
     void fetchComandaById(RequestCallback requestCallback, int id);
 
     void fetchComandas(RequestCallback requestCallback);
+
+    void fetchComandaItems(RequestCallback requestCallback, int id);
 
     void storeComandas(RequestCallback requestCallback, ComandaList comandas);
 
@@ -29,7 +32,11 @@ public interface ComandaInteractorCallbacks {
 
         void onFetchComandaSuccess(Comanda comanda);
 
+        void onFetchComandaItems(RealmList<ComandaItem> items);
+
         void onFetchComandaFail();
+
+        void onFetchItemsFail();
 
         void onFetchDataFailed(String error);
 

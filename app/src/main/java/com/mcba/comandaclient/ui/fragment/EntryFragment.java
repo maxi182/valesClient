@@ -8,10 +8,13 @@ import android.widget.Toast;
 
 import com.mcba.comandaclient.R;
 import com.mcba.comandaclient.model.Comanda;
+import com.mcba.comandaclient.model.ComandaItem;
 import com.mcba.comandaclient.presenter.ComandaListPresenter;
 import com.mcba.comandaclient.presenter.ComandaListPresenterImpl;
 import com.mcba.comandaclient.ui.ComandaListView;
 import com.mcba.comandaclient.ui.adapter.MainListAdapter;
+
+import io.realm.RealmList;
 
 /**
  * Created by mac on 25/06/2017.
@@ -61,7 +64,12 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
     }
 
     @Override
-    public void showItemsComanda(Comanda comanda) {
+    public void showComanda(Comanda comanda) {
+
+    }
+
+    @Override
+    public void showItemsComanda(RealmList<ComandaItem> items) {
 
     }
 
@@ -75,6 +83,16 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
 
     @Override
     public void onStoreItemSuccess(boolean isSuccess) {
+
+    }
+
+    @Override
+    public void onStoreItemFail() {
+
+    }
+
+    @Override
+    public void onFetchItemFail() {
 
     }
 

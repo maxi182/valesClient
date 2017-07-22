@@ -11,6 +11,7 @@ public class ComandaItem extends RealmObject {
 
     @PrimaryKey
     public int itemId;
+    public int comandaId;
     public ComandaProductItem mProductItem;
     public double mCant;
     public double mPrice;

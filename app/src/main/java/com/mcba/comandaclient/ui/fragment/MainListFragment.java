@@ -21,6 +21,7 @@ import com.mcba.comandaclient.ui.ComandaListView;
 import com.mcba.comandaclient.ui.adapter.MainListAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.realm.RealmList;
 
@@ -50,6 +51,8 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     private TextView mBtnFinish;
     private ItemFullName mItemFullName;
     private int mComandaId;
+
+    private List<ComandaItem> mComandaItemList = new ArrayList<>();
 
 
     private Comanda mComanda;
@@ -115,18 +118,19 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
 
         mItemFullName = getArguments().getParcelable(ITEM_FULL_NAME);
 
-
         //El fetch se debe llamar cuando viene de cantpricefragment
 
-
         if (!validateIsNewComanda()) {
-            storeComanda();
-            // mPresenter.fetchComandaById(mComandaId);
+            mPresenter.fetchItemsComanda(mComandaId);
         } else {
             mComandaId = mComandaId + 1;
         }
-
         //consultar comandas
+    }
+
+    @Override
+    public void onFetchItemFail() {
+        storeComanda();
     }
 
     private boolean validateIsNewComanda() {
@@ -136,14 +140,23 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     }
 
     @Override
-    public void showItemsComanda(Comanda comanda) {
+    public void showComanda(Comanda comanda) {
 
         if (comanda != null) {
             mTxtComandaId.setText(String.valueOf(comanda.comandaId));
             mComanda = comanda;
-          //  mAdapter.setItems(comanda.comandaItemList);
-          //  mAdapter.notifyDataSetChanged();
+
+            //  mAdapter.setItems(comanda.comandaItemList);
+            //  mAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void showItemsComanda(RealmList<ComandaItem> items) {
+
+        mComandaItemList.addAll(items);
+        storeComanda();
+
     }
 
     @Override
@@ -163,6 +176,12 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         }
     }
 
+    @Override
+    public void onStoreItemFail() {
+
+
+    }
+
 
     private void storeComanda() {
 
@@ -172,6 +191,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
 
         ComandaItem comandaItem = new ComandaItem();
         comandaItem.itemId = getArguments().getInt(LASTITEM_ID) + 1;
+        comandaItem.comandaId = mComandaId;
         comandaItem.mCant = getArguments().getInt(CANT);
         comandaItem.mPrice = getArguments().getDouble(PRICE);
         comandaItem.mTotal = comandaItem.mPrice * comandaItem.mCant;
@@ -191,8 +211,8 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
 
         comanda.comandaItemList = new RealmList<>();
 
-        if (mComanda != null) {
-            comanda.comandaItemList.addAll(mComanda.comandaItemList);
+        if (mComandaItemList != null && !mComandaItemList.isEmpty()) {
+            comanda.comandaItemList.addAll(mComandaItemList);
         }
         comanda.comandaItemList.add(comandaItem);
 

@@ -3,6 +3,7 @@ package com.mcba.comandaclient.presenter;
 import com.mcba.comandaclient.interactor.ComandaInteractorCallbacks;
 import com.mcba.comandaclient.interactor.ComandaInteractorImpl;
 import com.mcba.comandaclient.model.Comanda;
+import com.mcba.comandaclient.model.ComandaItem;
 import com.mcba.comandaclient.model.ComandaList;
 import com.mcba.comandaclient.ui.ComandaListView;
 
@@ -46,6 +47,12 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
     }
 
     @Override
+    public void fetchItemsComanda(int id) {
+
+        mComandaInteractorCallbacks.fetchComandaItems(this, id);
+    }
+
+    @Override
     public void fetchLastComanda() {
 
         mComandaInteractorCallbacks.getLastComandaId(this);
@@ -55,8 +62,17 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
     public void onFetchComandaSuccess(Comanda comanda) {
 
         if (comandaListView != null) {
-            getView().showItemsComanda(comanda);
+            getView().showComanda(comanda);
         }
+    }
+
+    @Override
+    public void onFetchComandaItems(RealmList<ComandaItem> items) {
+
+        if (comandaListView != null) {
+            getView().showItemsComanda(items);
+        }
+
     }
 
     private ComandaListView getView() {
@@ -67,6 +83,17 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
     @Override
     public void onFetchComandaFail() {
 
+        if (comandaListView != null) {
+            getView().onStoreItemFail();
+        }
+
+    }
+
+    @Override
+    public void onFetchItemsFail() {
+        if (comandaListView != null) {
+            getView().onFetchItemFail();
+        }
     }
 
     @Override
