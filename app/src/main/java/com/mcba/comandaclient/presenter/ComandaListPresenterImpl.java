@@ -5,9 +5,13 @@ import com.mcba.comandaclient.interactor.ComandaInteractorImpl;
 import com.mcba.comandaclient.model.Comanda;
 import com.mcba.comandaclient.model.ComandaItem;
 import com.mcba.comandaclient.model.ComandaList;
+import com.mcba.comandaclient.model.ComandaProductItem;
+import com.mcba.comandaclient.model.ItemFullName;
+import com.mcba.comandaclient.model.Packaging;
 import com.mcba.comandaclient.ui.ComandaListView;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import io.realm.RealmList;
 
@@ -34,7 +38,37 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
     }
 
     @Override
-    public void storeComanda(Comanda comanda) {
+    public void storeComanda(int mComandaId, int lastItemId, int cant, double price, int productId, int providerId, ItemFullName itemFullName, double packagePrice, List<ComandaItem> mComandaItemList) {
+
+        Comanda comanda = new Comanda();
+        comanda.comandaId = mComandaId;
+
+        ComandaItem comandaItem = new ComandaItem();
+        comandaItem.itemId = lastItemId + 1;
+        comandaItem.comandaId = mComandaId;
+        comandaItem.mCant = cant;
+        comandaItem.mPrice = price;
+        comandaItem.mTotal = comandaItem.mPrice * comandaItem.mCant;
+
+        ComandaProductItem comandaProductItem = new ComandaProductItem();
+        comandaProductItem.productItemId = comandaItem.itemId;
+        comandaProductItem.productId = productId;
+        comandaProductItem.providerId =  providerId;
+        comandaProductItem.productName = itemFullName.productName;
+        comandaProductItem.providerName = itemFullName.providerName;
+        comandaProductItem.typeName = itemFullName.productTypeName;
+        comandaProductItem.packaging = new Packaging();
+        comandaProductItem.packaging.value = packagePrice;
+        comandaProductItem.packaging.isFree = comandaProductItem.packaging.value > 0 ? false : true;
+
+        comandaItem.mProductItem = comandaProductItem;
+
+        comanda.comandaItemList = new RealmList<>();
+
+        if (mComandaItemList != null && !mComandaItemList.isEmpty()) {
+            comanda.comandaItemList.addAll(mComandaItemList);
+        }
+        comanda.comandaItemList.add(comandaItem);
 
         mComandaInteractorCallbacks.storeComanda(this, comanda);
     }

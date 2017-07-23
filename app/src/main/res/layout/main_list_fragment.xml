@@ -1,65 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
+
     <RelativeLayout
-        android:id="@+id/container_header"
+        android:id="@+id/container_comanda_resumen"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <include layout="@layout/include_product_list_header"/>
+        <include layout="@layout/item_comanda_resumen" />
 
     </RelativeLayout>
 
     <TextView
         android:id="@+id/txtcomanda_id"
-        android:layout_below="@id/container_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+         android:layout_below="@+id/container_comanda_resumen"
+        android:gravity="left"
         android:paddingRight="@dimen/general_margin"
-        tools:text="67686"
-        />
+        tools:text="67686" />
+
+    <RelativeLayout
+        android:id="@+id/container_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtcomanda_id">
+
+        <include layout="@layout/include_product_list_header" />
+
+    </RelativeLayout>
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_selection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/txtcomanda_id" />
+        android:layout_below="@id/container_header" />
 
 
     <LinearLayout
         android:id="@+id/bootom_layout"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/general_margin"
-        android:layout_height="wrap_content">
+        android:layout_margin="@dimen/general_margin">
 
         <TextView
             android:id="@+id/btn_finish"
             style="@style/AppTheme.Button.Large.DarkSlategray"
             android:layout_width="0dip"
+            android:layout_height="wrap_content"
             android:layout_weight=".5"
-            android:padding="10dip"
             android:drawableLeft="@drawable/ic_done"
             android:drawablePadding="8dip"
-            android:layout_height="wrap_content"
+            android:padding="10dip"
             android:text="Finalizar  " />
 
         <TextView
             android:id="@+id/btn_add_item"
             style="@style/AppTheme.Button.Large.DarkSlategray"
             android:layout_width="0dip"
-            android:layout_weight=".6"
-            android:padding="10dip"
-
-            android:drawableLeft="@drawable/ic_add_box_white"
             android:layout_height="wrap_content"
             android:layout_below="@id/btn_add_item"
+            android:layout_weight=".6"
+            android:drawableLeft="@drawable/ic_add_box_white"
+            android:padding="10dip"
             android:text="Nuevo Item" />
 
 

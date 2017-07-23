@@ -1,86 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:id="@+id/include_header"
-    android:elevation="3dip"
-
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/rel_item"
+        android:id="@+id/rel_header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dip"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:paddingTop="@dimen/general_margin_small"
-        android:paddingBottom="@dimen/general_margin_small"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorPrimaryDark">
+        android:layout_alignParentTop="true">
 
         <LinearLayout
             android:id="@+id/linear_cant"
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight=".2"
+            android:layout_weight=".25"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_qty"
+                android:id="@+id/txtcomanda_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="5"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="25dip"
+                android:textStyle="bold"
+                tools:text="00039" />
 
         </LinearLayout>
+
+        <View
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark"></View>
 
         <LinearLayout
             android:id="@+id/linear_detalle"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_weight=".6"
+            android:layout_weight=".15"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_detail"
+                android:id="@+id/txt_cantidad"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:textSize="20sp"
-                android:text="Banana ecuador Insanti "
-                android:textColor="@android:color/white"
-               />
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="25dip"
+                android:textStyle="bold"
+                android:maxLength="4"
+                tools:text="8" />
 
         </LinearLayout>
+
+        <View
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark"></View>
 
         <LinearLayout
             android:id="@+id/linear_precio"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_weight=".2"
+            android:layout_weight=".25"
             android:orientation="vertical">
 
 
             <TextView
-                android:id="@+id/txt_price"
+                android:id="@+id/txt_senia"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="250"
-                android:textColor="@android:color/white"
-                />
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="25dip"
+                android:textStyle="bold"
+                tools:text="$25220" />
 
         </LinearLayout>
+
+        <View
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark"></View>
 
         <LinearLayout
             android:id="@+id/linear_total"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_weight=".2"
+            android:layout_weight=".30"
             android:orientation="vertical">
 
 
@@ -89,9 +103,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="1250"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="25dip"
+                android:textStyle="bold"
+                android:maxLength="8"
+                tools:text="$12533330" />
 
         </LinearLayout>
     </LinearLayout>

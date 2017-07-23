@@ -12,6 +12,7 @@ import com.mcba.comandaclient.R;
 import com.mcba.comandaclient.model.Comanda;
 import com.mcba.comandaclient.model.ComandaItem;
 import com.mcba.comandaclient.model.Product;
+import com.mcba.comandaclient.utils.Utils;
 
 import java.util.Collections;
 import java.util.List;
@@ -55,10 +56,11 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
     public void onBindViewHolder(MainListAdapterHolder holder, final int position) {
         final ComandaItem comandaItem = mList.get(position);
 
-     //   holder.text_qty.setText(String.valueOf(comandaItem.mCant));
-       // holder.text_detail.setText(comandaItem.mProductItem.productId);
-        holder.text_price.setText("250");
-        holder.text_total.setText("500");
+        holder.text_qty.setText(String.valueOf(Utils.setDecimalFormat(comandaItem.mCant)));
+        holder.text_detail.setText(comandaItem.mProductItem.productName + " " + comandaItem.mProductItem.providerName + " " + comandaItem.mProductItem.typeName);
+        holder.text_price.setText(String.valueOf(comandaItem.mPrice));
+        holder.text_total.setText(String.valueOf(comandaItem.mTotal));
+
     }
 
     @Override

@@ -11,9 +11,7 @@ import android.widget.TextView;
 import com.mcba.comandaclient.R;
 import com.mcba.comandaclient.model.Comanda;
 import com.mcba.comandaclient.model.ComandaItem;
-import com.mcba.comandaclient.model.ComandaProductItem;
 import com.mcba.comandaclient.model.ItemFullName;
-import com.mcba.comandaclient.model.Packaging;
 import com.mcba.comandaclient.model.Product;
 import com.mcba.comandaclient.presenter.ComandaListPresenter;
 import com.mcba.comandaclient.presenter.ComandaListPresenterImpl;
@@ -124,6 +122,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
             mPresenter.fetchItemsComanda(mComandaId);
         } else {
             mComandaId = mComandaId + 1;
+            mTxtComandaId.setText(String.valueOf(String.format("%05d", mComandaId)));
         }
         //consultar comandas
     }
@@ -143,11 +142,11 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     public void showComanda(Comanda comanda) {
 
         if (comanda != null) {
-            mTxtComandaId.setText(String.valueOf(comanda.comandaId));
+            mTxtComandaId.setText(String.valueOf(String.format("%05d", comanda.comandaId)));
             mComanda = comanda;
 
-            //  mAdapter.setItems(comanda.comandaItemList);
-            //  mAdapter.notifyDataSetChanged();
+            mAdapter.setItems(comanda.comandaItemList);
+            mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -179,44 +178,13 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     @Override
     public void onStoreItemFail() {
 
-
     }
-
 
     private void storeComanda() {
 
-        //Enviar todos los ids al interactor para guardar y los datos del nuevo item
-        Comanda comanda = new Comanda();
-        comanda.comandaId = mComandaId;
-
-        ComandaItem comandaItem = new ComandaItem();
-        comandaItem.itemId = getArguments().getInt(LASTITEM_ID) + 1;
-        comandaItem.comandaId = mComandaId;
-        comandaItem.mCant = getArguments().getInt(CANT);
-        comandaItem.mPrice = getArguments().getDouble(PRICE);
-        comandaItem.mTotal = comandaItem.mPrice * comandaItem.mCant;
-
-        ComandaProductItem comandaProductItem = new ComandaProductItem();
-        comandaProductItem.productItemId = comandaItem.itemId;
-        comandaProductItem.productId = getArguments().getInt(PRUDUCT_ID);
-        comandaProductItem.providerId = getArguments().getInt(PROVIDER_ID);
-        comandaProductItem.productName = mItemFullName.productName;
-        comandaProductItem.providerName = mItemFullName.providerName;
-        comandaProductItem.typeName = mItemFullName.productTypeName;
-        comandaProductItem.packaging = new Packaging();
-        comandaProductItem.packaging.value = getArguments().getDouble(PACKAGE_PRICE);
-        comandaProductItem.packaging.isFree = comandaProductItem.packaging.value > 0 ? false : true;
-
-        comandaItem.mProductItem = comandaProductItem;
-
-        comanda.comandaItemList = new RealmList<>();
-
-        if (mComandaItemList != null && !mComandaItemList.isEmpty()) {
-            comanda.comandaItemList.addAll(mComandaItemList);
-        }
-        comanda.comandaItemList.add(comandaItem);
-
-        mPresenter.storeComanda(comanda);
+        mPresenter.storeComanda(mComandaId, getArguments().getInt(LASTITEM_ID), getArguments().getInt(CANT),
+                getArguments().getDouble(PRICE), getArguments().getInt(PRUDUCT_ID), getArguments().getInt(PROVIDER_ID), mItemFullName,
+                getArguments().getDouble(PACKAGE_PRICE), mComandaItemList);
     }
 
     @Override

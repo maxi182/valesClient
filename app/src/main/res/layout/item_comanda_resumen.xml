@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:id="@+id/include_header"
-    android:elevation="3dip"
-
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:id="@+id/rel_item"
+        android:id="@+id/rel_header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dip"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:paddingTop="@dimen/general_margin_small"
-        android:paddingBottom="@dimen/general_margin_small"
         android:layout_alignParentTop="true"
         android:background="@color/colorPrimaryDark">
 
@@ -21,15 +16,14 @@
             android:id="@+id/linear_cant"
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight=".2"
+            android:layout_weight=".25"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_qty"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="5"
+                android:text="Nro."
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
@@ -40,18 +34,16 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_weight=".6"
+            android:layout_weight=".25"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:textSize="20sp"
-                android:text="Banana ecuador Insanti "
+                android:text="Bultos"
                 android:textColor="@android:color/white"
-               />
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -65,13 +57,12 @@
 
 
             <TextView
-                android:id="@+id/txt_price"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="250"
+                android:text="Seña"
                 android:textColor="@android:color/white"
-                />
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -80,16 +71,15 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_weight=".2"
+            android:layout_weight=".25"
             android:orientation="vertical">
 
 
             <TextView
-                android:id="@+id/txt_total"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="1250"
+                android:text="TOTAL"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
 

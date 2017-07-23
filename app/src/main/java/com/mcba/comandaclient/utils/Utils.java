@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,6 +36,13 @@ public class Utils {
         String formattedDate = df.format(c.getTime());
 
         return formattedDate;
+    }
+
+    public static String setDecimalFormat(double value) {
+
+        DecimalFormat decimalFormat = new DecimalFormat("#");
+        return decimalFormat.format(value);
+
     }
 
 
