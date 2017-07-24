@@ -90,8 +90,11 @@ public class CantPricePresenerImpl implements CantPricePresenter, ProductInterac
     @Override
     public void setPriceText(double currentValue, double addValue, boolean operation) {
         if (cantPriceView != null) {
-            getView().updatePriceText(operation ? currentValue + addValue : currentValue - addValue);
-
+            if (!operation && (currentValue - addValue < 0)) {
+                getView().updatePriceText(0);
+            } else {
+                getView().updatePriceText(operation ? currentValue + addValue : currentValue - addValue);
+            }
         }
     }
 
