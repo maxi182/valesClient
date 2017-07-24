@@ -1,37 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <RelativeLayout
+    <FrameLayout
         android:id="@+id/container_comanda_resumen"
-
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <include layout="@layout/item_comanda_resumen" />
 
-    </RelativeLayout>
+    </FrameLayout>
 
-    <TextView
-        android:id="@+id/txtcomanda_id"
+    <FrameLayout
+        android:id="@+id/container_comanda_resumen_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-         android:layout_below="@+id/container_comanda_resumen"
-        android:gravity="left"
-        android:paddingRight="@dimen/general_margin"
-        tools:text="67686" />
+        android:layout_below="@+id/container_comanda_resumen">
+
+        <include layout="@layout/item_comanda_resumen_data" />
+
+    </FrameLayout>
 
     <RelativeLayout
         android:id="@+id/container_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtcomanda_id">
+        android:layout_below="@+id/container_comanda_resumen_data">
 
         <include layout="@layout/include_product_list_header" />
 

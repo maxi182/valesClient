@@ -19,7 +19,7 @@ import io.realm.RealmList;
  * Created by mac on 08/07/2017.
  */
 
-public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaInteractorCallbacks.RequestCallback{
+public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaInteractorCallbacks.RequestCallback {
 
     private ComandaInteractorCallbacks mComandaInteractorCallbacks;
     private WeakReference<ComandaListView> comandaListView;
@@ -38,6 +38,12 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
     }
 
     @Override
+    public void fetchTotales(List<ComandaItem> mComandaItemList) {
+
+        mComandaInteractorCallbacks.fetchTotales(this, mComandaItemList);
+    }
+
+    @Override
     public void storeComanda(int mComandaId, int lastItemId, int cant, double price, int productId, int providerId, ItemFullName itemFullName, double packagePrice, List<ComandaItem> mComandaItemList) {
 
         Comanda comanda = new Comanda();
@@ -53,7 +59,7 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
         ComandaProductItem comandaProductItem = new ComandaProductItem();
         comandaProductItem.productItemId = comandaItem.itemId;
         comandaProductItem.productId = productId;
-        comandaProductItem.providerId =  providerId;
+        comandaProductItem.providerId = providerId;
         comandaProductItem.productName = itemFullName.productName;
         comandaProductItem.providerName = itemFullName.providerName;
         comandaProductItem.typeName = itemFullName.productTypeName;
@@ -107,6 +113,13 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
             getView().showItemsComanda(items);
         }
 
+    }
+
+    @Override
+    public void onFetchTotales(double total, double totalSenia, double cant) {
+        if (comandaListView != null) {
+            getView().showTotales(total, totalSenia, cant);
+        }
     }
 
     private ComandaListView getView() {

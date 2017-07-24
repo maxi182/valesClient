@@ -4,6 +4,8 @@ import com.mcba.comandaclient.model.Comanda;
 import com.mcba.comandaclient.model.ComandaItem;
 import com.mcba.comandaclient.model.ComandaList;
 
+import java.util.List;
+
 import io.realm.RealmList;
 
 /**
@@ -15,6 +17,8 @@ public interface ComandaInteractorCallbacks {
     void fetchComandaById(RequestCallback requestCallback, int id);
 
     void fetchComandas(RequestCallback requestCallback);
+
+    void fetchTotales(RequestCallback requestCallback, List<ComandaItem> mComandaItemList);
 
     void fetchComandaItems(RequestCallback requestCallback, int id);
 
@@ -33,6 +37,8 @@ public interface ComandaInteractorCallbacks {
         void onFetchComandaSuccess(Comanda comanda);
 
         void onFetchComandaItems(RealmList<ComandaItem> items);
+
+        void onFetchTotales(double total, double totalSenia, double cant);
 
         void onFetchComandaFail();
 

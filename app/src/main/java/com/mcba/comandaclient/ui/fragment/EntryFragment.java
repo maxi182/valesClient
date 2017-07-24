@@ -74,6 +74,11 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
     }
 
     @Override
+    public void showTotales(double total, double totalSenia, double cant) {
+
+    }
+
+    @Override
     public void showLastComandaId(int id) {
 
         mNextComandaId = id;

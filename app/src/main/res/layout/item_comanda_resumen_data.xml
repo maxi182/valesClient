@@ -46,14 +46,14 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_cantidad"
+                android:id="@+id/txt_cantidad_bultos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:maxLength="4"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="25dip"
                 android:textStyle="bold"
-                android:maxLength="4"
                 tools:text="8" />
 
         </LinearLayout>
@@ -97,16 +97,15 @@
             android:layout_weight=".30"
             android:orientation="vertical">
 
-
             <TextView
-                android:id="@+id/txt_total"
+                android:id="@+id/txt_total_comanda"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:maxLength="8"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="25dip"
                 android:textStyle="bold"
-                android:maxLength="8"
                 tools:text="$12533330" />
 
         </LinearLayout>

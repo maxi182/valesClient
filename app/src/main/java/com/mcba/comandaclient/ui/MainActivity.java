@@ -229,7 +229,6 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
 
     }
 
-
     @Override
     public void onGoToSetPriceAndQty(int providerId, int productId, int productTypeId, int mCurrentComandaId) {
 

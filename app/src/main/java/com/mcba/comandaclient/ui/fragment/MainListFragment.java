@@ -47,6 +47,9 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     private TextView mBtnAddItem;
     private TextView mTxtComandaId;
     private TextView mBtnFinish;
+    private TextView mTxtTotalComanda;
+    private TextView mTxtSenia;
+    private TextView mCantBultos;
     private ItemFullName mItemFullName;
     private int mComandaId;
 
@@ -97,6 +100,9 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         mRecyclerview = (RecyclerView) findViewById(R.id.recycler_selection);
         mBtnAddItem = (TextView) findViewById(R.id.btn_add_item);
         mTxtComandaId = (TextView) findViewById(R.id.txtcomanda_id);
+        mTxtTotalComanda = (TextView) findViewById(R.id.txt_total_comanda);
+        mTxtSenia = (TextView) findViewById(R.id.txt_senia);
+        mCantBultos = (TextView) findViewById(R.id.txt_cantidad_bultos);
 
     }
 
@@ -144,7 +150,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         if (comanda != null) {
             mTxtComandaId.setText(String.valueOf(String.format("%05d", comanda.comandaId)));
             mComanda = comanda;
-
+            mPresenter.fetchTotales(comanda.comandaItemList);
             mAdapter.setItems(comanda.comandaItemList);
             mAdapter.notifyDataSetChanged();
         }
@@ -159,6 +165,13 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     }
 
     @Override
+    public void showTotales(double total, double totalSenia, double cant) {
+        mTxtTotalComanda.setText(String.valueOf(total));
+        mTxtSenia.setText(String.valueOf(totalSenia));
+        mCantBultos.setText(String.valueOf(cant));
+    }
+
+    @Override
     public void showLastComandaId(int id) {
     }
 
@@ -166,10 +179,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     public void onStoreItemSuccess(boolean isSuccess) {
 
         if (isSuccess) {
-
             mPresenter.fetchComandaById(mComandaId);
-            // mCallbacks.onGoToSelectProduct(mComandaId);
-
         } else {
             Log.e("StoreItem", "can not save item");
         }
