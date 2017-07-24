@@ -41,7 +41,6 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
 
 
     private LinearLayout mLinearContainer;
-    private TextInputLayout mCantTextInputLayout;
     private AppCompatEditText mCantEditText;
     private AppCompatEditText mPriceEditText;
     private ImageButton mImageButtonAdd;
