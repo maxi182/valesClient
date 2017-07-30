@@ -8,7 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.epson.epos2.printer.PrinterStatusInfo;
 import com.mcba.comandaclient.R;
+import com.mcba.comandaclient.helper.IPrintCallbacks;
+import com.mcba.comandaclient.helper.PrintComandaHelper;
 import com.mcba.comandaclient.model.Comanda;
 import com.mcba.comandaclient.model.ComandaItem;
 import com.mcba.comandaclient.model.ItemFullName;
@@ -17,6 +20,7 @@ import com.mcba.comandaclient.presenter.ComandaListPresenter;
 import com.mcba.comandaclient.presenter.ComandaListPresenterImpl;
 import com.mcba.comandaclient.ui.ComandaListView;
 import com.mcba.comandaclient.ui.adapter.MainListAdapter;
+import com.mcba.comandaclient.ui.fragment.dialog.PrintDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +31,7 @@ import io.realm.RealmList;
  * Created by mac on 25/05/2017.
  */
 
-public class MainListFragment extends BaseNavigationFragment<MainListFragment.MainListFragmentCallbacks> implements ComandaListView, MainListAdapter.AdapterCallbacks, View.OnClickListener {
+public class MainListFragment extends BaseNavigationFragment<MainListFragment.MainListFragmentCallbacks> implements ComandaListView, MainListAdapter.AdapterCallbacks, View.OnClickListener, IPrintCallbacks {
 
     public static final String COMANDA_ID = "comandaId";
     public static final String PRUDUCT_ID = "productId";
@@ -103,6 +107,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         mTxtTotalComanda = (TextView) findViewById(R.id.txt_total_comanda);
         mTxtSenia = (TextView) findViewById(R.id.txt_senia);
         mCantBultos = (TextView) findViewById(R.id.txt_cantidad_bultos);
+        mBtnFinish = (TextView) findViewById(R.id.btn_finish);
 
     }
 
@@ -117,6 +122,8 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         mPresenter.attachView();
 
         mBtnAddItem.setOnClickListener(this);
+        mBtnFinish.setOnClickListener(this);
+
 
         mComandaId = getArguments().getInt(COMANDA_ID);
 
@@ -190,6 +197,12 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
 
     }
 
+    private void printComanda() {
+
+        PrintComandaHelper printComandaHelper = new PrintComandaHelper(getActivity(), mComanda, this);
+        printComandaHelper.print();
+    }
+
     private void storeComanda() {
 
         mPresenter.storeComanda(mComandaId, getArguments().getInt(LASTITEM_ID), getArguments().getInt(CANT),
@@ -216,6 +229,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
                 break;
             case R.id.btn_finish:
                 // storeComanda();
+                printComanda();
                 break;
             default:
         }
@@ -229,6 +243,24 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
 
     @Override
     public void onItemPress(Product product) {
+
+    }
+
+    @Override
+    public void displayPrinterWarning(PrinterStatusInfo status) {
+
+    }
+
+    @Override
+    public void showProgress() {
+        PrintDialogFragment dialog = new PrintDialogFragment();
+        dialog.initDialog(null, false);
+        dialog.show(getActivity().getFragmentManager(), "");
+
+    }
+
+    @Override
+    public void hideProgress() {
 
     }
 

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -61,6 +62,16 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
         holder.text_price.setText(String.valueOf(comandaItem.mPrice));
         holder.text_total.setText(String.valueOf(comandaItem.mTotal));
 
+        if (!comandaItem.mProductItem.packaging.isFree) {
+            holder.linear_vacios.setVisibility(View.VISIBLE);
+            holder.text_senia_price.setText(String.valueOf(comandaItem.mProductItem.packaging.value));
+            holder.text_senia_qty.setText(String.valueOf(Utils.setDecimalFormat(comandaItem.mCant)));
+            holder.text_senia_total.setText(String.valueOf(comandaItem.mCant * comandaItem.mProductItem.packaging.value));
+        } else {
+            holder.linear_vacios.setVisibility(View.GONE);
+
+        }
+
     }
 
     @Override
@@ -73,6 +84,10 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
         public TextView text_price;
         public TextView text_detail;
         public TextView text_total;
+        public TextView text_senia_qty;
+        public TextView text_senia_price;
+        public TextView text_senia_total;
+        public LinearLayout linear_vacios;
 
 
         public MainListAdapterHolder(View itemView) {
@@ -81,7 +96,10 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
             text_price = (TextView) itemView.findViewById(R.id.txt_price);
             text_detail = (TextView) itemView.findViewById(R.id.txt_detail);
             text_total = (TextView) itemView.findViewById(R.id.txt_total);
-
+            text_senia_qty = (TextView) itemView.findViewById(R.id.txt_senia_qty);
+            text_senia_price = (TextView) itemView.findViewById(R.id.txt_senia_price);
+            text_senia_total = (TextView) itemView.findViewById(R.id.txt_senia_total);
+            linear_vacios = (LinearLayout) itemView.findViewById(R.id.linear_vacios);
         }
     }
 

@@ -12,6 +12,17 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//
+//        packagingOptions {
+//
+//            exclude "lib/x86/librealm-jni.so"
+//            exclude "lib/mips/librealm-jni.so"
+//            exclude "lib/armeabi-v7a/librealm-jni.so"
+//            exclude "lib/arm64-v8a/librealm-jni.so"
+//            exclude "lib/x86_64/librealm-jni.so"
+//
+//        }
+
     }
     buildTypes {
         release {
@@ -45,7 +56,6 @@ dependencies {
     compile 'br.com.mauker.materialsearchview:materialsearchview:1.2.2'
 
 
-    testCompile 'junit:junit:4.12'
 
     compile 'com.android.support.test.espresso:espresso-core:2.2.2'
 }

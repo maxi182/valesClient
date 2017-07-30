@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/include_header"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:elevation="3dip"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/rel_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:background="@color/colorPrimaryDark"
         android:paddingBottom="@dimen/general_margin_small"
         android:paddingTop="@dimen/general_margin_small">
@@ -26,7 +19,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_qty"
+                android:id="@+id/txt_senia_qty"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -37,7 +30,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linear_detalle"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
@@ -45,18 +37,16 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Banana ecuador Insanti "
+                android:text="Vacio con senia"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linear_precio"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -65,7 +55,7 @@
 
 
             <TextView
-                android:id="@+id/txt_price"
+                android:id="@+id/txt_senia_price"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -75,7 +65,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linear_total"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -84,7 +73,7 @@
 
 
             <TextView
-                android:id="@+id/txt_total"
+                android:id="@+id/txt_senia_total"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -94,21 +83,5 @@
 
         </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linear_vacios"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:orientation="horizontal">
-
-        <include layout="@layout/item_senia" />
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:background="@color/white"></View>
 
 </LinearLayout>

@@ -3,4 +3,27 @@
 
     <string name="dialog_ok">OK</string>
 
+
+    <string name="title_err_code">Error Code</string>
+    <string name="title_err_method">Method</string>
+    <string name="title_msg_result">Result</string>
+    <string name="title_msg_description">Description</string>
+
+
+    <string name="handlingmsg_warn_receipt_near_end">Papel de impresora escaso.\n</string>
+    <string name="handlingmsg_warn_battery_near_end">Nivel de bateria de impresora bajo\n</string>
+    <string name="handlingmsg_err_no_response">Por favor revise la conexion entre la impresora y el dispositivo movil.\nPerdida de conexion\n</string>
+    <string name="handlingmsg_err_cover_open">Por favor cierre la carcaza de la impresora.\n</string>
+    <string name="handlingmsg_err_receipt_end">Por favor, revise el papel de la impresora.\n</string>
+    <string name="handlingmsg_err_paper_feed">Por favor, libere el boton de encendido.\n</string>
+    <string name="handlingmsg_err_autocutter">Por favor, revise el papel de la impresora, probablemente se encuentre atorado.\n Luego reinicie la impresora.\n</string>
+    <string name="handlingmsg_err_need_recover">Si el problema persiste, presione el interruptor de encendido.\n</string>
+    <string name="handlingmsg_err_unrecover">Por favor, vuelva a encender la impresora.\n, Si el problema persiste, consulte a su tecnico.</string>
+    <string name="handlingmsg_err_overheat">Por favor, aguarde a que la luz de error se apague.\n</string>
+    <string name="handlingmsg_err_head">Cabezal de impresora sobrecalentado.\n</string>
+    <string name="handlingmsg_err_motor">Motor de rodillo sobrecalentado.\n</string>
+    <string name="handlingmsg_err_battery">Bateria de impresora sobrecalentada.\n</string>
+    <string name="handlingmsg_err_wrong_paper">Por favor, inserte correctamente el papel de la impresora.\n</string>
+    <string name="handlingmsg_err_battery_real_end">Por favor, conecte el cable de alimentacion o cambie la bateria de la impresora.\n</string>
+    <string name="handlingmsg_err_offline">Impresora sin conexion.\n</string>
 </resources>

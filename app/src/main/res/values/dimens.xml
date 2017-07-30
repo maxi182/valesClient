@@ -24,4 +24,13 @@
     <dimen name="general_elevation">4dp</dimen>
 
 
+    <dimen name="text_size_very_small">10sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_medium">15sp</dimen>
+    <dimen name="text_size_normal">16sp</dimen>
+    <dimen name="text_size_large">18sp</dimen>
+    <dimen name="text_size_extra_large">22sp</dimen>
+    <dimen name="text_size_extra_extra_large">24sp</dimen>
+
+
 </resources>
