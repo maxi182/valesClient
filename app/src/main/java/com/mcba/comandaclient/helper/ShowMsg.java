@@ -1,8 +1,10 @@
 package com.mcba.comandaclient.helper;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 
 import com.epson.epos2.Epos2CallbackCode;
 import com.epson.epos2.Epos2Exception;
@@ -12,7 +14,7 @@ import com.mcba.comandaclient.ui.fragment.dialog.PrintDialogFragment;
 
 public class ShowMsg implements IDialogCallbacks {
 
-    public static void showException(Exception e, String method, Context context) {
+    public static void showException(Exception e, String method, Activity context) {
         String msg = "";
         if (e instanceof Epos2Exception) {
             msg = String.format(
@@ -27,7 +29,7 @@ public class ShowMsg implements IDialogCallbacks {
         show(msg, context);
     }
 
-    public static void showResult(int code, String errMsg, Context context) {
+    public static void showResult(int code, String errMsg, Activity context) {
         String msg = "";
         if (errMsg.isEmpty()) {
             msg = String.format(
@@ -45,29 +47,18 @@ public class ShowMsg implements IDialogCallbacks {
         show(msg, context);
     }
 
-    public static void showMsg(String msg, Context context) {
+    public static void showMsg(String msg, Activity context) {
         show(msg, context);
     }
 
-    private static void show(String msg, Context context) {
+    private static void show(String msg, Activity context) {
 
-        PrintDialogFragment dialogFragment = new PrintDialogFragment();
-        //  dialogFragment.initDialog(this, true);
-
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-        alertDialog.setMessage(msg);
-        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                return;
-            }
-        });
-        alertDialog.create();
-        alertDialog.show();
-    }
-
-    private static void closeDialog() {
-        PrintDialogFragment dialogFragment = new PrintDialogFragment();
-        dialogFragment.dismiss();
+        Log.i("MSG", msg);
+        if (msg != "") {
+            PrintDialogFragment dialog = new PrintDialogFragment();
+            dialog.initDialog(null, true, msg);
+            dialog.show(context.getFragmentManager(), "");
+        }
     }
 
     private static String getEposExceptionText(int state) {

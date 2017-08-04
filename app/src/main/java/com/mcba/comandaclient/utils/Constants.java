@@ -11,4 +11,6 @@ public class Constants {
     public static final String PRODUCTTYPE_ID = "type_id";
     public static final String RESTORE_FRAGMENT_TAG = "fragment_tag";
 
+
+
 }

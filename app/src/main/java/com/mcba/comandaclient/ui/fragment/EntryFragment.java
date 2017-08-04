@@ -74,6 +74,11 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
     }
 
     @Override
+    public void onFetchComandaItemsForPrint(StringBuilder stringBuilder) {
+
+    }
+
+    @Override
     public void showTotales(double total, double totalSenia, double cant) {
 
     }

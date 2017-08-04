@@ -57,8 +57,9 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     private ItemFullName mItemFullName;
     private int mComandaId;
 
-    private List<ComandaItem> mComandaItemList = new ArrayList<>();
+    private PrintDialogFragment dialog = new PrintDialogFragment();
 
+    private List<ComandaItem> mComandaItemList = new ArrayList<>();
 
     private Comanda mComanda;
 
@@ -172,6 +173,14 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     }
 
     @Override
+    public void onFetchComandaItemsForPrint(StringBuilder stringBuilder) {
+
+        PrintComandaHelper printComandaHelper = new PrintComandaHelper(getActivity(), stringBuilder,  mComanda.comandaId, this);
+        printComandaHelper.print();
+
+    }
+
+    @Override
     public void showTotales(double total, double totalSenia, double cant) {
         mTxtTotalComanda.setText(String.valueOf(total));
         mTxtSenia.setText(String.valueOf(totalSenia));
@@ -199,8 +208,8 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
 
     private void printComanda() {
 
-        PrintComandaHelper printComandaHelper = new PrintComandaHelper(getActivity(), mComanda, this);
-        printComandaHelper.print();
+        mPresenter.prepareComandaForPrint(mComanda);
+
     }
 
     private void storeComanda() {
@@ -253,15 +262,14 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
 
     @Override
     public void showProgress() {
-        PrintDialogFragment dialog = new PrintDialogFragment();
-        dialog.initDialog(null, false);
+        dialog.initDialog(null, false, null);
         dialog.show(getActivity().getFragmentManager(), "");
 
     }
 
     @Override
     public void hideProgress() {
-
+        dialog.dismiss();
     }
 
     public interface MainListFragmentCallbacks {

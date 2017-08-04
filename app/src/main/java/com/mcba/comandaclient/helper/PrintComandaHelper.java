@@ -5,6 +5,8 @@ import android.app.Activity;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+import android.view.View;
 
 import com.epson.epos2.Epos2Exception;
 import com.epson.epos2.printer.Printer;
@@ -12,27 +14,31 @@ import com.epson.epos2.printer.PrinterStatusInfo;
 import com.epson.epos2.printer.ReceiveListener;
 import com.mcba.comandaclient.R;
 import com.mcba.comandaclient.model.Comanda;
+import com.mcba.comandaclient.model.ItemFullName;
+import com.mcba.comandaclient.utils.Utils;
 
 /**
  * Created by mac on 27/07/2017.
  */
 
-public class PrintComandaHelper implements Handler.Callback,ReceiveListener {
+public class PrintComandaHelper implements Handler.Callback, ReceiveListener {
 
     private static final String TARGET_PRINTER = "BT:00:01:90:C6:82:BE";
 
     private IPrintCallbacks mPrintCallbacks;
-    private Comanda mComanda;
+    private int mComandaId;
     private boolean mResult;
     private Printer mPrinter = null;
     private Activity mContext;
+    private StringBuilder mComandaItems;
 
     private Handler mHandler = new Handler(this);
 
-    public PrintComandaHelper(Activity context, Comanda comanda, IPrintCallbacks printCallbacks) {
+    public PrintComandaHelper(Activity context, StringBuilder comandaItems, int comandaId, IPrintCallbacks printCallbacks) {
         this.mContext = context;
         this.mPrintCallbacks = printCallbacks;
-        this.mComanda = comanda;
+        this.mComandaItems = comandaItems;
+        this.mComandaId = comandaId;
 
     }
 
@@ -187,18 +193,21 @@ public class PrintComandaHelper implements Handler.Callback,ReceiveListener {
 
             method = "addFeedLine";
             mPrinter.addFeedLine(1);
-            textData.append("THE STORE 123 (555) 555 – 5555\n");
-            textData.append("STORE DIRECTOR – John Smith\n");
+            textData.append(mContext.getString(R.string.venue_name));
+            textData.append(mContext.getString(R.string.company_name));
             textData.append("\n");
-            textData.append("7/01/07 16:58 6153 05 0191 134\n");
-            textData.append("ST# 21 OP# 001 TE# 01 TR# 747\n");
+            mPrinter.addTextAlign(Printer.ALIGN_LEFT);
+            textData.append("Comprobante Nro: " + String.valueOf(mComandaId) + "\n");
+            textData.append(Utils.getCurrentDate("dd/MM/yyyy  HH:mm\n"));
+            mPrinter.addTextAlign(Printer.ALIGN_CENTER);
+
             textData.append("------------------------------\n");
             method = "addText";
             mPrinter.addText(textData.toString());
             textData.delete(0, textData.length());
 
-            textData.append("400 OHEIDA 3PK SPRINGF  9.99 R\n");
-            textData.append("410 3 CUP BLK TEAPOT    9.99 R\n");
+            method = "addText";
+            mPrinter.addText(mComandaItems.toString());
 
             textData.append("------------------------------\n");
             method = "addText";
@@ -312,24 +321,62 @@ public class PrintComandaHelper implements Handler.Callback,ReceiveListener {
 
         return true;
     }
-    private void runWarningsOnMainThread(final Exception e, final String message){
+
+    private void runWarningsOnMainThread(final Exception e, final String message) {
 
         mContext.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ShowMsg.showException(e, message, mContext);            }
+                mPrintCallbacks.hideProgress();
+                ShowMsg.showException(e, message, mContext);
+            }
         });
     }
-    private void displayPrinterWariningsOnMainThread(final PrinterStatusInfo status){
+
+    private void displayPrinterWariningsOnMainThread(final PrinterStatusInfo status) {
 
         mContext.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                 ShowMsg.showMsg(makeErrorMessage(status), mContext);
+                // Log.i("STATUS_MSG1", status)
+                ShowMsg.showMsg(makeErrorMessage(status), mContext);
 
-             }
+            }
         });
     }
+
+    private void disconnectPrinter() {
+        if (mPrinter == null) {
+            return;
+        }
+
+        try {
+            mPrinter.endTransaction();
+        } catch (final Exception e) {
+            mContext.runOnUiThread(new Runnable() {
+                @Override
+                public synchronized void run() {
+                    runWarningsOnMainThread(e, "endTransaction");
+                }
+            });
+        }
+
+        try {
+            mPrinter.disconnect();
+        } catch (final Exception e) {
+            mContext.runOnUiThread(new Runnable() {
+                @Override
+                public synchronized void run() {
+                    mPrintCallbacks.hideProgress();
+
+                    ShowMsg.showException(e, "disconnect", mContext);
+                }
+            });
+        }
+
+        finalizeObject();
+    }
+
 
     @Override
     public boolean handleMessage(Message message) {
@@ -337,7 +384,29 @@ public class PrintComandaHelper implements Handler.Callback,ReceiveListener {
     }
 
     @Override
-    public void onPtrReceive(Printer printer, int i, PrinterStatusInfo printerStatusInfo, String s) {
+    public void onPtrReceive(final Printer printerObj, final int code, final PrinterStatusInfo status, final String printJobId) {
 
+        mContext.runOnUiThread(new Runnable() {
+            @Override
+            public synchronized void run() {
+                ShowMsg.showResult(code, makeErrorMessage(status), mContext);
+
+                mPrintCallbacks.hideProgress();
+
+                //  dispPrinterWarnings(status);
+
+                //  updateButtonState(true);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        disconnectPrinter();
+                    }
+                }).start();
+            }
+        });
     }
 }
+
+
+

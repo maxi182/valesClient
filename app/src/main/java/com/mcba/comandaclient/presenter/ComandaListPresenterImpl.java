@@ -9,6 +9,7 @@ import com.mcba.comandaclient.model.ComandaProductItem;
 import com.mcba.comandaclient.model.ItemFullName;
 import com.mcba.comandaclient.model.Packaging;
 import com.mcba.comandaclient.ui.ComandaListView;
+import com.mcba.comandaclient.utils.Utils;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -35,6 +36,37 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
 
         mComandaInteractorCallbacks.storeComandas(this, comandas);
 
+    }
+
+    @Override
+    public void prepareComandaForPrint(Comanda comanda) {
+
+        StringBuilder textData = new StringBuilder();
+
+        int itemLen = comanda.comandaItemList.size();
+        for (int i = 0; i < itemLen; i++) {
+            ComandaItem comandaItem = comanda.comandaItemList.get(i);
+
+            String product = comandaItem.mProductItem.productName + " "
+                    + comandaItem.mProductItem.providerName + " "
+                    + comandaItem.mProductItem.typeName;
+
+            textData.append(String.valueOf(Utils.setDecimalFormat(comandaItem.mCant)) + " "
+                    +   Utils.padBlanks(product, 30)+ " "
+                    + String.valueOf(comandaItem.mPrice) + " "
+                    + String.valueOf(comandaItem.mTotal) + "\n");
+
+            if (!comandaItem.mProductItem.packaging.isFree) {
+                String vacio = "Vacio con seña";
+                textData.append(String.valueOf(Utils.setDecimalFormat(comandaItem.mCant))
+                        +  Utils.padBlanks(vacio, 30) + comandaItem.mProductItem.packaging.value + " "
+                        + String.valueOf(comandaItem.mProductItem.packaging.value * comandaItem.mCant + "\n"));
+            }
+        }
+
+        if (comandaListView != null) {
+            getView().onFetchComandaItemsForPrint(textData);
+        }
     }
 
     @Override

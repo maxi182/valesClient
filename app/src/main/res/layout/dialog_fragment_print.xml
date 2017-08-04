@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="250dip"
-        android:layout_height="150dip"
+        android:layout_height="180dip"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true">
 
@@ -75,9 +76,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
-b
+
 
                 <ImageView
+                    android:id="@+id/img_dialog"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/general_margin"
@@ -92,24 +94,21 @@ b
                 android:id="@+id/txt_alert_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="dasdasdasdasd dsdsdsd dsdsds dsad"
-                android:maxLines="2"
+                android:gravity="center_horizontal"
                 android:layout_marginTop="@dimen/general_margin_small"
+                android:maxLines="2"
                 android:textSize="@dimen/text_size_large" />
 
             <TextView
                 android:id="@+id/btn_dialog_ok"
                 style="@style/AppTheme.Button.Large.DarkSlategray"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/general_margin"
                 android:layout_weight=".5"
-                android:drawableLeft="@drawable/ic_done"
-                android:drawablePadding="8dip"
-                android:padding="10dip"
-                android:textSize="15dip"
-                android:text="Finalizar  " />
+                android:text="OK"
+                android:textSize="15dip" />
 
         </LinearLayout>
 

@@ -13,6 +13,7 @@ public class Comanda extends RealmObject {
 
     @PrimaryKey
     public int comandaId;
+    public long timestamp;
     public RealmList<ComandaItem> comandaItemList;
 
 }

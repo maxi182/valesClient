@@ -9,7 +9,7 @@
     <string name="title_msg_result">Result</string>
     <string name="title_msg_description">Description</string>
 
-
+    <!--Print Errors-->
     <string name="handlingmsg_warn_receipt_near_end">Papel de impresora escaso.\n</string>
     <string name="handlingmsg_warn_battery_near_end">Nivel de bateria de impresora bajo\n</string>
     <string name="handlingmsg_err_no_response">Por favor revise la conexion entre la impresora y el dispositivo movil.\nPerdida de conexion\n</string>
@@ -26,4 +26,11 @@
     <string name="handlingmsg_err_wrong_paper">Por favor, inserte correctamente el papel de la impresora.\n</string>
     <string name="handlingmsg_err_battery_real_end">Por favor, conecte el cable de alimentacion o cambie la bateria de la impresora.\n</string>
     <string name="handlingmsg_err_offline">Impresora sin conexion.\n</string>
+
+    <!--Print -->
+    <string name="venue_name">NAVE 8 PUESTO 51-53\n</string>
+    <string name="company_name">FRUTYLEG SRL\n</string>
+    <string name="print_success">Retire el comprobante</string>
+
+
 </resources>

@@ -45,5 +45,20 @@ public class Utils {
 
     }
 
+    public static long getTimeStamp() {
+
+        return System.currentTimeMillis();
+    }
+
+    public static String padBlanks(String text, int maxChars) {
+
+        StringBuilder sb = new StringBuilder();
+        int rest = maxChars - text.length();
+        for (int i = 1; i < rest; i++) {
+            sb.append(" ");
+        }
+        return text.concat(sb.toString());
+
+    }
 
 }
