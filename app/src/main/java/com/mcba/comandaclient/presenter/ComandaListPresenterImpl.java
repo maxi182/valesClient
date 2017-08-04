@@ -107,18 +107,18 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
 
         comanda.comandaItemList.add(comandaItem);
 
-        int len = comanda.comandaItemList.size();
-
-        for (int i = 0; i < len; i++) {
-            total = total + comanda.comandaItemList.get(i).mTotal;
-            bultos = bultos + comanda.comandaItemList.get(i).mCant;
-            if (!comanda.comandaItemList.get(i).mProductItem.packaging.isFree) {
-                totalSenia = totalSenia + (comanda.comandaItemList.get(i).mProductItem.packaging.value * comanda.comandaItemList.get(i).mCant);
+        for (ComandaItem item: comanda.comandaItemList){
+            total = total + item.mTotal;
+            bultos = bultos + item.mCant;
+            if (!item.mProductItem.packaging.isFree) {
+                totalSenia = totalSenia + (item.mProductItem.packaging.value * item.mCant);
             }
         }
+
         comanda.cantBultos = bultos;
         comanda.mSenia = totalSenia;
-        comanda.mTotal = total+totalSenia;
+        comanda.mTotal = total + totalSenia;
+        comanda.timestamp = Utils.getTimeStamp();
 
         mComandaInteractorCallbacks.storeComanda(this, comanda);
     }
