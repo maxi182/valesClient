@@ -14,6 +14,9 @@ public class Comanda extends RealmObject {
     @PrimaryKey
     public int comandaId;
     public long timestamp;
+    public double cantBultos;
+    public double mTotal;
+    public double mSenia;
     public RealmList<ComandaItem> comandaItemList;
 
 }

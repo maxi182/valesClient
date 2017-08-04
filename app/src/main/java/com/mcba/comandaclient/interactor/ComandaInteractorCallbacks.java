@@ -18,8 +18,6 @@ public interface ComandaInteractorCallbacks {
 
     void fetchComandas(RequestCallback requestCallback);
 
-    void fetchTotales(RequestCallback requestCallback, List<ComandaItem> mComandaItemList);
-
     void fetchComandaItems(RequestCallback requestCallback, int id);
 
     void storeComandas(RequestCallback requestCallback, ComandaList comandas);
@@ -37,8 +35,6 @@ public interface ComandaInteractorCallbacks {
         void onFetchComandaSuccess(Comanda comanda);
 
         void onFetchComandaItems(RealmList<ComandaItem> items);
-
-        void onFetchTotales(double total, double totalSenia, double cant);
 
         void onFetchComandaFail();
 

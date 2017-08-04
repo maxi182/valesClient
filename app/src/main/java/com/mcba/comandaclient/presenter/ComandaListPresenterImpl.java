@@ -52,17 +52,18 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
                     + comandaItem.mProductItem.typeName;
 
             textData.append(String.valueOf(Utils.setDecimalFormat(comandaItem.mCant)) + " "
-                    +   Utils.padBlanks(product, 30)+ " "
+                    + Utils.padBlanks(product, 30) + " "
                     + String.valueOf(comandaItem.mPrice) + " "
                     + String.valueOf(comandaItem.mTotal) + "\n");
 
             if (!comandaItem.mProductItem.packaging.isFree) {
                 String vacio = "Vacio con seña";
                 textData.append(String.valueOf(Utils.setDecimalFormat(comandaItem.mCant))
-                        +  Utils.padBlanks(vacio, 30) + comandaItem.mProductItem.packaging.value + " "
+                        + Utils.padBlanks(vacio, 30) + comandaItem.mProductItem.packaging.value + " "
                         + String.valueOf(comandaItem.mProductItem.packaging.value * comandaItem.mCant + "\n"));
             }
         }
+
 
         if (comandaListView != null) {
             getView().onFetchComandaItemsForPrint(textData);
@@ -70,14 +71,11 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
     }
 
     @Override
-    public void fetchTotales(List<ComandaItem> mComandaItemList) {
-
-        mComandaInteractorCallbacks.fetchTotales(this, mComandaItemList);
-    }
-
-    @Override
     public void storeComanda(int mComandaId, int lastItemId, int cant, double price, int productId, int providerId, ItemFullName itemFullName, double packagePrice, List<ComandaItem> mComandaItemList) {
 
+        double total = 0;
+        double totalSenia = 0;
+        double bultos = 0;
         Comanda comanda = new Comanda();
         comanda.comandaId = mComandaId;
 
@@ -106,7 +104,21 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
         if (mComandaItemList != null && !mComandaItemList.isEmpty()) {
             comanda.comandaItemList.addAll(mComandaItemList);
         }
+
         comanda.comandaItemList.add(comandaItem);
+
+        int len = comanda.comandaItemList.size();
+
+        for (int i = 0; i < len; i++) {
+            total = total + comanda.comandaItemList.get(i).mTotal;
+            bultos = bultos + comanda.comandaItemList.get(i).mCant;
+            if (!comanda.comandaItemList.get(i).mProductItem.packaging.isFree) {
+                totalSenia = totalSenia + (comanda.comandaItemList.get(i).mProductItem.packaging.value * comanda.comandaItemList.get(i).mCant);
+            }
+        }
+        comanda.cantBultos = bultos;
+        comanda.mSenia = totalSenia;
+        comanda.mTotal = total+totalSenia;
 
         mComandaInteractorCallbacks.storeComanda(this, comanda);
     }
@@ -147,12 +159,6 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
 
     }
 
-    @Override
-    public void onFetchTotales(double total, double totalSenia, double cant) {
-        if (comandaListView != null) {
-            getView().showTotales(total, totalSenia, cant);
-        }
-    }
 
     private ComandaListView getView() {
         return (comandaListView != null) ? comandaListView.get() : null;

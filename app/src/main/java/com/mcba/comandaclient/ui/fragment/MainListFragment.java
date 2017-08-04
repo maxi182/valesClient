@@ -158,7 +158,10 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         if (comanda != null) {
             mTxtComandaId.setText(String.valueOf(String.format("%05d", comanda.comandaId)));
             mComanda = comanda;
-            mPresenter.fetchTotales(comanda.comandaItemList);
+            mTxtTotalComanda.setText(String.valueOf(mComanda.mTotal));
+            mTxtSenia.setText(String.valueOf(mComanda.mSenia));
+            mCantBultos.setText(String.valueOf(mComanda.cantBultos));
+
             mAdapter.setItems(comanda.comandaItemList);
             mAdapter.notifyDataSetChanged();
         }
@@ -182,9 +185,9 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
 
     @Override
     public void showTotales(double total, double totalSenia, double cant) {
-        mTxtTotalComanda.setText(String.valueOf(total));
-        mTxtSenia.setText(String.valueOf(totalSenia));
-        mCantBultos.setText(String.valueOf(cant));
+//        mTxtTotalComanda.setText(String.valueOf(total));
+//        mTxtSenia.setText(String.valueOf(totalSenia));
+//        mCantBultos.setText(String.valueOf(cant));
     }
 
     @Override

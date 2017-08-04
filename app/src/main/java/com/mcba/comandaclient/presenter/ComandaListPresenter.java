@@ -15,7 +15,6 @@ public interface ComandaListPresenter extends IBasePresenter {
 
     void storeComandas(ComandaList comandas);
     void prepareComandaForPrint(Comanda comanda);
-    void fetchTotales(List<ComandaItem> mComandaItemList);
     void storeComanda(int mComandaId, int lastItemId, int cant, double price, int productId,
                       int providerId, ItemFullName itemFullName, double packagePrice, List<ComandaItem> mComandaItemList);
     void fetchComandaById(int id);

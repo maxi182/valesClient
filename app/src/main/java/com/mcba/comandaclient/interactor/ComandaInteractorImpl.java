@@ -33,23 +33,6 @@ public class ComandaInteractorImpl extends RealmManager implements ComandaIntera
         }
     }
 
-    @Override
-    public void fetchTotales(RequestCallback requestCallback, List<ComandaItem> mComandaItemList) {
-
-        double total = 0;
-        double totalSenia = 0;
-        double cant = 0;
-        int len = mComandaItemList.size();
-
-        for (int i = 0; i < len; i++) {
-            total = total + mComandaItemList.get(i).mTotal;
-            cant = cant + mComandaItemList.get(i).mCant;
-            if (!mComandaItemList.get(i).mProductItem.packaging.isFree) {
-                totalSenia = totalSenia + (mComandaItemList.get(i).mProductItem.packaging.value * mComandaItemList.get(i).mCant);
-            }
-        }
-        requestCallback.onFetchTotales(total+totalSenia, totalSenia, cant);
-    }
 
     @Override
     public void fetchComandaItems(RequestCallback requestCallback, int id) {
