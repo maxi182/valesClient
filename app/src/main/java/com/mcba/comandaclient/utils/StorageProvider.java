@@ -121,7 +121,7 @@ public final class StorageProvider {
      * @return
      */
     public static int getPreferencesInt(String key) {
-        return getPreferences().getInt(key, 0);
+        return getPreferences().getInt(key, -1);
     }
 
     /**
