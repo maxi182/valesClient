@@ -74,7 +74,7 @@ public class PrintDialogFragment extends DialogFragment {
         mBtnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.dismiss();
+                mCallbacks.onOkPress(dialog);
             }
         });
 
@@ -82,4 +82,6 @@ public class PrintDialogFragment extends DialogFragment {
         return dialog;
 
     }
+
+
 }
