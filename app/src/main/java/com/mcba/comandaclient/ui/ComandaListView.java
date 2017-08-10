@@ -15,9 +15,7 @@ public interface ComandaListView {
 
     void showItemsComanda(RealmList<ComandaItem> items);
 
-    void onFetchComandaItemsForPrint(StringBuilder stringBuilder);
-
-    void showTotales(double total, double totalSenia, double cant);
+    void onFetchComandaItemsForPrint(StringBuilder stringBuilderItems, StringBuilder stringBuilderSubTotales, StringBuilder stringBuilderTotal,StringBuilder stringBuilderCopyItems);
 
     void showLastComandaId(int id);
 
