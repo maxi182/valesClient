@@ -12,9 +12,9 @@ import com.mcba.comandaclient.R;
 import com.mcba.comandaclient.ui.fragment.dialog.IDialogCallbacks;
 import com.mcba.comandaclient.ui.fragment.dialog.PrintDialogFragment;
 
-public class ShowMsg implements IDialogCallbacks {
+public class ShowMsg {
 
-    public static void showException(Exception e, String method, Activity context) {
+    public static void showException(Exception e, String method, Activity context,IDialogCallbacks mIDialogCallbacks) {
         String msg = "";
         if (e instanceof Epos2Exception) {
             msg = String.format(
@@ -26,10 +26,10 @@ public class ShowMsg implements IDialogCallbacks {
         } else {
             msg = e.toString();
         }
-        show(msg, context);
+        show(msg, context, mIDialogCallbacks);
     }
 
-    public static void showResult(int code, String errMsg, Activity context) {
+    public static void showResult(int code, String errMsg, Activity context, IDialogCallbacks mIDialogCallbacks) {
         String msg = "";
         if (errMsg.isEmpty()) {
             msg = String.format(
@@ -44,19 +44,19 @@ public class ShowMsg implements IDialogCallbacks {
                     context.getString(R.string.title_msg_description),
                     errMsg);
         }
-        show(msg, context);
+        show(msg, context, mIDialogCallbacks);
     }
 
-    public static void showMsg(String msg, Activity context) {
-        show(msg, context);
+    public static void showMsg(String msg, Activity context, IDialogCallbacks mIDialogCallbacks) {
+        show(msg, context, mIDialogCallbacks);
     }
 
-    private static void show(String msg, Activity context) {
+    private static void show(String msg, Activity context, IDialogCallbacks mIDialogCallbacks) {
 
         Log.i("MSG", msg);
         if (msg != "") {
             PrintDialogFragment dialog = new PrintDialogFragment();
-            dialog.initDialog(null, true, msg);
+            dialog.initDialog(mIDialogCallbacks, true, msg);
             dialog.show(context.getFragmentManager(), "");
         }
     }
@@ -183,8 +183,4 @@ public class ShowMsg implements IDialogCallbacks {
         return return_text;
     }
 
-    @Override
-    public void dismissDialog() {
-
-    }
 }
