@@ -1,5 +1,7 @@
 package com.mcba.comandaclient.ui.fragment.dialog;
 
+import android.app.Dialog;
+
 /**
  * Created by mac on 29/07/2017.
  */
@@ -7,4 +9,5 @@ package com.mcba.comandaclient.ui.fragment.dialog;
 public interface IDialogCallbacks {
 
     void dismissDialog();
+    void onOkPress(Dialog dialog);
 }
