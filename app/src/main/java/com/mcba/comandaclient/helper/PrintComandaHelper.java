@@ -5,16 +5,14 @@ import android.app.Activity;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-import android.view.View;
+
 
 import com.epson.epos2.Epos2Exception;
 import com.epson.epos2.printer.Printer;
 import com.epson.epos2.printer.PrinterStatusInfo;
 import com.epson.epos2.printer.ReceiveListener;
 import com.mcba.comandaclient.R;
-import com.mcba.comandaclient.model.Comanda;
-import com.mcba.comandaclient.model.ItemFullName;
+import com.mcba.comandaclient.ui.fragment.dialog.IDialogCallbacks;
 import com.mcba.comandaclient.utils.Utils;
 
 /**
@@ -26,19 +24,28 @@ public class PrintComandaHelper implements Handler.Callback, ReceiveListener {
     private static final String TARGET_PRINTER = "BT:00:01:90:C6:82:BE";
 
     private IPrintCallbacks mPrintCallbacks;
+    private IDialogCallbacks mIDialogCallbacks;
     private int mComandaId;
     private boolean mResult;
     private Printer mPrinter = null;
     private Activity mContext;
     private StringBuilder mComandaItems;
+    private StringBuilder mSubTotales;
+    private StringBuilder mTotal;
+    private StringBuilder copyItems;
+
 
     private Handler mHandler = new Handler(this);
 
-    public PrintComandaHelper(Activity context, StringBuilder comandaItems, int comandaId, IPrintCallbacks printCallbacks) {
+    public PrintComandaHelper(Activity context, IDialogCallbacks iDialogCallbacks, StringBuilder comandaItems, StringBuilder mSubTotales, StringBuilder total, StringBuilder copyItems, int comandaId, IPrintCallbacks printCallbacks) {
         this.mContext = context;
         this.mPrintCallbacks = printCallbacks;
         this.mComandaItems = comandaItems;
         this.mComandaId = comandaId;
+        this.mSubTotales = mSubTotales;
+        this.mTotal = total;
+        this.copyItems = copyItems;
+        this.mIDialogCallbacks = iDialogCallbacks;
 
     }
 
@@ -104,7 +111,7 @@ public class PrintComandaHelper implements Handler.Callback, ReceiveListener {
         displayPrinterWariningsOnMainThread(status);
 
         if (!isPrintable(status)) {
-            ShowMsg.showMsg(makeErrorMessage(status), mContext);
+            ShowMsg.showMsg(makeErrorMessage(status), mContext, mIDialogCallbacks);
             try {
                 mPrinter.disconnect();
             } catch (Exception ex) {
@@ -188,66 +195,65 @@ public class PrintComandaHelper implements Handler.Callback, ReceiveListener {
         }
 
         try {
-            method = "addTextAlign";
-            mPrinter.addTextAlign(Printer.ALIGN_CENTER);
+            for (int i = 0; i < 3; i++) {
+                method = "addTextAlign";
+                mPrinter.addTextAlign(Printer.ALIGN_CENTER);
 
-            method = "addFeedLine";
-            mPrinter.addFeedLine(1);
-            textData.append(mContext.getString(R.string.venue_name));
-            textData.append(mContext.getString(R.string.company_name));
-            textData.append("\n");
-            mPrinter.addTextAlign(Printer.ALIGN_LEFT);
-            textData.append("Comprobante Nro: " + String.valueOf(mComandaId) + "\n");
-            textData.append(Utils.getCurrentDate("dd/MM/yyyy  HH:mm\n"));
-            mPrinter.addTextAlign(Printer.ALIGN_CENTER);
+                method = "addFeedLine";
+                mPrinter.addFeedLine(1);
+                textData.append(mContext.getString(R.string.venue_name));
+                textData.append(mContext.getString(R.string.company_name));
+                textData.append("\n");
+                mPrinter.addTextAlign(Printer.ALIGN_LEFT);
+                textData.append("Comprobante Nro: " + String.valueOf(mComandaId) + "\n");
+                textData.append(Utils.getCurrentDate("dd/MM/yyyy  HH:mm\n"));
+                mPrinter.addTextAlign(Printer.ALIGN_CENTER);
 
-            textData.append("------------------------------\n");
-            method = "addText";
-            mPrinter.addText(textData.toString());
-            textData.delete(0, textData.length());
+                textData.append("------------------------------\n");
+                method = "addText";
+                mPrinter.addText(textData.toString());
+                textData.delete(0, textData.length());
 
-            method = "addText";
-            mPrinter.addText(mComandaItems.toString());
+                method = "addText";
+                mPrinter.addText(textData.toString());
 
-            textData.append("------------------------------\n");
-            method = "addText";
-            mPrinter.addText(textData.toString());
-            textData.delete(0, textData.length());
+                mPrinter.addText(i == 0 ? mComandaItems.toString() : copyItems.toString());
 
-            textData.append("SUBTOTAL                160.38\n");
-            textData.append("TAX                      14.43\n");
-            method = "addText";
-            mPrinter.addText(textData.toString());
-            textData.delete(0, textData.length());
-
-            method = "addTextSize";
-            mPrinter.addTextSize(2, 2);
-            method = "addText";
-            mPrinter.addText("TOTAL    174.81\n");
-            method = "addTextSize";
-            mPrinter.addTextSize(1, 1);
-            method = "addFeedLine";
-            mPrinter.addFeedLine(1);
-
-            textData.append("CASH                    200.00\n");
-            textData.append("CHANGE                   25.19\n");
-            textData.append("------------------------------\n");
-            method = "addText";
-            mPrinter.addText(textData.toString());
-            textData.delete(0, textData.length());
-
-            textData.append("Purchased item total number\n");
-            textData.append("Sign Up and Save !\n");
-            textData.append("With Preferred Saving Card\n");
-            method = "addText";
-            mPrinter.addText(textData.toString());
-            textData.delete(0, textData.length());
-            method = "addFeedLine";
-            mPrinter.addFeedLine(2);
+                method = "addText";
+                mPrinter.addFeedPosition(0);
+                textData.delete(0, textData.length());
 
 
-            method = "addCut";
-            // mPrinter.addCut(Printer.CUT_FEED);
+                method = "addText";
+                mPrinter.addText(i == 0 ? mSubTotales.toString() : "\n");
+                textData.delete(0, textData.length());
+
+                method = "addTextSize";
+                mPrinter.addTextSize(2, 2);
+                method = "addText";
+                mPrinter.addText(i == 0 ? mTotal.toString() : "\n");
+                method = "addTextSize";
+                mPrinter.addTextSize(1, 1);
+                method = "addFeedLine";
+                mPrinter.addFeedLine(1);
+
+                method = "addText";
+                mPrinter.addText(textData.toString());
+                textData.delete(0, textData.length());
+
+
+                method = "addText";
+                mPrinter.addText(textData.toString());
+                textData.delete(0, textData.length());
+                method = "addFeedLine";
+                mPrinter.addFeedLine(2);
+
+                if (i == 2) {
+                    mPrinter.addText("\n");
+                }
+                method = "addCut";
+                mPrinter.addCut(Printer.CUT_FEED);
+            }
         } catch (Exception e) {
             runWarningsOnMainThread(e, method);
 
@@ -328,7 +334,7 @@ public class PrintComandaHelper implements Handler.Callback, ReceiveListener {
             @Override
             public void run() {
                 mPrintCallbacks.hideProgress();
-                ShowMsg.showException(e, message, mContext);
+                ShowMsg.showException(e, message, mContext, mIDialogCallbacks);
             }
         });
     }
@@ -339,7 +345,7 @@ public class PrintComandaHelper implements Handler.Callback, ReceiveListener {
             @Override
             public void run() {
                 // Log.i("STATUS_MSG1", status)
-                ShowMsg.showMsg(makeErrorMessage(status), mContext);
+                ShowMsg.showMsg(makeErrorMessage(status), mContext, mIDialogCallbacks);
 
             }
         });
@@ -369,7 +375,7 @@ public class PrintComandaHelper implements Handler.Callback, ReceiveListener {
                 public synchronized void run() {
                     mPrintCallbacks.hideProgress();
 
-                    ShowMsg.showException(e, "disconnect", mContext);
+                    ShowMsg.showException(e, "disconnect", mContext, mIDialogCallbacks);
                 }
             });
         }
@@ -389,7 +395,7 @@ public class PrintComandaHelper implements Handler.Callback, ReceiveListener {
         mContext.runOnUiThread(new Runnable() {
             @Override
             public synchronized void run() {
-                ShowMsg.showResult(code, makeErrorMessage(status), mContext);
+                ShowMsg.showResult(code, makeErrorMessage(status), mContext, mIDialogCallbacks);
 
                 mPrintCallbacks.hideProgress();
 
