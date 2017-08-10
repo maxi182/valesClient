@@ -1,7 +1,6 @@
 package com.mcba.comandaclient.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -13,6 +12,8 @@ import com.mcba.comandaclient.presenter.ComandaListPresenter;
 import com.mcba.comandaclient.presenter.ComandaListPresenterImpl;
 import com.mcba.comandaclient.ui.ComandaListView;
 import com.mcba.comandaclient.ui.adapter.MainListAdapter;
+import com.mcba.comandaclient.utils.Constants;
+import com.mcba.comandaclient.utils.StorageProvider;
 
 import io.realm.RealmList;
 
@@ -74,12 +75,7 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
     }
 
     @Override
-    public void onFetchComandaItemsForPrint(StringBuilder stringBuilder) {
-
-    }
-
-    @Override
-    public void showTotales(double total, double totalSenia, double cant) {
+    public void onFetchComandaItemsForPrint(StringBuilder stringBuilderItems, StringBuilder stringBuilderSubTotales, StringBuilder stringBuilderTotal, StringBuilder stringBuilderCopyItems) {
 
     }
 
@@ -88,6 +84,7 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
 
         mNextComandaId = id;
         Toast.makeText(getActivity(), String.valueOf(id), Toast.LENGTH_SHORT).show();
+        StorageProvider.savePreferences(Constants.LAST_COMANDA_ID, id);
 
     }
 
