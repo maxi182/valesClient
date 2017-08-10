@@ -41,7 +41,10 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
     @Override
     public void prepareComandaForPrint(Comanda comanda) {
 
-        StringBuilder textData = new StringBuilder();
+        StringBuilder textItems = new StringBuilder();
+        StringBuilder textSubTotales = new StringBuilder();
+        StringBuilder textTotal = new StringBuilder();
+        StringBuilder textItemsCopy = new StringBuilder();
 
         int itemLen = comanda.comandaItemList.size();
         for (int i = 0; i < itemLen; i++) {
@@ -51,22 +54,31 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
                     + comandaItem.mProductItem.providerName + " "
                     + comandaItem.mProductItem.typeName;
 
-            textData.append(String.valueOf(Utils.setDecimalFormat(comandaItem.mCant)) + " "
+            textItems.append(String.valueOf(Utils.setDecimalFormat(comandaItem.mCant)) + " "
                     + Utils.padBlanks(product, 30) + " "
                     + String.valueOf(comandaItem.mPrice) + " "
                     + String.valueOf(comandaItem.mTotal) + "\n");
 
+            textItemsCopy.append(String.valueOf(Utils.setDecimalFormat(comandaItem.mCant)) + " "
+                    + Utils.padBlanks(product, 35) + " "
+                    + "\n");
+
             if (!comandaItem.mProductItem.packaging.isFree) {
                 String vacio = "Vacio con seña";
-                textData.append(String.valueOf(Utils.setDecimalFormat(comandaItem.mCant))
-                        + Utils.padBlanks(vacio, 30) + comandaItem.mProductItem.packaging.value + " "
+                textItems.append(String.valueOf(Utils.setDecimalFormat(comandaItem.mCant)) + " "
+                        + Utils.padBlanks(vacio, 33) + comandaItem.mProductItem.packaging.value + " "
                         + String.valueOf(comandaItem.mProductItem.packaging.value * comandaItem.mCant + "\n"));
             }
         }
 
+        textSubTotales.append("------------------------------\n");
+        textSubTotales.append("SUBTOTAL" + Utils.padLeft(String.valueOf(comanda.mTotal - comanda.mSenia), 22) + "\n");
+        textSubTotales.append("SEÑA" + Utils.padLeft(String.valueOf(comanda.mSenia), 26) + "\n");
+
+        textTotal.append("TOTAL" + Utils.padLeft(String.valueOf(comanda.mTotal), 11) + "\n");
 
         if (comandaListView != null) {
-            getView().onFetchComandaItemsForPrint(textData);
+            getView().onFetchComandaItemsForPrint(textItems, textSubTotales, textTotal, textItemsCopy);
         }
     }
 
@@ -107,7 +119,7 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
 
         comanda.comandaItemList.add(comandaItem);
 
-        for (ComandaItem item: comanda.comandaItemList){
+        for (ComandaItem item : comanda.comandaItemList) {
             total = total + item.mTotal;
             bultos = bultos + item.mCant;
             if (!item.mProductItem.packaging.isFree) {
