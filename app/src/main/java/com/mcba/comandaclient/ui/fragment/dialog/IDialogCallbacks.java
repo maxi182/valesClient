@@ -9,5 +9,5 @@ import android.app.Dialog;
 public interface IDialogCallbacks {
 
     void dismissDialog();
-    void onOkPress(Dialog dialog);
+    void onOkPress(Dialog dialog, boolean isSuccess);
 }

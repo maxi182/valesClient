@@ -98,12 +98,16 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
 
         StorageProvider.getPreferencesString(Constants.RESTORE_FRAGMENT_TAG);
         //handleFragment();
+        StorageProvider.savePreferences(Constants.OPEN_COMANDA, false);
 
         openEntryFragment();
+
+        // handleFragment();
 
         //handlele fist fragment
 
     }
+
 
     private void handleFragment() {
 
@@ -120,39 +124,56 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
                 case MAIN_LIST_FROM_ENTRY_FRAGMENT:
                     onGoToMainListFromEntryFragment(0);
                     break;
-                case PRODUCT_LIST_FRAGMENT:
-                    onGoToSelectProduct(0);
-                    break;
-                case PROVIDER_LIST_FRAGMENT:
-                    onGoToSelectProvider(10, 0);
-                    break;
-                case TYPE_LIST_FRAGMENT:
-                    onGoToSelectProductType(1, 10, 0);
-                    break;
+//                case PRODUCT_LIST_FRAGMENT:
+//                    onGoToSelectProduct(0);
+//                    break;
+//                case PROVIDER_LIST_FRAGMENT:
+//                    onGoToSelectProvider(10, 0);
+//                    break;
+//                case TYPE_LIST_FRAGMENT:
+//                    onGoToSelectProductType(1, 10, 0);
+//                    break;
 
             }
         }
 
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
+        Fragment currentFragment = getCurrentFragment(ENTRY_FRAGMENT);
 
+        if (currentFragment != null && currentFragment.isVisible()) {
+            openEntryFragment();
+
+        } else {
+
+            boolean restoreComanda = StorageProvider.getPreferencesBoolean(Constants.OPEN_COMANDA);
+
+            if (restoreComanda) {
+                int comandaId = StorageProvider.getPreferencesInt(Constants.LAST_COMANDA_ID);
+                changeFragment(MainListFragment.newInstance(comandaId, true), false, false, MAIN_LIST_FROM_ENTRY_FRAGMENT);
+            }
+        }
 
     }
 
     @Override
     public void onDestroy() {
+
+        //StorageProvider.savePreferences(Constants.OPEN_COMANDA, false);
+
         super.onDestroy();
 
-        //  StorageProvider.deletePreferences(Constants.RESTORE_FRAGMENT_TAG);
+        //StorageProvider.deletePreferences(Constants.RESTORE_FRAGMENT_TAG);
     }
 
     @Override
     public void onStop() {
         super.onStop();
+
+        StorageProvider.savePreferences(Constants.OPEN_COMANDA, true);
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container_body);
         StorageProvider.savePreferences(Constants.RESTORE_FRAGMENT_TAG, fragment.getTag());
@@ -184,7 +205,6 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
     private void setDate() {
 
         mCurrentDate = (TextView) findViewById(R.id.current_date);
-
         mCurrentDate.setText(Utils.getCurrentDate("dd/MM/yyyy"));
     }
 
@@ -197,7 +217,7 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
     @Override
     public void onGoToMainListFromEntryFragment(int nextComandaId) {
 
-        changeFragment(MainListFragment.newInstance(nextComandaId), false, false, MAIN_LIST_FROM_ENTRY_FRAGMENT);
+        changeFragment(MainListFragment.newInstance(nextComandaId, false), false, false, MAIN_LIST_FROM_ENTRY_FRAGMENT);
 
     }
 
@@ -210,22 +230,27 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
     @Override
     public void onGoToSelectProduct(int currentComandaId) {
 
-        changeFragment(ProductSelectionFragment.newInstance(currentComandaId), true, false, PRODUCT_LIST_FRAGMENT);
+        changeFragment(ProductSelectionFragment.newInstance(currentComandaId), false, false, PRODUCT_LIST_FRAGMENT);
 
+    }
+
+    @Override
+    public void onGoToEntryFragment() {
+        changeFragment(EntryFragment.newInstance(), false, false, ENTRY_FRAGMENT);
 
     }
 
     @Override
     public void onGoToSelectProvider(int productId, int currentComandaId) {
 
-        changeFragment(ProviderSelectionFragment.newInstance(productId, currentComandaId), true, false, PROVIDER_LIST_FRAGMENT);
+        changeFragment(ProviderSelectionFragment.newInstance(productId, currentComandaId), false, false, PROVIDER_LIST_FRAGMENT);
 
     }
 
     @Override
     public void onGoToSelectProductType(int providerId, int productId, int mCurrentComandaId) {
 
-        changeFragment(ProductTypeSelectionFragment.newInstance(productId, providerId, mCurrentComandaId), true, false, TYPE_LIST_FRAGMENT);
+        changeFragment(ProductTypeSelectionFragment.newInstance(productId, providerId, mCurrentComandaId), false, false, TYPE_LIST_FRAGMENT);
 
 
     }
@@ -233,7 +258,7 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
     @Override
     public void onGoToSetPriceAndQty(int providerId, int productId, int productTypeId, int mCurrentComandaId) {
 
-        changeFragment(CantPriceSelectionFragment.newInstance(productId, providerId, productTypeId, mCurrentComandaId), true, false, CANT_PRICE_FRAGMENT);
+        changeFragment(CantPriceSelectionFragment.newInstance(productId, providerId, productTypeId, mCurrentComandaId), false, false, CANT_PRICE_FRAGMENT);
 
     }
 
@@ -282,11 +307,15 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
         ft.commit();
     }
 
+    private Fragment getCurrentFragment(String currentFragmentTag) {
+
+        return getSupportFragmentManager().findFragmentByTag(currentFragmentTag);
+    }
 
     @Override
     public void onBackPressed() {
 
-        Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(MAIN_LIST_FRAGMENT);
+        Fragment currentFragment = getCurrentFragment(MAIN_LIST_FRAGMENT);
 
         if (currentFragment != null && currentFragment.isVisible()) {
             super.onBackPressed();

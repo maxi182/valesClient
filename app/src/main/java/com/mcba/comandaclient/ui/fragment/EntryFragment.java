@@ -83,6 +83,7 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
     public void showLastComandaId(int id) {
 
         mNextComandaId = id;
+        StorageProvider.savePreferences(Constants.RESTOREMAIN, false);
         Toast.makeText(getActivity(), String.valueOf(id), Toast.LENGTH_SHORT).show();
         StorageProvider.savePreferences(Constants.LAST_COMANDA_ID, id);
 

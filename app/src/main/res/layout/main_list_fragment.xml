@@ -56,7 +56,7 @@
             android:layout_weight=".5"
             android:drawableLeft="@drawable/ic_done"
             android:drawablePadding="8dip"
-            android:padding="10dip"
+            android:padding="8dip"
             android:text="Finalizar  " />
 
         <TextView

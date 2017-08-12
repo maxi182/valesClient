@@ -29,6 +29,7 @@ public class PrintDialogFragment extends DialogFragment {
     private String mMessage;
     private ImageView mVectorImage;
     private boolean mShowMessage;
+    private boolean isSuccess;
 
 
     public PrintDialogFragment() {
@@ -64,20 +65,22 @@ public class PrintDialogFragment extends DialogFragment {
         mLinearPriting.setVisibility(mShowMessage ? View.GONE : View.VISIBLE);
         mLinearMessage.setVisibility(mShowMessage ? View.VISIBLE : View.GONE);
 
+
         if (mMessage != null && mMessage.contains("PRINT_SUCCESS")) {
             mVectorImage.setImageResource(R.drawable.ic_check_circle);
             mTxtMessage.setText(dialog.getContext().getString(R.string.print_success));
+            isSuccess = true;
         } else {
             mTxtMessage.setText(mMessage);
             mVectorImage.setImageResource(R.drawable.ic_error_outline);
+            isSuccess = false;
         }
         mBtnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCallbacks.onOkPress(dialog);
+                mCallbacks.onOkPress(dialog, isSuccess);
             }
         });
-
 
         return dialog;
 
