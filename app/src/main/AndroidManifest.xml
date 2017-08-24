@@ -26,6 +26,12 @@
             </intent-filter>
         </activity>
 
+
+        <activity
+            android:name=".ui.ComandaSearchActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+
         <provider
             android:name="br.com.mauker.materialsearchview.db.HistoryProvider"
             android:authorities="br.com.mauker.materialsearchview.searchhistorydatabase"

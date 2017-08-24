@@ -24,6 +24,10 @@ public interface ComandaInteractorCallbacks {
 
     void storeComanda(RequestCallback requestCallback, Comanda comandas);
 
+    void deleteItemComanda(RequestCallback requestCallback, int comandaId, int itemId);
+
+    void deleteComanda(RequestCallback requestCallback, int comandaId);
+
     void getLastComandaId(RequestCallback requestCallback);
 
     void attachView();
@@ -45,6 +49,10 @@ public interface ComandaInteractorCallbacks {
         void onFetchLastComandaId(int id);
 
         void onStoreCompleted(boolean isSuccess);
+
+        void onDeleteItemCompleted(boolean isSuccess);
+
+        void onDeleteComandaCompleted(boolean isSuccess);
 
     }
 }

@@ -17,6 +17,8 @@ public class Comanda extends RealmObject {
     public double cantBultos;
     public double mTotal;
     public double mSenia;
+    public boolean isPrinted;
+    public Client mCliente;
     public RealmList<ComandaItem> comandaItemList;
 
 }

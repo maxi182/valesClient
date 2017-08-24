@@ -146,7 +146,7 @@ public abstract class MainSearchActivity extends AppCompatActivity implements IS
     @Override
     public void onSearchRequestFailed(Exception spiceException) {
         // mSearchTermProgressBar.setVisibility(View.GONE);
-        //  getSpiceActivity().showErrorDialog(spiceException);
+        // getSpiceActivity().showErrorDialog(spiceException);
     }
 
     private class QueuedSearchChangeNotifier implements Runnable {

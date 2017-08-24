@@ -12,8 +12,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -48,11 +50,14 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
     private static final String TYPE_LIST_FRAGMENT = "type_list_fragment";
     private static final String CANT_PRICE_FRAGMENT = "cant_price_fragment";
 
+    private FrameLayout mFrameToolbar;
+
 
     private FloatingActionsMenu menuMultipleActions;
 
     private Toolbar mToolbar;
     private TextView mCurrentDate;
+    private String mClientName;
 
 
     public static Intent getNewIntent(Context context) {
@@ -66,7 +71,7 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
 
     @Override
     public void searchByTerm(String searchTerm) {
-
+        mClientName = searchTerm;
     }
 
     @Override
@@ -82,8 +87,14 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
     @Override
     public void setOnSearchviewClose() {
 
+        Toast.makeText(this, "close", Toast.LENGTH_SHORT).show();
+
     }
 
+
+    public String getClientName() {
+        return mClientName;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,47 +106,11 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
         setDate();
         menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
         setFABButtons(this);
+        mFrameToolbar = (FrameLayout) findViewById(R.id.frame_toolbar);
 
         StorageProvider.getPreferencesString(Constants.RESTORE_FRAGMENT_TAG);
-        //handleFragment();
         StorageProvider.savePreferences(Constants.OPEN_COMANDA, false);
-
         openEntryFragment();
-
-        // handleFragment();
-
-        //handlele fist fragment
-
-    }
-
-
-    private void handleFragment() {
-
-        String tag = StorageProvider.getPreferencesString(Constants.RESTORE_FRAGMENT_TAG);
-
-        if (tag == null) {
-            openEntryFragment();
-        } else {
-
-            switch (tag) {
-                case ENTRY_FRAGMENT:
-                    openEntryFragment();
-                    break;
-                case MAIN_LIST_FROM_ENTRY_FRAGMENT:
-                    onGoToMainListFromEntryFragment(0);
-                    break;
-//                case PRODUCT_LIST_FRAGMENT:
-//                    onGoToSelectProduct(0);
-//                    break;
-//                case PROVIDER_LIST_FRAGMENT:
-//                    onGoToSelectProvider(10, 0);
-//                    break;
-//                case TYPE_LIST_FRAGMENT:
-//                    onGoToSelectProductType(1, 10, 0);
-//                    break;
-
-            }
-        }
 
     }
 
@@ -161,11 +136,8 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
 
     @Override
     public void onDestroy() {
-
         //StorageProvider.savePreferences(Constants.OPEN_COMANDA, false);
-
         super.onDestroy();
-
         //StorageProvider.deletePreferences(Constants.RESTORE_FRAGMENT_TAG);
     }
 
@@ -201,7 +173,6 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
 
     }
 
-
     private void setDate() {
 
         mCurrentDate = (TextView) findViewById(R.id.current_date);
@@ -209,47 +180,49 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
     }
 
     private void openEntryFragment() {
-
+        mFrameToolbar.setVisibility(View.GONE);
         changeFragment(EntryFragment.newInstance(), false, false, ENTRY_FRAGMENT);
 
     }
 
     @Override
     public void onGoToMainListFromEntryFragment(int nextComandaId) {
-
+        mFrameToolbar.setVisibility(View.VISIBLE);
         changeFragment(MainListFragment.newInstance(nextComandaId, false), false, false, MAIN_LIST_FROM_ENTRY_FRAGMENT);
 
     }
 
     @Override
     public void onGoToMainList(int providerId, int productId, int typeId, double price, int cant, int currentComandaId, int lastItemId, double packagePrice, ItemFullName itemFullName) {
+        mFrameToolbar.setVisibility(View.VISIBLE);
         changeFragment(MainListFragment.newInstance(productId, providerId, typeId, price, cant, currentComandaId, lastItemId, packagePrice, itemFullName), false, false, MAIN_LIST_FRAGMENT);
 
     }
 
     @Override
     public void onGoToSelectProduct(int currentComandaId) {
-
+        mFrameToolbar.setVisibility(View.GONE);
         changeFragment(ProductSelectionFragment.newInstance(currentComandaId), false, false, PRODUCT_LIST_FRAGMENT);
 
     }
 
     @Override
     public void onGoToEntryFragment() {
+        mFrameToolbar.setVisibility(View.GONE);
         changeFragment(EntryFragment.newInstance(), false, false, ENTRY_FRAGMENT);
 
     }
 
     @Override
     public void onGoToSelectProvider(int productId, int currentComandaId) {
-
+        mFrameToolbar.setVisibility(View.GONE);
         changeFragment(ProviderSelectionFragment.newInstance(productId, currentComandaId), false, false, PROVIDER_LIST_FRAGMENT);
 
     }
 
     @Override
     public void onGoToSelectProductType(int providerId, int productId, int mCurrentComandaId) {
-
+        mFrameToolbar.setVisibility(View.GONE);
         changeFragment(ProductTypeSelectionFragment.newInstance(productId, providerId, mCurrentComandaId), false, false, TYPE_LIST_FRAGMENT);
 
 
@@ -257,7 +230,7 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
 
     @Override
     public void onGoToSetPriceAndQty(int providerId, int productId, int productTypeId, int mCurrentComandaId) {
-
+        mFrameToolbar.setVisibility(View.GONE);
         changeFragment(CantPriceSelectionFragment.newInstance(productId, providerId, productTypeId, mCurrentComandaId), false, false, CANT_PRICE_FRAGMENT);
 
     }
@@ -296,6 +269,7 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
 
+
         if (animate) {
             ft.setCustomAnimations(R.anim.slide_right, R.anim.slide_left, R.anim.slide_right, R.anim.slide_left);
         }
@@ -315,14 +289,16 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
     @Override
     public void onBackPressed() {
 
-        Fragment currentFragment = getCurrentFragment(MAIN_LIST_FRAGMENT);
+        Fragment mainListFragment = getCurrentFragment(MAIN_LIST_FRAGMENT);
+        Fragment mainListfromEntryFragment = getCurrentFragment(MAIN_LIST_FROM_ENTRY_FRAGMENT);
+        Fragment entryFragment = getCurrentFragment(ENTRY_FRAGMENT);
 
-        if (currentFragment != null && currentFragment.isVisible()) {
+        if ((mainListFragment != null && mainListFragment.isVisible()) || (mainListfromEntryFragment != null && mainListfromEntryFragment.isVisible())) {
+            openEntryFragment();
+        } else if (entryFragment != null && entryFragment.isVisible()) {
             super.onBackPressed();
         } else {
             return;
         }
     }
-
-
 }

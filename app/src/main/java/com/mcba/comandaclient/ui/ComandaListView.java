@@ -19,7 +19,13 @@ public interface ComandaListView {
 
     void showLastComandaId(int id);
 
+    void onTotalesFetched(double total, double senia, double bultos);
+
     void onStoreItemSuccess(boolean isSuccess);
+
+    void onDeleteItemSuccess(boolean isSuccess);
+
+    void onDeleteComandaSuccess(boolean isSuccess);
 
     void onStoreItemFail();
 

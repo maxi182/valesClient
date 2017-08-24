@@ -70,9 +70,11 @@ public class PrintDialogFragment extends DialogFragment {
             mVectorImage.setImageResource(R.drawable.ic_check_circle);
             mTxtMessage.setText(dialog.getContext().getString(R.string.print_success));
             isSuccess = true;
+            mCallbacks.printSuccess();
         } else {
             mTxtMessage.setText(mMessage);
             mVectorImage.setImageResource(R.drawable.ic_error_outline);
+
             isSuccess = false;
         }
         mBtnOk.setOnClickListener(new View.OnClickListener() {

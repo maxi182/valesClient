@@ -37,7 +37,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
     }
 
     public interface AdapterCallbacks {
-        void onItemPress(Product product);
+        void onItemPress(ComandaItem comandaItem);
 
     }
 
@@ -57,6 +57,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
     public void onBindViewHolder(MainListAdapterHolder holder, final int position) {
         final ComandaItem comandaItem = mList.get(position);
 
+
         holder.text_qty.setText(String.valueOf(Utils.setDecimalFormat(comandaItem.mCant)));
         holder.text_detail.setText(comandaItem.mProductItem.productName + " " + comandaItem.mProductItem.providerName + " " + comandaItem.mProductItem.typeName);
         holder.text_price.setText(String.valueOf(comandaItem.mPrice));
@@ -71,6 +72,15 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
             holder.linear_vacios.setVisibility(View.GONE);
 
         }
+        holder.include_header.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                mCallbacks.onItemPress(comandaItem);
+
+                return true;
+            }
+        });
 
     }
 
@@ -88,6 +98,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
         public TextView text_senia_price;
         public TextView text_senia_total;
         public LinearLayout linear_vacios;
+        public LinearLayout include_header;
 
 
         public MainListAdapterHolder(View itemView) {
@@ -100,6 +111,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
             text_senia_price = (TextView) itemView.findViewById(R.id.txt_senia_price);
             text_senia_total = (TextView) itemView.findViewById(R.id.txt_senia_total);
             linear_vacios = (LinearLayout) itemView.findViewById(R.id.linear_vacios);
+            include_header = (LinearLayout) itemView.findViewById(R.id.include_header);
         }
     }
 

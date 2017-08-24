@@ -11,6 +11,7 @@ import com.mcba.comandaclient.model.ComandaItem;
 import com.mcba.comandaclient.presenter.ComandaListPresenter;
 import com.mcba.comandaclient.presenter.ComandaListPresenterImpl;
 import com.mcba.comandaclient.ui.ComandaListView;
+import com.mcba.comandaclient.ui.ComandaSearchActivity;
 import com.mcba.comandaclient.ui.adapter.MainListAdapter;
 import com.mcba.comandaclient.utils.Constants;
 import com.mcba.comandaclient.utils.StorageProvider;
@@ -25,8 +26,10 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
 
 
     private LinearLayout mBtnNewComanda;
+    private LinearLayout mBtnComandaList;
     private ComandaListPresenter mPresenter;
     private int mNextComandaId;
+
 
 
     public static EntryFragment newInstance() {
@@ -44,12 +47,15 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
     protected void setViewReferences() {
 
         mBtnNewComanda = (LinearLayout) findViewById(R.id.btn_new_comanda);
+        mBtnComandaList = (LinearLayout) findViewById(R.id.btn_comanda_list);
+
     }
 
     @Override
     protected void setupFragment(Bundle savedInstanceState) {
 
         mPresenter = new ComandaListPresenterImpl(this);
+
         mPresenter.attachView();
 
         mPresenter.fetchLastComanda();
@@ -59,6 +65,16 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
             public void onClick(View view) {
 
                 mCallbacks.onGoToMainListFromEntryFragment(mNextComandaId);
+            }
+        });
+
+
+        mBtnComandaList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(ComandaSearchActivity.getNewIntent(getActivity()));
+
             }
         });
 
@@ -84,13 +100,29 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
 
         mNextComandaId = id;
         StorageProvider.savePreferences(Constants.RESTOREMAIN, false);
+
         Toast.makeText(getActivity(), String.valueOf(id), Toast.LENGTH_SHORT).show();
         StorageProvider.savePreferences(Constants.LAST_COMANDA_ID, id);
 
     }
 
     @Override
+    public void onTotalesFetched(double total, double senia, double bultos) {
+
+    }
+
+    @Override
     public void onStoreItemSuccess(boolean isSuccess) {
+
+    }
+
+    @Override
+    public void onDeleteItemSuccess(boolean isSuccess) {
+
+    }
+
+    @Override
+    public void onDeleteComandaSuccess(boolean isSuccess) {
 
     }
 

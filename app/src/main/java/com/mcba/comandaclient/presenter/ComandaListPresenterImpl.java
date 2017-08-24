@@ -83,13 +83,14 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
     }
 
     @Override
-    public void storeComanda(int mComandaId, int lastItemId, int cant, double price, int productId, int providerId, ItemFullName itemFullName, double packagePrice, List<ComandaItem> mComandaItemList) {
+    public void storeComanda(int mComandaId, int lastItemId, int cant, double price, int productId, int providerId, ItemFullName itemFullName, double packagePrice, List<ComandaItem> mComandaItemList, boolean isPrinted) {
 
         double total = 0;
         double totalSenia = 0;
         double bultos = 0;
         Comanda comanda = new Comanda();
         comanda.comandaId = mComandaId;
+        comanda.isPrinted = isPrinted;
 
         ComandaItem comandaItem = new ComandaItem();
         comandaItem.itemId = lastItemId + 1;
@@ -127,12 +128,19 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
             }
         }
 
+
         comanda.cantBultos = bultos;
         comanda.mSenia = totalSenia;
         comanda.mTotal = total + totalSenia;
         comanda.timestamp = Utils.getTimeStamp();
 
         mComandaInteractorCallbacks.storeComanda(this, comanda);
+    }
+
+    @Override
+    public void deleteComanda(int comandaId) {
+
+        mComandaInteractorCallbacks.deleteComanda(this, comandaId);
     }
 
     @Override
@@ -153,6 +161,32 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
 
         mComandaInteractorCallbacks.getLastComandaId(this);
     }
+
+    @Override
+    public void fetchTotales(Comanda comanda) {
+
+        double total = 0;
+        double totalSenia = 0;
+        double bultos = 0;
+        for (ComandaItem item : comanda.comandaItemList) {
+            total = total + item.mTotal;
+            bultos = bultos + item.mCant;
+            if (!item.mProductItem.packaging.isFree) {
+                totalSenia = totalSenia + (item.mProductItem.packaging.value * item.mCant);
+            }
+        }
+        if (comandaListView != null) {
+            getView().onTotalesFetched(total + totalSenia, totalSenia, bultos);
+        }
+
+    }
+
+    @Override
+    public void deleteItemComanda(int comandaId, int itemId) {
+
+        mComandaInteractorCallbacks.deleteItemComanda(this, comandaId, itemId);
+    }
+
 
     @Override
     public void onFetchComandaSuccess(Comanda comanda) {
@@ -212,6 +246,22 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
         if (comandaListView != null) {
             getView().onStoreItemSuccess(isSuccess);
         }
+    }
+
+    @Override
+    public void onDeleteItemCompleted(boolean isSuccess) {
+        if (comandaListView != null) {
+            getView().onDeleteItemSuccess(isSuccess);
+        }
+    }
+
+    @Override
+    public void onDeleteComandaCompleted(boolean isSuccess) {
+
+        if (comandaListView != null) {
+            getView().onDeleteComandaSuccess(isSuccess);
+        }
+
     }
 
     @Override

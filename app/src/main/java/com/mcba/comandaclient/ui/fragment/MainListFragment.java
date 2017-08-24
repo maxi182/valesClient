@@ -22,6 +22,7 @@ import com.mcba.comandaclient.presenter.ComandaListPresenterImpl;
 import com.mcba.comandaclient.ui.ComandaListView;
 import com.mcba.comandaclient.ui.adapter.MainListAdapter;
 import com.mcba.comandaclient.ui.fragment.dialog.IDialogCallbacks;
+import com.mcba.comandaclient.ui.fragment.dialog.ItemOptionDialogFragment;
 import com.mcba.comandaclient.ui.fragment.dialog.PrintDialogFragment;
 import com.mcba.comandaclient.utils.Constants;
 import com.mcba.comandaclient.utils.StorageProvider;
@@ -137,6 +138,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
 
         mItemFullName = getArguments().getParcelable(ITEM_FULL_NAME);
 
+        StorageProvider.savePreferences(Constants.PRINTSUCCESS, false);
 
         if (validateRestoreComanda()) { // Se mete aca cuando vuelve de background
 
@@ -161,7 +163,6 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
             mTxtComandaId.setText(String.valueOf(String.format("%05d", mComandaId)));
         }
         //consultar comandas
-
 
     }
 
@@ -204,9 +205,13 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
             StorageProvider.savePreferences(Constants.RESTOREMAIN, true);
             mTxtComandaId.setText(String.valueOf(String.format("%05d", comanda.comandaId)));
             mComanda = comanda;
-            mTxtTotalComanda.setText(String.valueOf(mComanda.mTotal));
-            mTxtSenia.setText(String.valueOf(mComanda.mSenia));
-            mCantBultos.setText(String.valueOf(mComanda.cantBultos));
+
+
+            if (!(comanda.comandaItemList.size() > 0)) {
+                StorageProvider.savePreferences(Constants.RESTOREMAIN, false);
+            }
+
+            mPresenter.fetchTotales(comanda);
 
             mAdapter.setItems(comanda.comandaItemList);
             mAdapter.notifyDataSetChanged();
@@ -239,6 +244,14 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     }
 
     @Override
+    public void onTotalesFetched(double total, double senia, double bultos) {
+
+        mTxtTotalComanda.setText(String.valueOf(total));
+        mTxtSenia.setText(String.valueOf(senia));
+        mCantBultos.setText(String.valueOf(bultos));
+    }
+
+    @Override
     public void onStoreItemSuccess(boolean isSuccess) {
 
         if (isSuccess) {
@@ -246,6 +259,20 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         } else {
             Log.e("StoreItem", "can not save item");
         }
+    }
+
+    @Override
+    public void onDeleteItemSuccess(boolean isSuccess) {
+
+        if (isSuccess) {
+            mPresenter.fetchComandaById(mComandaId);
+        }
+
+    }
+
+    @Override
+    public void onDeleteComandaSuccess(boolean isSuccess) {
+
     }
 
     @Override
@@ -263,7 +290,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
 
         mPresenter.storeComanda(mComandaId, getArguments().getInt(LASTITEM_ID), getArguments().getInt(CANT),
                 getArguments().getDouble(PRICE), getArguments().getInt(PRUDUCT_ID), getArguments().getInt(PROVIDER_ID), mItemFullName,
-                getArguments().getDouble(PACKAGE_PRICE), mComandaItemList);
+                getArguments().getDouble(PACKAGE_PRICE), mComandaItemList, false);
     }
 
 
@@ -275,9 +302,12 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
                 mCallbacks.onGoToSelectProduct(mComandaId);
                 break;
             case R.id.btn_finish:
-                // storeComanda();
                 if (!validateIsNewComanda() || isRestoreMain()) {
-                    printComanda();
+
+                    if (mAdapter.getItemCount() > 0) {
+                        // printSuccess();
+                        printComanda();
+                    }
                 }
                 break;
             default:
@@ -286,8 +316,6 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
 
     @Override
     public void onStop() {
-        StorageProvider.savePreferences("restoreCmdId", true);
-
         super.onStop();
 
     }
@@ -299,7 +327,11 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     }
 
     @Override
-    public void onItemPress(Product product) {
+    public void onItemPress(ComandaItem comandaItem) {
+
+        ItemOptionDialogFragment itemOptionDialogFragment = new ItemOptionDialogFragment();
+        itemOptionDialogFragment.initDialog(this, comandaItem.itemId);
+        itemOptionDialogFragment.show(getActivity().getFragmentManager(), "");
 
     }
 
@@ -325,6 +357,16 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     }
 
     @Override
+    public void printSuccess() {
+
+        mPresenter.storeComanda(mComandaId, getArguments().getInt(LASTITEM_ID), getArguments().getInt(CANT),
+                getArguments().getDouble(PRICE), getArguments().getInt(PRUDUCT_ID), getArguments().getInt(PROVIDER_ID), mItemFullName,
+                getArguments().getDouble(PACKAGE_PRICE), mComandaItemList, true);
+
+
+    }
+
+    @Override
     public void onOkPress(Dialog dialog, boolean isSuccess) {
         dialog.dismiss();
         if (isSuccess) {
@@ -332,6 +374,12 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         } else {
             return;
         }
+    }
+
+    @Override
+    public void onDeletePress(Dialog dialog, int itemId) {
+        dialog.dismiss();
+        mPresenter.deleteItemComanda(mComandaId, itemId);
     }
 
     @Override

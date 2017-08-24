@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/general_margin"
+        android:layout_marginRight="@dimen/general_margin"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -36,7 +37,7 @@
     </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/btn_client_list"
+            android:id="@+id/btn_comanda_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/general_margin"
@@ -49,10 +50,10 @@
                 android:gravity="center"
                 android:textSize="20sp"
                 android:textColor="@color/white"
-                android:drawableLeft="@drawable/ic_vector_person"
+                android:drawableLeft="@drawable/ic_description"
                 android:drawablePadding="@dimen/general_margin"
                 android:layout_centerHorizontal="true"
-                android:text="Listado de Clientes" />
+                android:text="Listado de Comandas" />
 
 
         </LinearLayout>

@@ -9,5 +9,10 @@ import android.app.Dialog;
 public interface IDialogCallbacks {
 
     void dismissDialog();
+
+    void printSuccess();
+
     void onOkPress(Dialog dialog, boolean isSuccess);
+
+    void onDeletePress(Dialog dialog, int itemId);
 }

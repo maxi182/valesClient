@@ -6,8 +6,6 @@ import com.mcba.comandaclient.model.Comanda;
 import com.mcba.comandaclient.model.ComandaItem;
 import com.mcba.comandaclient.model.ComandaList;
 
-import java.util.List;
-
 import io.realm.Realm;
 import io.realm.RealmAsyncTask;
 import io.realm.RealmList;
@@ -29,7 +27,6 @@ public class ComandaInteractorImpl extends RealmManager implements ComandaIntera
             //  requestCallback.onFetchComandaSuccess(getRealmComandaData());
         } else {
             requestCallback.onFetchComandaFail();
-
         }
     }
 
@@ -66,6 +63,72 @@ public class ComandaInteractorImpl extends RealmManager implements ComandaIntera
 
     }
 
+    @Override
+    public void deleteItemComanda(final RequestCallback callback, final int comandaId, final int itemId) {
+
+
+        mTransaction = mRealm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm bgRealm) {
+
+                RealmList<ComandaItem> results = bgRealm.where(Comanda.class).equalTo("comandaId", comandaId).findFirst().comandaItemList;
+                ComandaItem comandaItem = results.where().equalTo("itemId", itemId).findFirst();
+                comandaItem.deleteFromRealm();
+
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                callback.onDeleteItemCompleted(true);
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                callback.onDeleteItemCompleted(false);
+            }
+        });
+    }
+
+
+    @Override
+    public void deleteComanda(final RequestCallback callback, final int comandaId) {
+
+        mTransaction = mRealm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm bgRealm) {
+
+                RealmResults<Comanda> results = bgRealm.where(Comanda.class).equalTo("comandaId", comandaId).findAll();
+                Comanda comanda = results.where().equalTo("comandaId", comandaId).findFirst();
+                comanda.deleteFromRealm();
+
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                callback.onDeleteComandaCompleted(true);
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                callback.onDeleteComandaCompleted(false);
+            }
+        });
+    }
+
+    private void deleteComandaItems(final int deleteId) {
+
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+
+                RealmList<ComandaItem> results = realm.where(Comanda.class).equalTo("comandaId", deleteId).findFirst().comandaItemList;
+                RealmResults<ComandaItem> comandaItem = results.where().findAll();
+                comandaItem.deleteAllFromRealm();
+
+            }
+        });
+    }
+
     private RealmResults<ComandaItem> checkItemsByComanda(int id) {
 
         return mRealm.where(ComandaItem.class).equalTo("comandaId", id).findAll();
@@ -86,7 +149,6 @@ public class ComandaInteractorImpl extends RealmManager implements ComandaIntera
             @Override
             public void onSuccess() {
                 callback.onStoreCompleted(true);
-                // callback.onFetchDataSuccess(getRealmProviderList(), getRealmProductList());
             }
         }, new Realm.Transaction.OnError() {
             @Override
@@ -107,6 +169,7 @@ public class ComandaInteractorImpl extends RealmManager implements ComandaIntera
 
                 bgRealm.insertOrUpdate(comanda);
 
+
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
@@ -125,7 +188,12 @@ public class ComandaInteractorImpl extends RealmManager implements ComandaIntera
     @Override
     public void getLastComandaId(RequestCallback requestCallback) {
 
-        Number nextID = mRealm.where(Comanda.class).max("comandaId");
+        Number nextIDNotPrinted = mRealm.where(Comanda.class).equalTo("isPrinted", false).max("comandaId");
+        if (nextIDNotPrinted != null) {
+            deleteComandaItems(nextIDNotPrinted.intValue());
+        }
+
+        Number nextID = mRealm.where(Comanda.class).equalTo("isPrinted", true).max("comandaId");
 
         if (nextID != null) {
             requestCallback.onFetchLastComandaId(nextID.intValue());
