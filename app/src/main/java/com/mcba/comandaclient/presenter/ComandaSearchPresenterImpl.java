@@ -3,6 +3,7 @@ package com.mcba.comandaclient.presenter;
 import com.mcba.comandaclient.interactor.ComandaSearchInteractorCallbacks;
 import com.mcba.comandaclient.interactor.ComandaSearchInteractorImpl;
 import com.mcba.comandaclient.model.Comanda;
+import com.mcba.comandaclient.ui.ComandaListView;
 import com.mcba.comandaclient.ui.ComandaSearchView;
 
 import java.lang.ref.WeakReference;
@@ -27,8 +28,12 @@ public class ComandaSearchPresenterImpl implements ComandaSearchPresenter, Coman
     @Override
     public void fetchComandas() {
 
+        mComandaSearchInteractorCallbacks.fetchComandas(this);
 
+    }
 
+    private ComandaSearchView getView() {
+        return (comandaSearchView != null) ? comandaSearchView.get() : null;
     }
 
     @Override
@@ -48,6 +53,9 @@ public class ComandaSearchPresenterImpl implements ComandaSearchPresenter, Coman
 
     @Override
     public void onFetchComandasSuccess(RealmList<Comanda> comandas) {
+        if (comandaSearchView != null) {
+            getView().onComandasFetched(comandas);
+        }
 
     }
 }

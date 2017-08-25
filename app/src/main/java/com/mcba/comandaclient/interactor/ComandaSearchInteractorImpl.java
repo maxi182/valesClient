@@ -1,5 +1,7 @@
 package com.mcba.comandaclient.interactor;
 
+import android.util.Log;
+
 import com.mcba.comandaclient.model.Comanda;
 
 import io.realm.RealmList;
@@ -17,19 +19,26 @@ public class ComandaSearchInteractorImpl extends RealmManager implements Comanda
     public void fetchComandas(RequestCallback requestCallback) {
         RealmList<Comanda> listComandas = new RealmList<>();
 
-        RealmResults<Comanda> results = mRealm.where(Comanda.class).findAll().sort("comandaId", Sort.DESCENDING);
+        RealmResults<Comanda> results = mRealm.where(Comanda.class).equalTo("isPrinted", true).findAll().sort("comandaId", Sort.DESCENDING);
         listComandas.addAll(results);
         requestCallback.onFetchComandasSuccess(listComandas);
     }
 
-
     @Override
     public void attachView() {
+
+        Log.d("LOG", "Attach View");
+        initRealm();
 
     }
 
     @Override
     public void detachView() {
 
+        Log.d("LOG", "detachView");
+
+        closeRealm();
+
     }
+
 }

@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -14,19 +15,24 @@ import android.widget.TextView;
 
 
 import com.mcba.comandaclient.R;
+import com.mcba.comandaclient.model.Comanda;
 import com.mcba.comandaclient.presenter.ComandaSearchPresenter;
+import com.mcba.comandaclient.presenter.ComandaSearchPresenterImpl;
+import com.mcba.comandaclient.ui.adapter.ComandaSearchAdapter;
 
 import br.com.mauker.materialsearchview.MaterialSearchView;
+import io.realm.RealmList;
 
 /**
  * Created by mac on 24/07/2017.
  */
 
-public class ComandaSearchActivity extends MainSearchActivity {
+public class ComandaSearchActivity extends MainSearchActivity implements ComandaSearchView, ComandaSearchAdapter.AdapterCallbacks {
 
     private Toolbar mToolbar;
     private RecyclerView mRecyclerview;
     private TextView mSearchHint;
+    private ComandaSearchAdapter mAdapter;
 
     private ComandaSearchPresenter mPresenter;
 
@@ -36,14 +42,30 @@ public class ComandaSearchActivity extends MainSearchActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_comanda);
 
+
+        mPresenter = new ComandaSearchPresenterImpl(this);
+        mPresenter.attachView();
+
         mRecyclerview = (RecyclerView) findViewById(R.id.recycler_comandas);
+        mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new ComandaSearchAdapter(this, this);
+        mRecyclerview.setAdapter(mAdapter);
+
         mSearchHint = (TextView) findViewById(R.id.txt_hint);
         mSearchHint.setText("Nº Comanda");
 
+        mPresenter.fetchComandas();
 
         setupToolbar();
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-     //   mPresenter.fetchComandas();
+
+    }
+
+    @Override
+    public void onComandasFetched(RealmList<Comanda> listComandas) {
+
+        mAdapter.setItems(listComandas);
+        mAdapter.notifyDataSetChanged();
 
     }
 
@@ -70,7 +92,6 @@ public class ComandaSearchActivity extends MainSearchActivity {
     public void setSearchHint(MaterialSearchView searchView) {
 
         searchView.setHint("N comanda");
-
     }
 
     @Override
@@ -113,5 +134,8 @@ public class ComandaSearchActivity extends MainSearchActivity {
         actionBar.setDisplayShowHomeEnabled(true);
     }
 
+    @Override
+    public void onItemPress(Comanda comandaItem) {
 
+    }
 }
