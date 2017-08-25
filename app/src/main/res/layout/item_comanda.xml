@@ -3,65 +3,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_container"
     android:layout_width="match_parent"
-    android:layout_height="80dip">
+    android:layout_height="100dip">
 
 
-    <TextView
-        android:id="@+id/txt_num_comanda"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/general_margin"
-        android:drawableLeft="@drawable/ic_description_greeen"
-        android:drawablePadding="@dimen/general_margin"
-        android:gravity="center_vertical"
-        tools:text="30119"
-        android:textColor="@color/zh_white_alpha_20"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-
-    <TextView
-        android:id="@+id/txt_date"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="@dimen/general_margin"
-        android:layout_marginRight="@dimen/general_margin_small"
-        android:drawableLeft="@drawable/ic_calendar"
-        android:drawablePadding="@dimen/general_margin_small"
-        android:gravity="right"
-        tools:text="22/08/2017"
-        android:textColor="@color/zh_white_alpha_20"
-        android:textSize="20sp" />
+        android:layout_height="90dip"
+        android:layout_centerInParent="true">
 
-    <TextView
-        android:id="@+id/txt_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="@dimen/general_margin"
-        android:layout_marginRight="@dimen/general_margin_small"
-        android:drawableLeft="@drawable/ic_time"
-        android:drawablePadding="@dimen/general_margin_small"
-        android:layout_alignParentBottom="true"
-        tools:text="05:30"
 
-        android:textColor="@color/zh_white_alpha_20"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/txt_num_comanda"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/general_margin"
+            android:drawableLeft="@drawable/ic_description_greeen"
+            android:drawablePadding="@dimen/general_margin"
+            android:gravity="center_vertical"
+            android:textColor="@color/zh_white_alpha_20"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:text="30119" />
 
-    <TextView
-        android:id="@+id/txt_client"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="@dimen/general_margin"
-        android:layout_marginRight="@dimen/general_margin_small"
-        android:drawableLeft="@drawable/ic_person_green"
-        android:drawablePadding="@dimen/general_margin_small"
-        android:layout_alignParentBottom="true"
-        tools:text="CC / MIGUELEZ"
-        android:textColor="@color/zh_white_alpha_20"
-        android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txt_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/general_margin"
+            android:layout_marginRight="@dimen/general_margin"
+            android:drawableLeft="@drawable/ic_calendar"
+            android:drawablePadding="@dimen/general_margin_small"
+            android:gravity="right"
+            android:textColor="@color/zh_white_alpha_20"
+            android:textSize="20sp"
+            tools:text="22/08/2017" />
+
+        <TextView
+            android:id="@+id/txt_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/general_margin"
+            android:drawableLeft="@drawable/ic_time"
+            android:drawablePadding="@dimen/general_margin"
+            android:textColor="@color/zh_white_alpha_20"
+            android:textSize="20sp"
+            tools:text="05:30" />
+
+        <TextView
+            android:id="@+id/txt_client"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/txt_num_comanda"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/txt_num_comanda"
+            android:drawableLeft="@drawable/ic_person_green"
+            android:drawablePadding="@dimen/general_margin"
+            android:textColor="@color/zh_white_alpha_20"
+            android:textSize="18sp"
+            android:text="EFE" />
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
@@ -69,7 +73,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="@dimen/general_margin"
         android:layout_marginRight="@dimen/general_margin"
-        android:background="@color/zh_slate_grey">
+        android:layout_marginTop="@dimen/general_margin"
+        android:background="@color/colorPrimary">
 
     </View>
 
