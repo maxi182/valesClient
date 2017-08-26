@@ -289,6 +289,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
 
     private void storeComanda() {
 
+
         mPresenter.storeComanda(mComandaId, getArguments().getInt(LASTITEM_ID), getArguments().getInt(CANT),
                 getArguments().getDouble(PRICE), getArguments().getInt(PRUDUCT_ID), getArguments().getInt(PROVIDER_ID), mItemFullName,
                 getArguments().getDouble(PACKAGE_PRICE), mComandaItemList, false);
@@ -360,9 +361,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     @Override
     public void printSuccess() {
 
-        mPresenter.storeComanda(mComandaId, getArguments().getInt(LASTITEM_ID), getArguments().getInt(CANT),
-                getArguments().getDouble(PRICE), getArguments().getInt(PRUDUCT_ID), getArguments().getInt(PROVIDER_ID), mItemFullName,
-                getArguments().getDouble(PACKAGE_PRICE), mComandaItemList, true);
+        mPresenter.storeComanda(mComanda);
 
 
     }

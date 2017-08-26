@@ -138,6 +138,26 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
     }
 
     @Override
+    public void storeComanda(Comanda cmd) {
+
+        Comanda comanda = new Comanda();
+        comanda.comandaId = cmd.comandaId;
+        comanda.isPrinted = true;
+        comanda.comandaItemList = new RealmList<>();
+
+        if (cmd.comandaItemList != null && !cmd.comandaItemList.isEmpty()) {
+            comanda.comandaItemList.addAll(cmd.comandaItemList);
+        }
+        comanda.cantBultos = cmd.cantBultos;
+        comanda.mSenia = cmd.mSenia;
+        comanda.mTotal = cmd.mTotal;
+        comanda.timestamp = cmd.timestamp;
+
+        mComandaInteractorCallbacks.storeComanda(this, comanda);
+
+    }
+
+    @Override
     public void deleteComanda(int comandaId) {
 
         mComandaInteractorCallbacks.deleteComanda(this, comandaId);
