@@ -13,6 +13,8 @@ public class Constants {
     public static final String LAST_COMANDA_ID = "last_comanda_id";
     public static final String RESTOREMAIN = "restore_main";
     public static final String PRINTSUCCESS = "print_success";
+    public static final String DATEFORMAT = "dd/MM/yyyy";
+    public static final String TIMEFORMAT = "hh:mm";
 
 
 }

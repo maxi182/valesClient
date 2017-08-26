@@ -12,10 +12,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.mcba.comandaclient.R;
 import com.mcba.comandaclient.model.Comanda;
+import com.mcba.comandaclient.model.ComandaItem;
 import com.mcba.comandaclient.presenter.ComandaSearchPresenter;
 import com.mcba.comandaclient.presenter.ComandaSearchPresenterImpl;
 import com.mcba.comandaclient.ui.adapter.ComandaSearchAdapter;
@@ -66,6 +68,14 @@ public class ComandaSearchActivity extends MainSearchActivity implements Comanda
 
         mAdapter.setItems(listComandas);
         mAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onItemsFetched(RealmList<ComandaItem> items) {
+
+        RealmList<ComandaItem> its = items;
+        Toast.makeText(this, String.valueOf(items.size()), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -136,6 +146,8 @@ public class ComandaSearchActivity extends MainSearchActivity implements Comanda
 
     @Override
     public void onItemPress(Comanda comandaItem) {
+
+        mPresenter.fetchItems(comandaItem.comandaId);
 
     }
 }

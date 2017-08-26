@@ -8,4 +8,6 @@ public interface ComandaSearchPresenter extends IBasePresenter {
 
     void fetchComandas();
 
+    void fetchItems(int id);
+
 }

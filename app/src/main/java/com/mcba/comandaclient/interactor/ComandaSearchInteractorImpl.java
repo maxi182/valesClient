@@ -3,6 +3,7 @@ package com.mcba.comandaclient.interactor;
 import android.util.Log;
 
 import com.mcba.comandaclient.model.Comanda;
+import com.mcba.comandaclient.model.ComandaItem;
 
 import io.realm.RealmList;
 import io.realm.RealmResults;
@@ -23,6 +24,15 @@ public class ComandaSearchInteractorImpl extends RealmManager implements Comanda
         listComandas.addAll(results);
         requestCallback.onFetchComandasSuccess(listComandas);
     }
+
+    @Override
+    public void fetchItemsComanda(RequestCallback requestCallback, int id) {
+
+        RealmList<ComandaItem> items = mRealm.where(Comanda.class).equalTo("comandaId", id).findFirst().comandaItemList;
+        requestCallback.onFetchComandaItems(items);
+
+    }
+
 
     @Override
     public void attachView() {

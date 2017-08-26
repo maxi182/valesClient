@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,6 +51,13 @@ public class Utils {
         return System.currentTimeMillis();
     }
 
+    public static String getTimeFromTimeStamp(long timestamp, String format) {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String time = formatter.format(new Date(timestamp));
+        return time;
+    }
+
     public static String padBlanks(String text, int maxChars) {
 
         StringBuilder sb = new StringBuilder();
@@ -61,12 +69,11 @@ public class Utils {
 
     }
 
-    public static String padLeft(String text, int maxChars){
+    public static String padLeft(String text, int maxChars) {
 
         StringBuilder sb = new StringBuilder();
         int rest = maxChars - text.length();
-        for(int i = 1; i < rest; i++)
-        {
+        for (int i = 1; i < rest; i++) {
             sb.append(" ");
         }
         sb.append(text);

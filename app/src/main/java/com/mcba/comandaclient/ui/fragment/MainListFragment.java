@@ -207,6 +207,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
             mComanda = comanda;
 
 
+
             if (!(comanda.comandaItemList.size() > 0)) {
                 StorageProvider.savePreferences(Constants.RESTOREMAIN, false);
             }
@@ -305,8 +306,8 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
                 if (!validateIsNewComanda() || isRestoreMain()) {
 
                     if (mAdapter.getItemCount() > 0) {
-                        // printSuccess();
-                        printComanda();
+                         printSuccess();
+                        //printComanda();
                     }
                 }
                 break;
