@@ -115,6 +115,7 @@ public class ComandaInteractorImpl extends RealmManager implements ComandaIntera
         });
     }
 
+
     private void deleteComandaItems(final int deleteId) {
 
         mRealm.executeTransaction(new Realm.Transaction() {
@@ -128,6 +129,7 @@ public class ComandaInteractorImpl extends RealmManager implements ComandaIntera
             }
         });
     }
+
 
     private RealmResults<ComandaItem> checkItemsByComanda(int id) {
 
@@ -164,6 +166,7 @@ public class ComandaInteractorImpl extends RealmManager implements ComandaIntera
 
 
         mTransaction = mRealm.executeTransactionAsync(new Realm.Transaction() {
+
             @Override
             public void execute(Realm bgRealm) {
 
@@ -183,6 +186,35 @@ public class ComandaInteractorImpl extends RealmManager implements ComandaIntera
             }
         });
 
+    }
+
+    @Override
+    public void updateVacio(final RequestCallback callback, final int comandaId, final int itemId) {
+
+        mTransaction = mRealm.executeTransactionAsync(new Realm.Transaction() {
+
+            @Override
+            public void execute(Realm bgRealm) {
+
+                RealmList<ComandaItem> results = bgRealm.where(Comanda.class).equalTo("comandaId", comandaId).findFirst().comandaItemList;
+                ComandaItem comandaItem = results.where().equalTo("itemId", itemId).findFirst();
+                comandaItem.mProductItem.packaging.value = 0;
+                comandaItem.mProductItem.packaging.isFree = true;
+                bgRealm.insertOrUpdate(comandaItem);
+
+
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                callback.onStoreCompleted(true);
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                callback.onStoreCompleted(false);
+            }
+        });
     }
 
     @Override

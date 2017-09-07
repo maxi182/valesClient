@@ -6,12 +6,12 @@
 
     <RelativeLayout
         android:layout_width="260dip"
-        android:layout_height="80dip"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true">
 
         <LinearLayout
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_margin="@dimen/general_margin"
@@ -20,9 +20,9 @@
             <LinearLayout
                 android:id="@+id/btn_dialog_delete"
                 style="@style/AppTheme.Button.Large.DarkSlategray"
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:padding="@dimen/general_margin">
 
                 <ImageView
@@ -34,9 +34,28 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-
+                    android:layout_gravity="center_horizontal|center_vertical"
                     android:text="Eliminar"
+                    android:textColor="@color/white"
+                    android:textSize="15dip" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btn_dialog_delete_vacio"
+                style="@style/AppTheme.Button.Large.DarkSlategray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:padding="@dimen/general_margin">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:text="Eliminar vacio"
                     android:textColor="@color/white"
                     android:textSize="15dip" />
 

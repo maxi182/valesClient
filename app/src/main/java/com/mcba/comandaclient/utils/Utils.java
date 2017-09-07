@@ -53,7 +53,7 @@ public class Utils {
 
     public static String getTimeFromTimeStamp(long timestamp, String format) {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat(format);
         String time = formatter.format(new Date(timestamp));
         return time;
     }

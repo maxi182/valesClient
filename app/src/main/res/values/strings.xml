@@ -27,10 +27,16 @@
     <string name="handlingmsg_err_battery_real_end">Por favor, conecte el cable de alimentacion o cambie la bateria de la impresora.\n</string>
     <string name="handlingmsg_err_offline">Impresora sin conexion.\n</string>
 
-    <!--Print -->
+    <!-- Print -->
     <string name="venue_name">NAVE 8 PUESTO 51-53\n</string>
     <string name="company_name">FRUTYLEG SRL\n</string>
     <string name="print_success">Retire el comprobante</string>
+
+    <!-- Comanda card view -->
+    <string name="comanda_name">Comanda N</string>
+    <string name="time">Fecha</string>
+    <string name="client">Cliente</string>
+
 
 
 </resources>

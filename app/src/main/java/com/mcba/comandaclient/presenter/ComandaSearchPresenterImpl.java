@@ -34,8 +34,9 @@ public class ComandaSearchPresenterImpl implements ComandaSearchPresenter, Coman
     }
 
     @Override
-    public void fetchItems(int id) {
-        mComandaSearchInteractorCallbacks.fetchItemsComanda(this, id);
+    public void fetchItems(int id, double cantBultos, double total, double senia, long timestamp) {
+        mComandaSearchInteractorCallbacks.fetchItemsComanda(this, id, cantBultos, total, senia, timestamp);
+
     }
 
     private ComandaSearchView getView() {
@@ -62,14 +63,12 @@ public class ComandaSearchPresenterImpl implements ComandaSearchPresenter, Coman
         if (comandaSearchView != null) {
             getView().onComandasFetched(comandas);
         }
-
     }
 
     @Override
-    public void onFetchComandaItems(RealmList<ComandaItem> items) {
+    public void onFetchComandaItems(RealmList<ComandaItem> items, int id, double cantBultos, double total, double senia, long timestamp) {
         if (comandaSearchView != null) {
-            getView().onItemsFetched(items);
+            getView().onItemsFetched(items, id, cantBultos, total, senia, timestamp);
         }
-
     }
 }

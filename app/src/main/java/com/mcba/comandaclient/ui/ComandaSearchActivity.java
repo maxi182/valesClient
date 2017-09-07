@@ -22,6 +22,8 @@ import com.mcba.comandaclient.presenter.ComandaSearchPresenter;
 import com.mcba.comandaclient.presenter.ComandaSearchPresenterImpl;
 import com.mcba.comandaclient.ui.adapter.ComandaSearchAdapter;
 
+import java.util.ArrayList;
+
 import br.com.mauker.materialsearchview.MaterialSearchView;
 import io.realm.RealmList;
 
@@ -43,7 +45,6 @@ public class ComandaSearchActivity extends MainSearchActivity implements Comanda
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_comanda);
-
 
         mPresenter = new ComandaSearchPresenterImpl(this);
         mPresenter.attachView();
@@ -72,12 +73,10 @@ public class ComandaSearchActivity extends MainSearchActivity implements Comanda
     }
 
     @Override
-    public void onItemsFetched(RealmList<ComandaItem> items) {
-
-        RealmList<ComandaItem> its = items;
-        Toast.makeText(this, String.valueOf(items.size()), Toast.LENGTH_SHORT).show();
-
+    public void onItemsFetched(RealmList<ComandaItem> items, int id, double cantBultos, double total, double senia, long timestamp) {
+        startActivity(ComandaSearchDetailActivity.getNewIntent(this, new ArrayList(items), id, cantBultos, total, senia, timestamp));
     }
+
 
     public static Intent getNewIntent(Context context) {
         return new Intent(context, ComandaSearchActivity.class);
@@ -100,7 +99,6 @@ public class ComandaSearchActivity extends MainSearchActivity implements Comanda
 
     @Override
     public void setSearchHint(MaterialSearchView searchView) {
-
         searchView.setHint("N comanda");
     }
 
@@ -121,19 +119,16 @@ public class ComandaSearchActivity extends MainSearchActivity implements Comanda
     private void setupToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
-
         if (mToolbar != null) {
             Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_description
             );
             mToolbar.setNavigationIcon(drawable);
-
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //open activity client
                 }
             });
-
             setSupportActionBar(mToolbar);
             setupActionBar(getSupportActionBar());
         }
@@ -145,9 +140,9 @@ public class ComandaSearchActivity extends MainSearchActivity implements Comanda
     }
 
     @Override
-    public void onItemPress(Comanda comandaItem) {
+    public void onItemPress(Comanda comanda) {
 
-        mPresenter.fetchItems(comandaItem.comandaId);
+        mPresenter.fetchItems(comanda.comandaId, comanda.cantBultos, comanda.mTotal, comanda.mSenia, comanda.timestamp);
 
     }
 }

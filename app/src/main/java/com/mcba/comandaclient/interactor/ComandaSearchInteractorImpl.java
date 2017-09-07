@@ -26,13 +26,10 @@ public class ComandaSearchInteractorImpl extends RealmManager implements Comanda
     }
 
     @Override
-    public void fetchItemsComanda(RequestCallback requestCallback, int id) {
-
+    public void fetchItemsComanda(RequestCallback requestCallback, int id, double cantBultos, double total, double senia, long timestamp) {
         RealmList<ComandaItem> items = mRealm.where(Comanda.class).equalTo("comandaId", id).findFirst().comandaItemList;
-        requestCallback.onFetchComandaItems(items);
-
+        requestCallback.onFetchComandaItems(items, id, cantBultos, total, senia, timestamp);
     }
-
 
     @Override
     public void attachView() {

@@ -1,10 +1,12 @@
 package com.mcba.comandaclient.ui.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -39,7 +41,7 @@ public class ComandaSearchAdapter extends RecyclerView.Adapter<ComandaSearchAdap
     @Override
     public ComandaSearchAdapterHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_comanda, parent, false);
+                .inflate(R.layout.item_comanda_cv, parent, false);
         return new ComandaSearchAdapter.ComandaSearchAdapterHolder(itemView);
 
     }
@@ -52,15 +54,15 @@ public class ComandaSearchAdapter extends RecyclerView.Adapter<ComandaSearchAdap
     public void onBindViewHolder(ComandaSearchAdapterHolder holder, int position) {
         final Comanda comanda = mList.get(position);
         holder.text_num_comanda.setText(String.format("%05d", comanda.comandaId));
-        holder.text_date.setText(String.valueOf(Utils.getTimeFromTimeStamp(comanda.timestamp, Constants.DATEFORMAT)));
-        holder.text_time.setText(String.valueOf(Utils.getTimeFromTimeStamp(comanda.timestamp, Constants.TIMEFORMAT)));
+        holder.text_date.setText(String.valueOf(Utils.getTimeFromTimeStamp(comanda.timestamp, Constants.DATEFORMAT)) + " " + String.valueOf(Utils.getTimeFromTimeStamp(comanda.timestamp, Constants.TIMEFORMAT)));
+        // holder.text_time.setText(String.valueOf(Utils.getTimeFromTimeStamp(comanda.timestamp, Constants.TIMEFORMAT)));
+
         holder.mContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCallbacks.onItemPress(comanda);
             }
         });
-
     }
 
     @Override
@@ -73,16 +75,17 @@ public class ComandaSearchAdapter extends RecyclerView.Adapter<ComandaSearchAdap
         public RelativeLayout mContainer;
         public TextView text_num_comanda;
         public TextView text_date;
-        public TextView text_time;
         public TextView txt_client;
+        public TextView  txt_num_comanda;
 
         public ComandaSearchAdapterHolder(View itemView) {
             super(itemView);
-            mContainer = (RelativeLayout) itemView.findViewById(R.id.item_container);
+
+            mContainer = (RelativeLayout) itemView.findViewById(R.id.content);
             text_num_comanda = (TextView) itemView.findViewById(R.id.txt_num_comanda);
             text_date = (TextView) itemView.findViewById(R.id.txt_date);
-            text_time = (TextView) itemView.findViewById(R.id.txt_time);
             txt_client = (TextView) itemView.findViewById(R.id.txt_client);
+            txt_num_comanda = (TextView) itemView.findViewById(R.id.txt_num_comanda);
 
 
         }

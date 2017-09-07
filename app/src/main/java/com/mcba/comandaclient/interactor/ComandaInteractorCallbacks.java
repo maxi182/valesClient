@@ -24,6 +24,8 @@ public interface ComandaInteractorCallbacks {
 
     void storeComanda(RequestCallback requestCallback, Comanda comandas);
 
+    void updateVacio(RequestCallback requestCallback, int comandaId, int itemId);
+
     void deleteItemComanda(RequestCallback requestCallback, int comandaId, int itemId);
 
     void deleteComanda(RequestCallback requestCallback, int comandaId);

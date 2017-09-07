@@ -13,7 +13,7 @@ public interface ComandaSearchInteractorCallbacks {
 
     void fetchComandas(RequestCallback requestCallback);
 
-    void fetchItemsComanda(RequestCallback requestCallback, int id);
+    void fetchItemsComanda(RequestCallback requestCallback, int id, double cantBultos, double total, double senia, long timestamp);
 
     void attachView();
 
@@ -23,7 +23,7 @@ public interface ComandaSearchInteractorCallbacks {
 
         void onFetchComandasSuccess(RealmList<Comanda> comandas);
 
-        void onFetchComandaItems(RealmList<ComandaItem> items);
+        void onFetchComandaItems(RealmList<ComandaItem> items, int id, double cantBultos, double total, double senia, long timestamp);
 
 
     }

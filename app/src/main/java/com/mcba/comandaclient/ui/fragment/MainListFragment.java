@@ -207,7 +207,6 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
             mComanda = comanda;
 
 
-
             if (!(comanda.comandaItemList.size() > 0)) {
                 StorageProvider.savePreferences(Constants.RESTOREMAIN, false);
             }
@@ -307,7 +306,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
                 if (!validateIsNewComanda() || isRestoreMain()) {
 
                     if (mAdapter.getItemCount() > 0) {
-                         printSuccess();
+                        printSuccess();
                         //printComanda();
                     }
                 }
@@ -332,7 +331,8 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     public void onItemPress(ComandaItem comandaItem) {
 
         ItemOptionDialogFragment itemOptionDialogFragment = new ItemOptionDialogFragment();
-        itemOptionDialogFragment.initDialog(this, comandaItem.itemId);
+        itemOptionDialogFragment.initDialog(this, comandaItem.itemId, comandaItem.mProductItem.packaging.isFree);
+
         itemOptionDialogFragment.show(getActivity().getFragmentManager(), "");
 
     }
@@ -381,6 +381,13 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         dialog.dismiss();
         mPresenter.deleteItemComanda(mComandaId, itemId);
     }
+
+    @Override
+    public void onDeleteVacioPress(Dialog dialog, int itemId) {
+        dialog.dismiss();
+        mPresenter.updateVacio(mComanda, itemId);
+    }
+
 
     @Override
     public MainListFragmentCallbacks getDummyCallbacks() {

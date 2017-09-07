@@ -148,6 +148,7 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
         if (cmd.comandaItemList != null && !cmd.comandaItemList.isEmpty()) {
             comanda.comandaItemList.addAll(cmd.comandaItemList);
         }
+
         comanda.cantBultos = cmd.cantBultos;
         comanda.mSenia = cmd.mSenia;
         comanda.mTotal = cmd.mTotal;
@@ -156,6 +157,14 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
         mComandaInteractorCallbacks.storeComanda(this, comanda);
 
     }
+
+    @Override
+    public void updateVacio(Comanda cmd, int itemId) {
+
+        mComandaInteractorCallbacks.updateVacio(this, cmd.comandaId, itemId);
+
+    }
+
 
     @Override
     public void deleteComanda(int comandaId) {

@@ -4,9 +4,9 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".ComandaClientApplication"
@@ -14,11 +14,11 @@
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.MainActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait"
+        <activity
+            android:name=".ui.MainActivity"
             android:launchMode="singleTop"
-            >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,14 +30,19 @@
         <activity
             android:name=".ui.ComandaSearchActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.ComandaSearchDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="br.com.mauker.materialsearchview.db.HistoryProvider"
             android:authorities="br.com.mauker.materialsearchview.searchhistorydatabase"
             android:exported="false"
             android:protectionLevel="signature"
-            android:syncable="true"/>
+            android:syncable="true" />
 
     </application>
 

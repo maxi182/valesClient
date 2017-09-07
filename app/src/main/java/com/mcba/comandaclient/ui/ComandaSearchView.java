@@ -13,5 +13,6 @@ public interface ComandaSearchView {
 
     void onComandasFetched(RealmList<Comanda> listComandas);
 
-    void onItemsFetched(RealmList<ComandaItem> items);
+    void onItemsFetched(RealmList<ComandaItem> items, int id, double cantBultos, double total, double senia, long timestamp);
+
 }

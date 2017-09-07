@@ -15,4 +15,6 @@ public interface IDialogCallbacks {
     void onOkPress(Dialog dialog, boolean isSuccess);
 
     void onDeletePress(Dialog dialog, int itemId);
+
+    void onDeleteVacioPress(Dialog dialog, int itemId);
 }

@@ -19,12 +19,15 @@ import com.mcba.comandaclient.R;
 public class ItemOptionDialogFragment extends DialogFragment {
 
     private LinearLayout mBtnDelete;
+    private LinearLayout mBtnDeleteVacio;
     private int mItemId;
     private IDialogCallbacks mCallbacks;
+    private boolean mShowDeleteSenia;
 
-    public void initDialog(IDialogCallbacks iDialogCallbacks, int itemId) {
+    public void initDialog(IDialogCallbacks iDialogCallbacks, int itemId, boolean showDeleteSenia) {
         this.mCallbacks = iDialogCallbacks;
         this.mItemId = itemId;
+        this.mShowDeleteSenia = !showDeleteSenia;
 
     }
 
@@ -44,6 +47,18 @@ public class ItemOptionDialogFragment extends DialogFragment {
         dialog.show();
 
         mBtnDelete = (LinearLayout) dialog.findViewById(R.id.btn_dialog_delete);
+        mBtnDeleteVacio = (LinearLayout) dialog.findViewById(R.id.btn_dialog_delete_vacio);
+
+        mBtnDeleteVacio.setVisibility(mShowDeleteSenia ? View.VISIBLE : View.GONE);
+
+        mBtnDeleteVacio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mCallbacks.onDeleteVacioPress(dialog, mItemId);
+
+            }
+        });
 
         mBtnDelete.setOnClickListener(new View.OnClickListener() {
             @Override

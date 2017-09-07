@@ -35,6 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"
+                android:paddingLeft="@dimen/general_margin"
                 android:textSize="16dip"
                 android:layout_marginLeft="@dimen/general_margin_very_very_large"
                 android:textAppearance="@style/AppTheme.Text.LatoBold.darkgray.14.67"

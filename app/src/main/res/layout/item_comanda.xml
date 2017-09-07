@@ -48,7 +48,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/general_margin"
             android:drawableLeft="@drawable/ic_time"
-            android:drawablePadding="@dimen/general_margin"
+            android:drawablePadding="@dimen/general_margin_small"
             android:textColor="@color/zh_white_alpha_20"
             android:textSize="20sp"
             tools:text="05:30" />
