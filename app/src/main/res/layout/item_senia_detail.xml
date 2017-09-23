@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/general_margin_small"
+        android:paddingTop="@dimen/general_margin_small">
+
+        <LinearLayout
+            android:id="@+id/linear_cant"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight=".2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_senia_qty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                tools:text="5"
+                android:textSize="18dip"
+                android:textColor="@color/zh_white_alpha_20"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_weight=".6"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Vacio con seña"
+                android:textColor="@color/zh_white_alpha_20"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_weight=".2"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/txt_senia_price"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="16dip"
+                android:gravity="center"
+                tools:text="250"
+                android:textColor="@color/zh_white_alpha_20"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_weight=".2"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/txt_senia_total"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="18dip"
+                android:gravity="center"
+                tools:text="1250"
+                android:textColor="@color/zh_white_alpha_20"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

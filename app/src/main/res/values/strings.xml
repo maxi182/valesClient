@@ -36,7 +36,9 @@
     <string name="comanda_name">Comanda N</string>
     <string name="time">Fecha</string>
     <string name="client">Cliente</string>
-
+    <string name="total">Total</string>
+    <string name="senia">Seña</string>
+    <string name="bultos">Bultos</string>
 
 
 </resources>

@@ -27,11 +27,13 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
     private Context mContext;
     private List<ComandaItem> mList;
     private AdapterCallbacks mCallbacks;
+    private boolean isDetail;
 
 
-    public MainListAdapter(Context context, AdapterCallbacks callbacks) {
+    public MainListAdapter(Context context, AdapterCallbacks callbacks, boolean isDetail) {
         this.mContext = context;
         this.mCallbacks = callbacks;
+        this.isDetail = isDetail;
         this.mList = Collections.emptyList();
 
     }
@@ -49,7 +51,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
     @Override
     public MainListAdapterHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_item, parent, false);
+                .inflate(isDetail ? R.layout.item_detail : R.layout.item_item, parent, false);
         return new MainListAdapterHolder(itemView);
     }
 

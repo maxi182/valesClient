@@ -14,49 +14,74 @@
         android:gravity="center"
         android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/btn_new_comanda"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/AppTheme.Button.Large.DarkSlategray"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/btn_new_comanda"
+            style="@style/AppTheme.Button.Large.DarkSlategray"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:drawableLeft="@drawable/ic_playlist_add"
-            android:layout_centerHorizontal="true"
-            android:drawablePadding="@dimen/general_margin"
-            android:text="Nueva Comanda" />
+            android:orientation="horizontal">
 
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/ic_playlist_add"
+                android:drawablePadding="@dimen/general_margin"
+                android:gravity="center"
+                android:text="Nueva Comanda"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/btn_comanda_list"
+            style="@style/AppTheme.Button.Large.DarkSlategray"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/general_margin"
-            style="@style/AppTheme.Button.Large.DarkSlategray"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textColor="@color/white"
+                android:layout_centerHorizontal="true"
                 android:drawableLeft="@drawable/ic_description"
                 android:drawablePadding="@dimen/general_margin"
-                android:layout_centerHorizontal="true"
-                android:text="Listado de Comandas" />
+                android:gravity="center"
+                android:text="Listado de Comandas"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
 
         </LinearLayout>
+
+
+        <LinearLayout
+             style="@style/AppTheme.Button.Large.DarkSlategray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/general_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/ic_settings"
+                android:drawablePadding="@dimen/general_margin"
+                android:gravity="center"
+                android:text="Configuracion"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
+
+
     </LinearLayout>
+
 
 </LinearLayout>

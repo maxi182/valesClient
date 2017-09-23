@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/include_header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="3dip"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/rel_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:paddingBottom="@dimen/general_margin_small"
+        android:paddingTop="@dimen/general_margin_small">
+
+        <LinearLayout
+            android:id="@+id/linear_cant"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight=".2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_qty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="5"
+                android:textColor="@color/zh_white_alpha_20"
+                android:textSize="18dip"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_detalle"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_weight=".6"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/zh_white_alpha_20"
+                android:textSize="20sp"
+                tools:text="Banana ecuador Insanti " />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_precio"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_weight=".2"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/txt_price"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="250"
+                android:textColor="@color/zh_white_alpha_20"
+                android:textSize="16dip" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_total"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_weight=".2"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/txt_total"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="1250"
+                android:textColor="@color/zh_white_alpha_20"
+                android:textSize="18dip"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_vacios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <include layout="@layout/item_senia_detail" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:layout_marginLeft="@dimen/general_margin"
+        android:layout_marginRight="@dimen/general_margin"
+        android:background="@android:color/darker_gray"></View>
+
+</LinearLayout>

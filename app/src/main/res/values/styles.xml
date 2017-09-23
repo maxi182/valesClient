@@ -51,6 +51,17 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
+    <style name="AppTheme.Button.Small" parent="AppTheme.Button">
+
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/general_margin_small</item>
+        <item name="android:paddingBottom">@dimen/general_margin_small</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+
     <style name="AppTheme.Text.LatoBold.darkslategray" parent="AppTheme.Text.LatoBold">
         <item name="android:textColor">@color/zh_dark_slate_gray</item>
     </style>
@@ -70,6 +81,13 @@
         <item name="android:textAppearance">@style/AppTheme.Text.LatoBold.white.14.67</item>
         <item name="android:textColor">@drawable/button_darkslategray_text_color_selector</item>
     </style>
+
+    <style name="AppTheme.Button.Small.DarkSlategray" parent="AppTheme.Button.Small">
+        <item name="android:background">@drawable/button_darkslategray_background_selector</item>
+        <item name="android:textAppearance">@style/AppTheme.Text.LatoBold.white.14.67</item>
+        <item name="android:textColor">@drawable/button_darkslategray_text_color_selector</item>
+    </style>
+
 
     <style name="AppTheme.Text.LatoBold.darkslategray.14.67" parent="AppTheme.Text.LatoBold.darkslategray">
         <item name="android:textSize">14.67sp</item>

@@ -1,7 +1,6 @@
 package com.mcba.comandaclient.ui.fragment;
 
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
@@ -20,6 +19,7 @@ import com.mcba.comandaclient.model.ProviderList;
 import com.mcba.comandaclient.presenter.CantPricePresenerImpl;
 import com.mcba.comandaclient.presenter.CantPricePresenter;
 import com.mcba.comandaclient.ui.CantPriceView;
+import com.mcba.comandaclient.utils.Utils;
 
 import java.util.List;
 
@@ -66,6 +66,8 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
     private int mSelectedResourceId;
     private double mPackagePrice;
     private ItemFullName mItemFullName;
+    private boolean mIsDot = false;
+    private String mOldStr;
 
     private CantPricePresenter mCantPricePresenter;
 
@@ -165,6 +167,36 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
                 if (charSequence.toString().equals("") || charSequence.toString().substring(0, 1).equals("0")) {
                     mCantEditText.setText(INITIAL_QTY);
                 }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        mPriceEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                 mOldStr = charSequence.toString();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if (Utils.qtyOfDots(charSequence.toString())) {
+                    mPriceEditText.setText(mOldStr);
+                 }
+                if (charSequence.toString().equals("")) {
+                    mPriceEditText.setText("0");
+                }
+                if (charSequence.toString().length() > 0 && charSequence.toString().substring(0, 1).contains(".")) {
+
+                    mPriceEditText.setText(charSequence.toString().substring(1));
+
+                }
+
             }
 
             @Override

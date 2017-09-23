@@ -8,12 +8,15 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.mcba.comandaclient.R;
 import com.mcba.comandaclient.model.ComandaItem;
+import com.mcba.comandaclient.ui.adapter.MainListAdapter;
 
 import java.util.ArrayList;
 
@@ -21,7 +24,7 @@ import java.util.ArrayList;
  * Created by mac on 29/08/2017.
  */
 
-public class ComandaSearchDetailActivity extends AppCompatActivity {
+public class ComandaSearchDetailActivity extends AppCompatActivity implements MainListAdapter.AdapterCallbacks {
     public static final String ITEMS = "items";
     public static final String CANT_BULTOS = "cant_bultos";
     public static final String TOTAL = "total";
@@ -30,6 +33,9 @@ public class ComandaSearchDetailActivity extends AppCompatActivity {
     public static final String COMANDAID = "comandaid";
     private Toolbar mToolbar;
     private TextView mTxtHint;
+    private RecyclerView mRecyclerview;
+    private MainListAdapter mAdapter;
+    private ArrayList items;
 
     public static Intent getNewIntent(Context context, ArrayList<ComandaItem> items, int id, double cantBultos, double total, double senia, long timestamp) {
 
@@ -46,13 +52,27 @@ public class ComandaSearchDetailActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_comanda);
+        setContentView(R.layout.activity_search_comanda_detail);
         mTxtHint = (TextView) findViewById(R.id.txt_hint);
+        mRecyclerview = (RecyclerView) findViewById(R.id.recycler_comandas);
+
         setupToolbar();
         displayTitle();
 
-        ArrayList items = getIntent().getIntegerArrayListExtra(ITEMS);
+        mAdapter = new MainListAdapter(this, this, true);
+        mRecyclerview.setAdapter(mAdapter);
+        mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
 
+        items = getIntent().getIntegerArrayListExtra(ITEMS);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mAdapter.setItems(items);
+        mAdapter.notifyDataSetChanged();
     }
 
 
@@ -64,9 +84,7 @@ public class ComandaSearchDetailActivity extends AppCompatActivity {
     private void setupToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
-
         if (mToolbar != null) {
-
             setSupportActionBar(mToolbar);
             setupActionBar(getSupportActionBar());
         }
@@ -97,4 +115,8 @@ public class ComandaSearchDetailActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onItemPress(ComandaItem comandaItem) {
+
+    }
 }

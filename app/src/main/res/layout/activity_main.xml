@@ -62,6 +62,7 @@
         android:layout_marginBottom="@dimen/general_margin"
         android:layout_marginEnd="@dimen/general_margin"
         android:layout_marginRight="@dimen/general_margin"
+        android:visibility="gone"
         fab:fab_addButtonColorNormal="@color/zh_slate_grey"
         fab:fab_addButtonColorPressed="@color/zh_dark_slate_gray"
         fab:fab_addButtonPlusIconColor="@color/white">

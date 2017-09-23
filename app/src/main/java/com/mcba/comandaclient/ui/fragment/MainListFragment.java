@@ -124,7 +124,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     @Override
     protected void setupFragment(Bundle savedInstanceState) {
 
-        mAdapter = new MainListAdapter(getActivity(), this);
+        mAdapter = new MainListAdapter(getActivity(), this, false);
         mRecyclerview.setAdapter(mAdapter);
         mRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
