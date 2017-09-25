@@ -50,7 +50,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txt_num_comanda"
+                    android:id="@+id/txt_total"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -58,7 +58,7 @@
                     android:layout_weight="0.3"
                     android:gravity="right|center_vertical"
                     android:maxLines="2"
-                    android:text="32232"
+                    android:textSize="18sp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
@@ -82,11 +82,12 @@
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
-                    android:id="@+id/txt_date"
+                    android:id="@+id/txt_total_senia"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginRight="@dimen/general_margin"
+                    android:textSize="18sp"
                     android:layout_weight="0.3"
                     android:gravity="right|center_vertical"
                     android:maxLines="2"
@@ -113,12 +114,13 @@
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
-                    android:id="@+id/txt_client"
+                    android:id="@+id/txt_cant_bultos"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginRight="@dimen/general_margin"
                     android:layout_weight="0.3"
+                    android:textSize="18sp"
                     android:gravity="right|center_vertical"
                     android:maxLines="2"
                     android:textAppearance="?android:attr/textAppearanceSmall" />

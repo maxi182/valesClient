@@ -9,6 +9,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.text.method.DigitsKeyListener;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 
 import br.com.mauker.materialsearchview.MaterialSearchView;
 import io.realm.RealmList;
+import io.realm.RealmResults;
 
 /**
  * Created by mac on 24/07/2017.
@@ -57,6 +60,7 @@ public class ComandaSearchActivity extends MainSearchActivity implements Comanda
         mSearchHint = (TextView) findViewById(R.id.txt_hint);
         mSearchHint.setText("Nº Comanda");
 
+
         mPresenter.fetchComandas();
 
         setupToolbar();
@@ -77,6 +81,16 @@ public class ComandaSearchActivity extends MainSearchActivity implements Comanda
         startActivity(ComandaSearchDetailActivity.getNewIntent(this, new ArrayList(items), id, cantBultos, total, senia, timestamp));
     }
 
+    @Override
+    public void onComandasByIdFetched(RealmResults<Comanda> listComandas) {
+
+        if (listComandas.size() > 0) {
+            mAdapter.setItems(listComandas);
+            mAdapter.notifyDataSetChanged();
+
+        }
+    }
+
 
     public static Intent getNewIntent(Context context) {
         return new Intent(context, ComandaSearchActivity.class);
@@ -95,6 +109,9 @@ public class ComandaSearchActivity extends MainSearchActivity implements Comanda
     @Override
     public void searchByTerm(String searchTerm) {
 
+        if (!searchTerm.equals("")) {
+            mPresenter.fetchComandasById(Integer.valueOf(searchTerm));
+        }
     }
 
     @Override
@@ -109,7 +126,12 @@ public class ComandaSearchActivity extends MainSearchActivity implements Comanda
 
     @Override
     public void setOnSearchviewClose() {
+        mPresenter.fetchComandas();
+    }
 
+    @Override
+    public void setInputType(MaterialSearchView searchView) {
+        searchView.setInputType(InputType.TYPE_CLASS_NUMBER);
     }
 
     public Toolbar getToolbar() {

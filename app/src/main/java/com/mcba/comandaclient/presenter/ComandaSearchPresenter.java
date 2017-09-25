@@ -9,4 +9,6 @@ public interface ComandaSearchPresenter extends IBasePresenter {
     void fetchComandas();
 
     void fetchItems(int id, double cantBultos, double total, double senia, long timestamp);
+
+    void fetchComandasById(int id);
 }

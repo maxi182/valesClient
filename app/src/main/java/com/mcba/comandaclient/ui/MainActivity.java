@@ -91,6 +91,11 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
 
     }
 
+    @Override
+    public void setInputType(MaterialSearchView searchView) {
+
+    }
+
 
     public String getClientName() {
         return mClientName;

@@ -32,6 +32,9 @@ public class ComandaSearchDetailActivity extends AppCompatActivity implements Ma
     public static final String TIMESTAMP = "timestamp";
     public static final String COMANDAID = "comandaid";
     private Toolbar mToolbar;
+    private TextView mTxtSenia;
+    private TextView mTxtTotal;
+    private TextView mTxtCantBultos;
     private TextView mTxtHint;
     private RecyclerView mRecyclerview;
     private MainListAdapter mAdapter;
@@ -55,9 +58,13 @@ public class ComandaSearchDetailActivity extends AppCompatActivity implements Ma
         setContentView(R.layout.activity_search_comanda_detail);
         mTxtHint = (TextView) findViewById(R.id.txt_hint);
         mRecyclerview = (RecyclerView) findViewById(R.id.recycler_comandas);
+        mTxtSenia = (TextView) findViewById(R.id.txt_total_senia);
+        mTxtTotal = (TextView) findViewById(R.id.txt_total);
+        mTxtCantBultos = (TextView) findViewById(R.id.txt_cant_bultos);
 
         setupToolbar();
         displayTitle();
+        displayDataInCv();
 
         mAdapter = new MainListAdapter(this, this, true);
         mRecyclerview.setAdapter(mAdapter);
@@ -80,6 +87,13 @@ public class ComandaSearchDetailActivity extends AppCompatActivity implements Ma
         return mToolbar;
     }
 
+    private void displayDataInCv() {
+
+        mTxtSenia.setText("$ " + String.valueOf(getIntent().getDoubleExtra(SENIA, -1)));
+        mTxtTotal.setText("$ " + String.valueOf(getIntent().getDoubleExtra(TOTAL, -1)));
+        mTxtCantBultos.setText(String.valueOf(getIntent().getDoubleExtra(CANT_BULTOS, -1)));
+    }
+
 
     private void setupToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -92,7 +106,7 @@ public class ComandaSearchDetailActivity extends AppCompatActivity implements Ma
 
     private void displayTitle() {
 
-        mTxtHint.setText(String.valueOf(getIntent().getIntExtra(COMANDAID, -1)));
+        mTxtHint.setText(String.valueOf(String.format("%05d", getIntent().getIntExtra(COMANDAID, -1))));
         mTxtHint.setTextColor(ContextCompat.getColor(this, R.color.white));
         mTxtHint.setTypeface(Typeface.DEFAULT_BOLD);
         mTxtHint.setTextSize(20);

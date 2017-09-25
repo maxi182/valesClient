@@ -10,6 +10,7 @@ import com.mcba.comandaclient.ui.ComandaSearchView;
 import java.lang.ref.WeakReference;
 
 import io.realm.RealmList;
+import io.realm.RealmResults;
 
 /**
  * Created by mac on 24/07/2017.
@@ -38,6 +39,23 @@ public class ComandaSearchPresenterImpl implements ComandaSearchPresenter, Coman
         mComandaSearchInteractorCallbacks.fetchItemsComanda(this, id, cantBultos, total, senia, timestamp);
 
     }
+
+    @Override
+    public void fetchComandasById(int id) {
+
+        mComandaSearchInteractorCallbacks.fetchComandasById(this, id);
+
+    }
+
+    @Override
+    public void onFetchComandasByIdSuccess(RealmResults<Comanda> comandas) {
+
+        if (comandaSearchView != null) {
+            getView().onComandasByIdFetched(comandas);
+        }
+
+    }
+
 
     private ComandaSearchView getView() {
         return (comandaSearchView != null) ? comandaSearchView.get() : null;
@@ -71,4 +89,6 @@ public class ComandaSearchPresenterImpl implements ComandaSearchPresenter, Coman
             getView().onItemsFetched(items, id, cantBultos, total, senia, timestamp);
         }
     }
+
+
 }

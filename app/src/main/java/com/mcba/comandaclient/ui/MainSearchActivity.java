@@ -48,6 +48,8 @@ public abstract class MainSearchActivity extends AppCompatActivity implements IS
 
     public abstract void setOnSearchviewClose();
 
+    public abstract void setInputType(MaterialSearchView searchView);
+
 
     @Override
     public void onStop() {
@@ -65,6 +67,8 @@ public abstract class MainSearchActivity extends AppCompatActivity implements IS
         mSearchView = (MaterialSearchView) findViewById(R.id.search_view);
         mTxtHint = (TextView) findViewById(R.id.txt_hint);
         mSearchView.setVoiceIcon(R.drawable.ic_vector_mic);
+
+        setInputType(mSearchView);
 
         mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
