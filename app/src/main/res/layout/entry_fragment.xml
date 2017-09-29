@@ -60,7 +60,8 @@
 
 
         <LinearLayout
-             style="@style/AppTheme.Button.Large.DarkSlategray"
+            android:id="@+id/btn_settings"
+            style="@style/AppTheme.Button.Large.DarkSlategray"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/general_margin"
@@ -73,7 +74,7 @@
                 android:drawableLeft="@drawable/ic_settings"
                 android:drawablePadding="@dimen/general_margin"
                 android:gravity="center"
-                android:text="Configuracion"
+                android:text="@string/settings"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 

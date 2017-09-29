@@ -12,6 +12,7 @@ import com.mcba.comandaclient.presenter.ComandaListPresenter;
 import com.mcba.comandaclient.presenter.ComandaListPresenterImpl;
 import com.mcba.comandaclient.ui.ComandaListView;
 import com.mcba.comandaclient.ui.ComandaSearchActivity;
+import com.mcba.comandaclient.ui.SettingsActivity;
 import com.mcba.comandaclient.ui.adapter.MainListAdapter;
 import com.mcba.comandaclient.utils.Constants;
 import com.mcba.comandaclient.utils.StorageProvider;
@@ -27,9 +28,9 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
 
     private LinearLayout mBtnNewComanda;
     private LinearLayout mBtnComandaList;
+    private LinearLayout mBtnSettings;
     private ComandaListPresenter mPresenter;
     private int mNextComandaId;
-
 
 
     public static EntryFragment newInstance() {
@@ -48,6 +49,7 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
 
         mBtnNewComanda = (LinearLayout) findViewById(R.id.btn_new_comanda);
         mBtnComandaList = (LinearLayout) findViewById(R.id.btn_comanda_list);
+        mBtnSettings = (LinearLayout) findViewById(R.id.btn_settings);
 
     }
 
@@ -68,7 +70,6 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
             }
         });
 
-
         mBtnComandaList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,6 +78,16 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
 
             }
         });
+
+        mBtnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(SettingsActivity.getNewIntent(getActivity()));
+
+            }
+        });
+
 
     }
 

@@ -41,4 +41,14 @@
     <string name="bultos">Bultos</string>
 
 
+    <string name="settings">Configuración</string>
+
+
+    <string name="update_btn_title">Actualizar</string>
+    <string name="update_title">Actualizar Stock</string>
+    <string name="last_update">Ultima vez actualizado 12/23/2017 23:34</string>
+
+
+
+
 </resources>

@@ -91,7 +91,6 @@ public class ComandaSearchActivity extends MainSearchActivity implements Comanda
         }
     }
 
-
     public static Intent getNewIntent(Context context) {
         return new Intent(context, ComandaSearchActivity.class);
     }
@@ -116,7 +115,7 @@ public class ComandaSearchActivity extends MainSearchActivity implements Comanda
 
     @Override
     public void setSearchHint(MaterialSearchView searchView) {
-        searchView.setHint("N comanda");
+        searchView.setHint("Nº comanda");
     }
 
     @Override
