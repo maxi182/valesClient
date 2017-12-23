@@ -168,7 +168,7 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
         if (isRealmDBComandaItemLoaded()) {
             int lastItem = mRealm.where(ComandaItem.class).max("itemId").intValue();
             callback.onLastItemIdFetched(lastItem);
-        }else{
+        } else {
             callback.onLastItemIdFetched(0);
 
         }

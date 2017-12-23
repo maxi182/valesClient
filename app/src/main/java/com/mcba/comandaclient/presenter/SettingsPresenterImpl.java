@@ -10,7 +10,7 @@ import java.lang.ref.WeakReference;
  * Created by mac on 27/09/2017.
  */
 
-public class SettingsPresenterImpl implements SettingsPresenter , SettingsInteractorCallbacks.RequestCallback{
+public class SettingsPresenterImpl implements SettingsPresenter, SettingsInteractorCallbacks.RequestCallback {
 
 
     private SettingsInteractorCallbacks mSettingsInteractorCallback;
@@ -32,6 +32,14 @@ public class SettingsPresenterImpl implements SettingsPresenter , SettingsIntera
     @Override
     public void onUpdateProductsCompleted(boolean isSuccess) {
 
+        if (settingsView != null) {
+            getView().updateProducts(isSuccess);
+        }
+
+    }
+
+    private SettingsView getView() {
+        return (settingsView != null) ? settingsView.get() : null;
     }
 
     @Override

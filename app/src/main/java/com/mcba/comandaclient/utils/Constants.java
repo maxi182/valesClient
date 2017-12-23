@@ -15,6 +15,10 @@ public class Constants {
     public static final String PRINTSUCCESS = "print_success";
     public static final String DATEFORMAT = "dd/MM/yyyy";
     public static final String TIMEFORMAT = "hh:mm";
+    public static final String TIMEDATEFORMAT = "dd/MM/yyyy hh:mm";
+    public static final String LASTUPDATE = "lastupdate";
+
+
 
 
 }

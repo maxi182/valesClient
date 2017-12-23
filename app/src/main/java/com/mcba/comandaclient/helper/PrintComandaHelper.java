@@ -33,11 +33,12 @@ public class PrintComandaHelper implements Handler.Callback, ReceiveListener {
     private StringBuilder mSubTotales;
     private StringBuilder mTotal;
     private StringBuilder copyItems;
+    private String name;
 
 
     private Handler mHandler = new Handler(this);
 
-    public PrintComandaHelper(Activity context, IDialogCallbacks iDialogCallbacks, StringBuilder comandaItems, StringBuilder mSubTotales, StringBuilder total, StringBuilder copyItems, int comandaId, IPrintCallbacks printCallbacks) {
+    public PrintComandaHelper(Activity context, IDialogCallbacks iDialogCallbacks, StringBuilder comandaItems, StringBuilder mSubTotales, StringBuilder total, StringBuilder copyItems, int comandaId, String name, IPrintCallbacks printCallbacks) {
         this.mContext = context;
         this.mPrintCallbacks = printCallbacks;
         this.mComandaItems = comandaItems;
@@ -46,6 +47,7 @@ public class PrintComandaHelper implements Handler.Callback, ReceiveListener {
         this.mTotal = total;
         this.copyItems = copyItems;
         this.mIDialogCallbacks = iDialogCallbacks;
+        this.name = name;
 
     }
 
@@ -203,10 +205,13 @@ public class PrintComandaHelper implements Handler.Callback, ReceiveListener {
                 mPrinter.addFeedLine(1);
                 textData.append(mContext.getString(R.string.venue_name));
                 textData.append(mContext.getString(R.string.company_name));
+
+
                 textData.append("\n");
                 mPrinter.addTextAlign(Printer.ALIGN_LEFT);
                 textData.append("Comprobante Nro: " + String.valueOf(mComandaId) + "\n");
                 textData.append(Utils.getCurrentDate("dd/MM/yyyy  HH:mm\n"));
+                textData.append("Cliente: " + name + "\n");
                 mPrinter.addTextAlign(Printer.ALIGN_CENTER);
 
                 textData.append("------------------------------\n");

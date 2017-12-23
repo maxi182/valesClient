@@ -27,6 +27,10 @@
     <string name="handlingmsg_err_battery_real_end">Por favor, conecte el cable de alimentacion o cambie la bateria de la impresora.\n</string>
     <string name="handlingmsg_err_offline">Impresora sin conexion.\n</string>
 
+
+    <string name="dealer_venue">N8P51/53"</string>
+
+
     <!-- Print -->
     <string name="venue_name">NAVE 8 PUESTO 51-53\n</string>
     <string name="company_name">FRUTYLEG SRL\n</string>
@@ -46,7 +50,7 @@
 
     <string name="update_btn_title">Actualizar</string>
     <string name="update_title">Actualizar Stock</string>
-    <string name="last_update">Ultima vez actualizado 12/23/2017 23:34</string>
+    <string name="last_update">Ultima vez actualizado </string>
 
 
 

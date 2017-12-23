@@ -8,12 +8,16 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.mcba.comandaclient.R;
 import com.mcba.comandaclient.presenter.SettingsPresenter;
 import com.mcba.comandaclient.presenter.SettingsPresenterImpl;
+import com.mcba.comandaclient.utils.Constants;
+import com.mcba.comandaclient.utils.StorageProvider;
+import com.mcba.comandaclient.utils.Utils;
 
 /**
  * Created by mac on 25/09/2017.
@@ -24,6 +28,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView,
     private Toolbar mToolbar;
     private TextView mTxtHint;
     private TextView mBtnUpdate;
+    private TextView mLastUpdate;
     private SettingsPresenter mPresenter;
 
 
@@ -39,12 +44,15 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView,
 
         mTxtHint = (TextView) findViewById(R.id.txt_hint);
         mBtnUpdate = (TextView) findViewById(R.id.txt_btn_update);
+        mLastUpdate = (TextView) findViewById(R.id.txt_last_update);
         mBtnUpdate.setOnClickListener(this);
 
 
         mPresenter = new SettingsPresenterImpl(this);
         mPresenter.attachView();
 
+        String lastupdate = StorageProvider.getPreferencesString(Constants.LASTUPDATE);
+        mLastUpdate.setText(getResources().getString(R.string.last_update) + " " + lastupdate);
 
         setupToolbar();
         displayTitle();
@@ -93,10 +101,21 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView,
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(menuItem);
+    }
 
     @Override
-    public void updateProducts() {
+    public void updateProducts(boolean isSuccess) {
 
+
+        StorageProvider.savePreferences(Constants.LASTUPDATE, Utils.getCurrentDate(Constants.TIMEDATEFORMAT));
+
+        mLastUpdate.setText(isSuccess ? getResources().getString(R.string.last_update) + " " + Utils.getCurrentDate(Constants.TIMEDATEFORMAT) : "-");
 
     }
 }

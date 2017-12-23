@@ -26,8 +26,7 @@ public class SettingsInteractorImpl extends RealmManager implements SettingsInte
 
         deleteData();
 
-        //  fetchDataFromServer(requestCallback);
-
+        requestCallback.onUpdateProductsCompleted(true);
 
     }
 

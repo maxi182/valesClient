@@ -134,6 +134,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         mBtnAddItem.setOnClickListener(this);
         mBtnFinish.setOnClickListener(this);
 
+
         mComandaId = getArguments().getInt(COMANDA_ID);
 
         mItemFullName = getArguments().getParcelable(ITEM_FULL_NAME);
@@ -234,7 +235,8 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     @Override
     public void onFetchComandaItemsForPrint(StringBuilder stringBuilderItems, StringBuilder stringBuilderSubTotales, StringBuilder stringBuilderTotal, StringBuilder stringBuilderCopyItems) {
 
-        PrintComandaHelper printComandaHelper = new PrintComandaHelper(getActivity(), this, stringBuilderItems, stringBuilderSubTotales, stringBuilderTotal, stringBuilderCopyItems, mComanda.comandaId, this);
+        String clientname = getBaseActivity().getClientName();
+        PrintComandaHelper printComandaHelper = new PrintComandaHelper(getActivity(), this, stringBuilderItems, stringBuilderSubTotales, stringBuilderTotal, stringBuilderCopyItems, mComanda.comandaId, clientname, this);
         printComandaHelper.print();
 
     }
@@ -306,8 +308,8 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
                 if (!validateIsNewComanda() || isRestoreMain()) {
 
                     if (mAdapter.getItemCount() > 0) {
-                        printSuccess();
-                        //printComanda();
+                       // printSuccess();
+                        printComanda();
                     }
                 }
                 break;
@@ -362,7 +364,6 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     public void printSuccess() {
 
         mPresenter.storeComanda(mComanda);
-
 
     }
 

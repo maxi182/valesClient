@@ -6,5 +6,5 @@ package com.mcba.comandaclient.ui;
 
 public interface SettingsView {
 
-    void updateProducts();
+    void updateProducts(boolean success);
 }

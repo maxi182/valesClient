@@ -5,6 +5,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -146,11 +147,40 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
         mCantPricePresenter.getItemNameById(mProductId, mProviderId, mTypeId);
 
         validateNotZero();
+        clearValueFromEditText();
         mCantEditText.setText(INITIAL_QTY);
         mPriceEditText.setText(INITIAL_PRICE);
         mSelectedResourceId = R.id.linear_100;
         mLinear100.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
 
+    }
+
+    private void clearValueFromEditText() {
+        mPriceEditText.setFocusable(true);
+        mCantEditText.setFocusable(true);
+        mPriceEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+
+                if (hasFocus) {
+                    mPriceEditText.setText("");
+                } else if (!hasFocus && mPriceEditText.getText().toString().trim().equals("")) {
+                    mPriceEditText.setText("0");
+                }
+            }
+        });
+
+        mCantEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+
+                if (hasFocus) {
+                    mCantEditText.setText("");
+                } else if (!hasFocus && mCantEditText.getText().toString().trim().equals("")) {
+                    mCantEditText.setText("1");
+                }
+            }
+        });
     }
 
     private void validateNotZero() {
@@ -164,9 +194,9 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if (charSequence.toString().equals("") || charSequence.toString().substring(0, 1).equals("0")) {
-                    mCantEditText.setText(INITIAL_QTY);
-                }
+//                if (charSequence.toString().equals("") || charSequence.toString().substring(0, 1).equals("0")) {
+//                    mCantEditText.setText(INITIAL_QTY);
+//                }
             }
 
             @Override
@@ -179,7 +209,7 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                 mOldStr = charSequence.toString();
+                mOldStr = charSequence.toString();
             }
 
             @Override
@@ -187,9 +217,9 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
 
                 if (Utils.qtyOfDots(charSequence.toString())) {
                     mPriceEditText.setText(mOldStr);
-                 }
+                }
                 if (charSequence.toString().equals("")) {
-                    mPriceEditText.setText("0");
+                    //mPriceEditText.setText("0");
                 }
                 if (charSequence.toString().length() > 0 && charSequence.toString().substring(0, 1).contains(".")) {
 
@@ -308,6 +338,28 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
 
     }
 
+    private boolean validateNotEmpty() {
+        if (mPriceEditText.getText().toString().trim().equals("")) {
+            Toast.makeText(getActivity(), "Ingrese precio", Toast.LENGTH_SHORT).show();
+            return false;
+            //  mPriceEditText.setText("0");
+        }
+        if (mCantEditText.getText().toString().trim().equals("")) {
+            Toast.makeText(getActivity(), "Ingrese cantidad", Toast.LENGTH_SHORT).show();
+            return false;
+
+            // mCantEditText.setText("1");
+        }
+        return true;
+
+    }
+
+    private void validatePriceNotEmpty() {
+        if (mPriceEditText.getText().toString().trim().equals("")) {
+            mPriceEditText.setText("0");
+        }
+
+    }
 
     @Override
     public void onClick(View v) {
@@ -327,7 +379,9 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
                 break;
 
             case R.id.btn_green_item_confirm:
-                mCallbacks.onGoToMainList(mProviderId, mProductId, mTypeId, Double.valueOf(mPriceEditText.getText().toString()), Integer.valueOf(mCantEditText.getText().toString()), mCurrentComandaId, mLastItemId, mPackagePrice, mItemFullName);
+                if (validateNotEmpty()) {
+                    mCallbacks.onGoToMainList(mProviderId, mProductId, mTypeId, Double.valueOf(mPriceEditText.getText().toString()), Integer.valueOf(mCantEditText.getText().toString()), mCurrentComandaId, mLastItemId, mPackagePrice, mItemFullName);
+                }
                 break;
             case R.id.linear_1:
                 setBackgroundColor(v.getId());
@@ -351,11 +405,13 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
                 break;
 
             case R.id.img_btn_add_price:
+                validatePriceNotEmpty();
                 handleBtnPrice(true);
 
                 break;
 
             case R.id.img_btn_minus_price:
+                validatePriceNotEmpty();
                 handleBtnPrice(false);
 
                 break;
