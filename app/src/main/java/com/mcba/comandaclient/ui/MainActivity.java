@@ -101,6 +101,10 @@ public class MainActivity extends MainSearchActivity implements MainListFragment
         return mClientName != null ? mClientName : "EFECTIVO";
     }
 
+    public void setClientName(String clientName){
+        mClientName = clientName;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

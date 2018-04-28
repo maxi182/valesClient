@@ -115,7 +115,7 @@ public class ComandaSearchActivity extends MainSearchActivity implements Comanda
 
     @Override
     public void setSearchHint(MaterialSearchView searchView) {
-        searchView.setHint("Nº comanda");
+        searchView.setHint("Nº comprobante");
     }
 
     @Override

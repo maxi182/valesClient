@@ -29,7 +29,7 @@
                 android:drawableLeft="@drawable/ic_playlist_add"
                 android:drawablePadding="@dimen/general_margin"
                 android:gravity="center"
-                android:text="Nueva Comanda"
+                android:text="Ingresar Vacios"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
@@ -51,7 +51,29 @@
                 android:drawableLeft="@drawable/ic_description"
                 android:drawablePadding="@dimen/general_margin"
                 android:gravity="center"
-                android:text="Listado de Comandas"
+                android:text="Listado de Vales"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_clientes"
+            style="@style/AppTheme.Button.Large.DarkSlategray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/general_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/ic_person_green"
+                android:drawablePadding="@dimen/general_margin_very_very_very_large"
+                android:gravity="center"
+                android:text="@string/clentes"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 

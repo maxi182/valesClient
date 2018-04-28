@@ -38,7 +38,7 @@ public class CantPriceSelectionFragment extends BaseNavigationFragment<CantPrice
     public static final String COMANDA_ID = "comandaId";
     public static final String TYPE_ID = "type_id";
     public static final String INITIAL_QTY = "1";
-    public static final String INITIAL_PRICE = "100";
+    public static final String INITIAL_PRICE = "0";
 
 
     private LinearLayout mLinearContainer;

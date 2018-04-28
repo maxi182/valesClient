@@ -66,10 +66,10 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
         holder.text_total.setText(String.valueOf(comandaItem.mTotal));
 
         if (!comandaItem.mProductItem.packaging.isFree) {
-            holder.linear_vacios.setVisibility(View.VISIBLE);
-            holder.text_senia_price.setText(String.valueOf(comandaItem.mProductItem.packaging.value));
+            holder.linear_vacios.setVisibility(View.GONE);
+            holder.text_price.setText(String.valueOf(comandaItem.mProductItem.packaging.value));
             holder.text_senia_qty.setText(String.valueOf(Utils.setDecimalFormat(comandaItem.mCant)));
-            holder.text_senia_total.setText(String.valueOf(comandaItem.mCant * comandaItem.mProductItem.packaging.value));
+            holder.text_total.setText(String.valueOf(comandaItem.mCant * comandaItem.mProductItem.packaging.value));
         } else {
             holder.linear_vacios.setVisibility(View.GONE);
 

@@ -93,8 +93,6 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         args.putInt(CANT, cant);
         args.putInt(LASTITEM_ID, lastItemId);
         args.putBoolean(ISNEWCOMANDA, false);
-        //args.putBoolean(RESTORECOMANDA, false);
-
         args.putParcelable(ITEM_FULL_NAME, itemFullName);
 
 
@@ -172,6 +170,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         mTxtTotalComanda.setText("-");
         mTxtSenia.setText("-");
         mCantBultos.setText("-");
+        getBaseActivity().setClientName("");
 
     }
 
@@ -291,9 +290,10 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     private void storeComanda() {
 
 
-        mPresenter.storeComanda(mComandaId, getArguments().getInt(LASTITEM_ID), getArguments().getInt(CANT),
+        //todo change cleint id
+        mPresenter.storeComanda(mComandaId, getArguments().getInt(LASTITEM_ID), 1, getArguments().getInt(CANT),
                 getArguments().getDouble(PRICE), getArguments().getInt(PRUDUCT_ID), getArguments().getInt(PROVIDER_ID), mItemFullName,
-                getArguments().getDouble(PACKAGE_PRICE), mComandaItemList, false);
+                getArguments().getDouble(PACKAGE_PRICE), mComandaItemList, getBaseActivity().getClientName(), false);
     }
 
 

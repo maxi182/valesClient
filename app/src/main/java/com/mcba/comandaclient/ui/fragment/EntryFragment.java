@@ -10,6 +10,7 @@ import com.mcba.comandaclient.model.Comanda;
 import com.mcba.comandaclient.model.ComandaItem;
 import com.mcba.comandaclient.presenter.ComandaListPresenter;
 import com.mcba.comandaclient.presenter.ComandaListPresenterImpl;
+import com.mcba.comandaclient.ui.ClientActivity;
 import com.mcba.comandaclient.ui.ComandaListView;
 import com.mcba.comandaclient.ui.ComandaSearchActivity;
 import com.mcba.comandaclient.ui.SettingsActivity;
@@ -29,6 +30,7 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
     private LinearLayout mBtnNewComanda;
     private LinearLayout mBtnComandaList;
     private LinearLayout mBtnSettings;
+    private LinearLayout mBtnClientes;
     private ComandaListPresenter mPresenter;
     private int mNextComandaId;
 
@@ -50,6 +52,7 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
         mBtnNewComanda = (LinearLayout) findViewById(R.id.btn_new_comanda);
         mBtnComandaList = (LinearLayout) findViewById(R.id.btn_comanda_list);
         mBtnSettings = (LinearLayout) findViewById(R.id.btn_settings);
+        mBtnClientes = (LinearLayout) findViewById(R.id.btn_clientes);
 
     }
 
@@ -75,6 +78,15 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
             public void onClick(View view) {
 
                 startActivity(ComandaSearchActivity.getNewIntent(getActivity()));
+
+            }
+        });
+
+        mBtnClientes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(ClientActivity.getNewIntent(getActivity()));
 
             }
         });

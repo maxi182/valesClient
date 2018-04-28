@@ -2,6 +2,7 @@ package com.mcba.comandaclient.presenter;
 
 import com.mcba.comandaclient.interactor.ComandaInteractorCallbacks;
 import com.mcba.comandaclient.interactor.ComandaInteractorImpl;
+import com.mcba.comandaclient.model.Client;
 import com.mcba.comandaclient.model.Comanda;
 import com.mcba.comandaclient.model.ComandaItem;
 import com.mcba.comandaclient.model.ComandaList;
@@ -83,7 +84,7 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
     }
 
     @Override
-    public void storeComanda(int mComandaId, int lastItemId, int cant, double price, int productId, int providerId, ItemFullName itemFullName, double packagePrice, List<ComandaItem> mComandaItemList, boolean isPrinted) {
+    public void storeComanda(int mComandaId, int lastItemId, int clientId, int cant, double price, int productId, int providerId, ItemFullName itemFullName, double packagePrice, List<ComandaItem> mComandaItemList, String clientName, boolean isPrinted) {
 
         double total = 0;
         double totalSenia = 0;
@@ -91,6 +92,10 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
         Comanda comanda = new Comanda();
         comanda.comandaId = mComandaId;
         comanda.isPrinted = isPrinted;
+        Client client = new Client();
+        client.mName = clientName;
+        client.clientId = clientId;
+        comanda.mCliente = client;
 
         ComandaItem comandaItem = new ComandaItem();
         comandaItem.itemId = lastItemId + 1;

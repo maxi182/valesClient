@@ -13,4 +13,13 @@ public class Client extends RealmObject {
     public int clientId;
     public String mName;
 
+
+    public Client() {
+
+    }
+
+    public Client(int clientId, String mName) {
+        this.clientId = clientId;
+        this.mName = mName;
+    }
 }

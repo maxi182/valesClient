@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Comandaclient.iml" filepath="$PROJECT_DIR$/Comandaclient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ValesClient.iml" filepath="$PROJECT_DIR$/.idea/ValesClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
