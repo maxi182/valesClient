@@ -6,7 +6,7 @@ package com.mcba.comandaclient.presenter;
 
 public interface ComandaSearchPresenter extends IBasePresenter {
 
-    void fetchComandas();
+    void fetchComandas(String dateFrom);
 
     void fetchItems(int id, double cantBultos, double total, double senia, long timestamp);
 

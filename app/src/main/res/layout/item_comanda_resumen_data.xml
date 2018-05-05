@@ -110,6 +110,11 @@
                 tools:text="$12533330" />
 
         </LinearLayout>
-    </LinearLayout>
 
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimaryDark"></View>
 </LinearLayout>

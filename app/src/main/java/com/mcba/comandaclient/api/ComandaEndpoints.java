@@ -12,7 +12,7 @@ import retrofit2.http.GET;
 
 public interface ComandaEndpoints {
 
-    @GET("/css/providers.json")
+    @GET("/css/vacios.json")
     Call<ProviderList> getProducts();
 
 }

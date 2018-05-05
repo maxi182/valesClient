@@ -12,7 +12,7 @@ import io.realm.RealmResults;
 
 public interface ComandaSearchInteractorCallbacks {
 
-    void fetchComandas(RequestCallback requestCallback);
+    void fetchComandas(RequestCallback requestCallback, String dateFrom);
 
     void fetchItemsComanda(RequestCallback requestCallback, int id, double cantBultos, double total, double senia, long timestamp);
 

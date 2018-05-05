@@ -53,7 +53,8 @@
     <string name="update_title">Actualizar Stock</string>
     <string name="last_update">Ultima vez actualizado </string>
 
-
+    <string name="empty_vales_search">No hay vales emitidos \n para el dia seleccionado.</string>
+    <string name="empty_vales_search_id">No hay vales emitidos \n con el codigo ingresado.</string>
 
 
 </resources>

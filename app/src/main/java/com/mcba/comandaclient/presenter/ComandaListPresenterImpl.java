@@ -148,6 +148,8 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
         Comanda comanda = new Comanda();
         comanda.comandaId = cmd.comandaId;
         comanda.isPrinted = true;
+        comanda.date =  Utils.getCurrentDate("ddMMyy");
+
         comanda.comandaItemList = new RealmList<>();
 
         if (cmd.comandaItemList != null && !cmd.comandaItemList.isEmpty()) {

@@ -28,9 +28,9 @@ public class ComandaSearchPresenterImpl implements ComandaSearchPresenter, Coman
     }
 
     @Override
-    public void fetchComandas() {
+    public void fetchComandas(String dateFrom) {
 
-        mComandaSearchInteractorCallbacks.fetchComandas(this);
+        mComandaSearchInteractorCallbacks.fetchComandas(this, dateFrom);
 
     }
 

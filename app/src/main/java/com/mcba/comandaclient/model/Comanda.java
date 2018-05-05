@@ -13,6 +13,7 @@ public class Comanda extends RealmObject {
 
     @PrimaryKey
     public int comandaId;
+    public String date;
     public long timestamp;
     public double cantBultos;
     public double mTotal;

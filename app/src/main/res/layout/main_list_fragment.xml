@@ -38,7 +38,11 @@
         android:id="@+id/recycler_selection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/container_header" />
+        android:layout_marginBottom="@dimen/toolbar_height"
+        android:layout_below="@id/container_header"
+
+
+        />
 
 
     <LinearLayout
@@ -46,29 +50,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/general_margin">
+        android:layout_margin="@dimen/general_margin_small">
 
         <TextView
             android:id="@+id/btn_finish"
-            style="@style/AppTheme.Button.Large.DarkSlategray"
+            style="@style/AppTheme.Button.Large.Square"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight=".5"
-            android:drawableLeft="@drawable/ic_done"
-            android:drawablePadding="8dip"
+            android:background="@drawable/textview_square_border"
+            android:drawableLeft="@drawable/ic_done_green"
             android:padding="8dip"
-            android:text="Finalizar  " />
+            android:text="Finalizar  "
+            android:textSize="@dimen/text_size_large" />
 
         <TextView
             android:id="@+id/btn_add_item"
-            style="@style/AppTheme.Button.Large.DarkSlategray"
+            style="@style/AppTheme.Button.Large.Square"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_below="@id/btn_add_item"
-            android:layout_weight=".6"
-            android:drawableLeft="@drawable/ic_add_box_white"
-            android:padding="10dip"
-            android:text="Nuevo Item" />
+            android:layout_marginLeft="@dimen/general_margin_small"
+            android:layout_weight=".5"
+            android:background="@drawable/textview_square_border"
+            android:drawableLeft="@drawable/ic_playlist_add_green"
+            android:padding="8dip"
+            android:text="Nuevo Item"
+            android:textSize="@dimen/text_size_large" />
 
 
     </LinearLayout>

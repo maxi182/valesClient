@@ -11,7 +11,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/linear_cant"
@@ -25,7 +25,6 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="CANT"
-                android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -43,7 +42,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="DETALLE"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -62,7 +61,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="P.UNIT"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -81,10 +80,14 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="TOTAL"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
 
         </LinearLayout>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/colorPrimary"></View>
 
 </LinearLayout>

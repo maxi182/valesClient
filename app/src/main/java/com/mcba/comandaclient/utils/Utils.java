@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,6 +38,20 @@ public class Utils {
         String formattedDate = df.format(c.getTime());
 
         return formattedDate;
+    }
+
+    public static long getCurrentDateInMillis(String format, String date) {
+        long timeInMilliseconds = 0;
+        SimpleDateFormat df = new SimpleDateFormat(format);
+        try {
+            Date mDate = df.parse(date.replace(" ",""));
+            timeInMilliseconds = mDate.getTime();
+            System.out.println("Date in milli :: " + timeInMilliseconds);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return timeInMilliseconds;
     }
 
     public static String setDecimalFormat(double value) {

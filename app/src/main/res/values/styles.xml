@@ -76,6 +76,12 @@
         <item name="android:textColor">@color/zh_dark_grey</item>
     </style>
 
+    <style name="AppTheme.Button.Large.Square" parent="AppTheme.Button.Large">
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:textAppearance">@style/AppTheme.Text.LatoBold.green.14.67</item>
+        <item name="android:textColor">@drawable/button_colorprimary_dark_selector</item>
+    </style>
+
     <style name="AppTheme.Button.Large.DarkSlategray" parent="AppTheme.Button.Large">
         <item name="android:background">@drawable/button_darkslategray_background_selector</item>
         <item name="android:textAppearance">@style/AppTheme.Text.LatoBold.white.14.67</item>
@@ -105,6 +111,12 @@
     <style name="AppTheme.Text.LatoBold.white.14.67" parent="AppTheme.Text.LatoBold.white">
         <item name="android:textSize">25.67sp</item>
     </style>
+
+    <style name="AppTheme.Text.LatoBold.green.14.67" parent="AppTheme.Text.LatoBold.white">
+        <item name="android:textSize">25.67sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
 
 
 

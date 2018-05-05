@@ -17,10 +17,10 @@ public class ComandaSearchInteractorImpl extends RealmManager implements Comanda
 
 
     @Override
-    public void fetchComandas(RequestCallback requestCallback) {
+    public void fetchComandas(RequestCallback requestCallback, String dateFrom) {
         RealmList<Comanda> listComandas = new RealmList<>();
 
-        RealmResults<Comanda> results = mRealm.where(Comanda.class).equalTo("isPrinted", true).findAll().sort("comandaId", Sort.DESCENDING);
+        RealmResults<Comanda> results = mRealm.where(Comanda.class).equalTo("isPrinted", true).findAll().where().equalTo("date", dateFrom).findAll().sort("comandaId", Sort.DESCENDING);
         listComandas.addAll(results);
         requestCallback.onFetchComandasSuccess(listComandas);
     }
@@ -34,7 +34,7 @@ public class ComandaSearchInteractorImpl extends RealmManager implements Comanda
     @Override
     public void fetchComandasById(RequestCallback requestCallback, int id) {
 
-        RealmResults<Comanda>  comandas = mRealm.where(Comanda.class).equalTo("comandaId", id).findAll();
+        RealmResults<Comanda> comandas = mRealm.where(Comanda.class).equalTo("comandaId", id).findAll();
         requestCallback.onFetchComandasByIdSuccess(comandas);
 
     }

@@ -14,6 +14,16 @@
 
     </FrameLayout>
 
+    <include layout="@layout/item_dates"></include>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/colorPrimary"></View>
+
+    <include layout="@layout/empty_vales_search"></include>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_comandas"
         android:layout_width="wrap_content"
