@@ -8,6 +8,8 @@ public interface SettingsInteractorCallbacks {
 
     void updateProducts(RequestCallback requestCallback);
 
+    void addItem(RequestCallback requestCallback);
+
     void attachView();
 
     void detachView();

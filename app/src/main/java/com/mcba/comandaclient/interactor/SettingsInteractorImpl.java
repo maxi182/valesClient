@@ -30,6 +30,11 @@ public class SettingsInteractorImpl extends RealmManager implements SettingsInte
 
     }
 
+    @Override
+    public void addItem(RequestCallback requestCallback) {
+
+    }
+
     private void deleteData() {
 
         mRealm.executeTransaction(new Realm.Transaction() {

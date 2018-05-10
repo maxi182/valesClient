@@ -55,7 +55,7 @@ public class ProductInteractorImpl extends RealmManager implements ProductIntera
         });
     }
 
-    private void storeLocal(final RequestCallback callback, final ProviderList data) {
+    public void storeLocal(final RequestCallback callback, final ProviderList data) {
 
         mTransaction = mRealm.executeTransactionAsync(new Realm.Transaction() {
             @Override

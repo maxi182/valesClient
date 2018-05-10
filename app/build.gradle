@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'realm-android'
 
 android {
@@ -54,6 +57,7 @@ dependencies {
     compile 'br.com.mauker.materialsearchview:materialsearchview:1.2.2'
 
 
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.30"
 
     compile 'com.android.support.test.espresso:espresso-core:2.2.2'
 }

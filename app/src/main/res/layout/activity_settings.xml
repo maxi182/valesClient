@@ -19,23 +19,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:background="@color/colorAccent">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/zh_white"
             android:gravity="center"
-            android:padding="@dimen/general_margin_small"
-            android:text="@string/update_title" />
+             android:text="@string/update_title"
+            android:textColor="@color/zh_white" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/rel_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/general_margin"
-        android:layout_marginRight="@dimen/general_margin"
+
+        android:padding="@dimen/general_margin"
+
         android:layout_marginTop="@dimen/general_margin_small">
 
         <LinearLayout
@@ -75,6 +76,24 @@
 
         </LinearLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_add_item"
+        android:background="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textview_square_border"
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:drawableLeft="@drawable/ic_plus"
+            android:textSize="@dimen/text_size_normal"
+            android:padding="@dimen/general_margin"
+            android:text="@string/add_new_item" />
     </LinearLayout>
 
 </LinearLayout>

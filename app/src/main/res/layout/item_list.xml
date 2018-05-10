@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_container"
     android:layout_width="match_parent"
     android:layout_height="80dip">
@@ -12,8 +13,9 @@
         android:layout_marginLeft="@dimen/general_margin"
         android:gravity="center_vertical"
         android:textStyle="bold"
+        android:text="texto"
         android:textSize="24sp"
-        android:textColor="@color/zh_white_alpha_20" />
+        android:textColor="@color/colorPrimary" />
 
     <View
         android:layout_width="match_parent"

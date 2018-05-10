@@ -40,6 +40,7 @@ public class ClientActivity extends MainSearchClientActivity implements ClientVi
     private ClientAdapter mAdapter;
     private TextView mSearchHint;
     private Toolbar mToolbar;
+
     private AddClientDialogFragment addClientDialogFragment;
     private List<Client> mList = new ArrayList<>();
 
@@ -58,6 +59,7 @@ public class ClientActivity extends MainSearchClientActivity implements ClientVi
         mPresenter = new ClientPresenterImpl(this);
         mPresenter.attachView();
 
+
         mRecyclerview = (RecyclerView) findViewById(R.id.recycler_comandas);
         mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new ClientAdapter(this, this);
@@ -73,6 +75,7 @@ public class ClientActivity extends MainSearchClientActivity implements ClientVi
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
     }
+
 
     private void setupToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -90,6 +93,13 @@ public class ClientActivity extends MainSearchClientActivity implements ClientVi
             setSupportActionBar(mToolbar);
             setupActionBar(getSupportActionBar());
         }
+    }
+
+    private void openDialog(){
+
+        addClientDialogFragment = new AddClientDialogFragment();
+        addClientDialogFragment.initDialog(this, this, 1);
+        addClientDialogFragment.show(getFragmentManager(), "");
     }
 
     private void setupActionBar(ActionBar actionBar) {

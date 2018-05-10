@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mcba.comandaclient.R;
@@ -29,6 +30,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView,
     private TextView mTxtHint;
     private TextView mBtnUpdate;
     private TextView mLastUpdate;
+    private LinearLayout mAddItemLinearLayout;
     private SettingsPresenter mPresenter;
 
 
@@ -41,12 +43,12 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-
         mTxtHint = (TextView) findViewById(R.id.txt_hint);
         mBtnUpdate = (TextView) findViewById(R.id.txt_btn_update);
         mLastUpdate = (TextView) findViewById(R.id.txt_last_update);
+        mAddItemLinearLayout = (LinearLayout) findViewById(R.id.linear_add_item);
         mBtnUpdate.setOnClickListener(this);
-
+        mAddItemLinearLayout.setOnClickListener(this);
 
         mPresenter = new SettingsPresenterImpl(this);
         mPresenter.attachView();
@@ -93,9 +95,10 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_btn_update:
-
                 mPresenter.onUpdatePress();
-
+                break;
+            case R.id.linear_add_item:
+                startActivity(AddProviderActivity.getNewIntent(this));
                 break;
             default:
         }

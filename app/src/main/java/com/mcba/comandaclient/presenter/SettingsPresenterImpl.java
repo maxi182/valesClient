@@ -30,6 +30,11 @@ public class SettingsPresenterImpl implements SettingsPresenter, SettingsInterac
     }
 
     @Override
+    public void onAddItemPress() {
+        mSettingsInteractorCallback.addItem(this);
+    }
+
+    @Override
     public void onUpdateProductsCompleted(boolean isSuccess) {
 
         if (settingsView != null) {

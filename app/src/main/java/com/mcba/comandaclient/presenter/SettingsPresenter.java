@@ -7,4 +7,5 @@ package com.mcba.comandaclient.presenter;
 public interface SettingsPresenter extends IBasePresenter {
 
     void onUpdatePress();
+    void onAddItemPress();
 }

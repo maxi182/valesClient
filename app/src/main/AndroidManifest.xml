@@ -47,6 +47,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".ui.AddProviderActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="br.com.mauker.materialsearchview.db.HistoryProvider"
