@@ -13,6 +13,8 @@ public interface ClientPresenter extends IBasePresenter {
 
     void fetchClients();
 
+    void filterClientByName(String name);
+
     void storeClient(String name);
 
     void validateExistingUser(String name, List<Client> clients);

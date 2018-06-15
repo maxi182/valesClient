@@ -15,6 +15,8 @@ public interface ClientInteractorCallbacks {
 
     void storeClient(RequestCallback requestCallback, String name);
 
+    void filterClietsByName(RequestCallback requestCallback, String name);
+
     void attachView();
 
     void detachView();

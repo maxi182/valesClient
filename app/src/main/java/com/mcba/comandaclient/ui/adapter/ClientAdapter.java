@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.mcba.comandaclient.model.Comanda;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mac on 15/01/2018.
@@ -51,6 +53,13 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ClientAdap
         holder.mName.setText(client.mName);
         holder.mCode.setText(String.valueOf(client.clientId));
 
+        holder.mContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCallbacks.onItemPress(client);
+            }
+        });
+
 
     }
 
@@ -65,14 +74,14 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ClientAdap
 
 
     public static class ClientAdapterHolder extends RecyclerView.ViewHolder {
-        public FrameLayout mContainer;
+        public LinearLayout mContainer;
         public TextView mName;
         public TextView mCode;
 
         public ClientAdapterHolder(View itemView) {
             super(itemView);
 
-            mContainer = (FrameLayout) itemView.findViewById(R.id.frame_container);
+            mContainer = (LinearLayout) itemView.findViewById(R.id.content);
             mName = (TextView) itemView.findViewById(R.id.name_textview);
             mCode = (TextView) itemView.findViewById(R.id.txt_id);
         }

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/toptoolbar"
         android:layout_width="wrap_content"
-        android:layout_height="30dip"
+        android:layout_height="@dimen/toolbar_height"
         android:background="@color/zh_dark_grey">
 
         <TextView
@@ -27,8 +27,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:paddingRight="@dimen/general_margin"
-            tools:text="28/05/2017"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:text="28/05/2017" />
 
     </RelativeLayout>
 
@@ -36,11 +36,13 @@
         android:id="@+id/frame_toolbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toptoolbar">
+        android:layout_below="@id/toptoolbar"
+         >
 
         <include layout="@layout/layout_toolbar" />
 
     </FrameLayout>
+
 
     <RelativeLayout
         android:id="@+id/container_body"
@@ -52,6 +54,19 @@
         <include layout="@layout/layout_progress_bar" />
 
     </RelativeLayout>
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/client_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_below="@id/frame_toolbar"
+
+        android:visibility="gone">
+
+    </android.support.v7.widget.RecyclerView>
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/multiple_actions"
@@ -73,8 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/zh_crimson"
-            fab:fab_colorPressed="@color/zh_crimson"
-            />
+            fab:fab_colorPressed="@color/zh_crimson" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

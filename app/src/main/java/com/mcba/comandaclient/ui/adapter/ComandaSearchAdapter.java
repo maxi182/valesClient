@@ -55,6 +55,8 @@ public class ComandaSearchAdapter extends RecyclerView.Adapter<ComandaSearchAdap
         final Comanda comanda = mList.get(position);
         holder.text_num_comanda.setText(String.format("%05d", comanda.comandaId));
         holder.text_date.setText(String.valueOf(Utils.getTimeFromTimeStamp(comanda.timestamp, Constants.DATEFORMAT)) + " " + String.valueOf(Utils.getTimeFromTimeStamp(comanda.timestamp, Constants.TIMEFORMAT)));
+        holder.txt_client.setText(comanda.mClientName);
+
         // holder.text_time.setText(String.valueOf(Utils.getTimeFromTimeStamp(comanda.timestamp, Constants.TIMEFORMAT)));
 
         holder.mContainer.setOnClickListener(new View.OnClickListener() {

@@ -6,25 +6,35 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.View
 import com.mcba.comandaclient.R
-import com.mcba.comandaclient.model.Provider
 import kotlinx.android.synthetic.main.item_list.view.*
 import kotlinx.android.synthetic.main.item_add_header.view.*
+import java.util.*
 
 /**
  * Created by mac on 10/05/2018.
  */
-class AddProductAdapter(context : Context) :
+class AddProductAdapter(context: Context, callback: adapterCallbacks) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    lateinit var partItemList: List<ListModel>
+    var partItemList: List<ListModel> = ArrayList()
+    var mContext: Context = context
+    var mAdapterCallbacks: adapterCallbacks = callback
+
 
     companion object {
-        const val TYPE_ITEM = 0
+        const val TYPE_PROVIDER = 0
         const val TYPE_HEADER = 1
+        const val TYPE_PRODUCT = 2
+        const val TYPE_PRODUCTTYPE = 3
+    }
+
+    interface adapterCallbacks {
+
+        fun onItemSelected(listModel: ListModel)
     }
 
     interface ListMoldelViewHolder {
-        fun bindViews(listModel: ListModel)
+        fun bindViews(listModel: ListModel, context: Context, adapterCallbacks: adapterCallbacks)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -34,7 +44,10 @@ class AddProductAdapter(context : Context) :
         val viewItem = inflater.inflate(R.layout.item_list, parent, false)
         val viewHeader = inflater.inflate(R.layout.item_add_header, parent, false)
         val viewHolder: RecyclerView.ViewHolder = when (viewType) {
-            TYPE_ITEM -> ItemViewHolder(viewItem)
+            TYPE_PROVIDER -> ItemViewHolder(viewItem)
+            TYPE_PRODUCT -> ProductViewHolder(viewItem)
+            TYPE_PRODUCTTYPE -> ProductTypeViewHolder(viewItem)
+
         // other view holders...
             else -> HeaderViewHolder(viewHeader)
         }
@@ -49,22 +62,20 @@ class AddProductAdapter(context : Context) :
 
     override fun getItemViewType(position: Int): Int {
         val type = when (partItemList[position].updateType) {
-            ListModel.TYPE.HEADER -> TYPE_HEADER
-        // other types...
-            else -> TYPE_ITEM
+            ListModel.TYPE.PRODUCT -> TYPE_PRODUCT
+            ListModel.TYPE.PROVIDER -> TYPE_PROVIDER
+            ListModel.TYPE.PRODUCT_TYPE -> TYPE_PRODUCTTYPE
+
+            else -> TYPE_HEADER
         }
         return type
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-        (holder as ListMoldelViewHolder).bindViews(partItemList[position])
-    }
+        (holder as ListMoldelViewHolder).bindViews(partItemList[position], mContext, mAdapterCallbacks)
 
-//    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-//        // Populate ViewHolder with data that corresponds to the position in the list
-//        // which we are told to load
-//        (holder as PartViewHolder).bind(partItemList[position], clickListener)
-//    }
+
+    }
 
     override fun getItemCount(): Int = partItemList?.size
 
@@ -72,11 +83,25 @@ class AddProductAdapter(context : Context) :
     class ItemViewHolder(itemView: View)
         : RecyclerView.ViewHolder(itemView), ListMoldelViewHolder {
 
+        override fun bindViews(update: ListModel, context: Context, adapterCallbacks: adapterCallbacks) {
+            val data = update as ProviderListModel
+            itemView?.txt_name?.text = data?.provider?.name
+
+            itemView?.setOnClickListener({
+                adapterCallbacks.onItemSelected(data)
+
+            })
+        }
+    }
+
+    class ProductViewHolder(itemView: View)
+        : RecyclerView.ViewHolder(itemView), ListMoldelViewHolder {
+
         // get the views reference from itemView...
 
-        override fun bindViews(update: ListModel) {
-            val data = update as ProviderListModel
-             itemView.txt_name.text = data.provider.name
+        override fun bindViews(update: ListModel, context: Context, adapterCallbacks: adapterCallbacks) {
+            val data = update as ProductListModel
+            itemView?.txt_name?.text = data?.product?.name
             // bind update values to views
         }
     }
@@ -86,9 +111,32 @@ class AddProductAdapter(context : Context) :
 
         // get the views reference from itemView...
 
-        override fun bindViews(update: ListModel) {
+        override fun bindViews(update: ListModel, context: Context, adapterCallbacks: adapterCallbacks) {
             val data = update as HeaderListModel
-             itemView.txt_title.text = data.title
+            itemView?.txt_title?.text = data?.title
+
+
+            itemView?.new_txt_btn?.setOnClickListener({
+                adapterCallbacks.onItemSelected(data)
+
+            })
+            // bind update values to views
+        }
+    }
+
+    class ProductTypeViewHolder(itemView: View)
+        : RecyclerView.ViewHolder(itemView), ListMoldelViewHolder {
+
+        // get the views reference from itemView...
+
+        override fun bindViews(update: ListModel, context: Context, adapterCallbacks: adapterCallbacks) {
+            val data = update as HeaderListModel
+            itemView?.txt_title?.text = data?.title
+
+            itemView?.new_txt_btn?.setOnClickListener({
+                adapterCallbacks.onItemSelected(data)
+
+            })
             // bind update values to views
         }
     }

@@ -57,6 +57,12 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mCallbacks.hideSearch();
+    }
+
+    @Override
     protected void setupFragment(Bundle savedInstanceState) {
 
         mPresenter = new ComandaListPresenterImpl(this);
@@ -161,6 +167,7 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
 
     public interface EntryFragmentCallbacks {
         void onGoToMainListFromEntryFragment(int nextComandaId);
+        void hideSearch();
     }
 
 
@@ -177,6 +184,12 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
             public void onGoToMainListFromEntryFragment(int nextComandaId) {
 
             }
+
+            @Override
+            public void hideSearch() {
+
+            }
+
         };
     }
 }

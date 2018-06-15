@@ -48,6 +48,11 @@ public abstract class MainSearchActivity extends AppCompatActivity implements IS
 
     public abstract void setOnSearchviewClose();
 
+    public abstract void setOnSearchviewOpen();
+
+    public abstract void handleSerchView(MaterialSearchView searchView);
+
+
     public abstract void setInputType(MaterialSearchView searchView);
 
 
@@ -95,6 +100,7 @@ public abstract class MainSearchActivity extends AppCompatActivity implements IS
             @Override
             public void onSearchViewOpened() {
                 mTxtHint.setVisibility(View.GONE);
+                setOnSearchviewOpen();
             }
 
             @Override
@@ -108,6 +114,10 @@ public abstract class MainSearchActivity extends AppCompatActivity implements IS
 
         return super.onCreateOptionsMenu(menu);
 
+    }
+
+    public void closeSearch(){
+        mSearchView.closeSearch();
     }
 
     @Override

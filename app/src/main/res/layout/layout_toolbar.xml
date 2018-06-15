@@ -37,6 +37,7 @@
                 android:layout_gravity="center|left"
                 android:paddingLeft="@dimen/general_margin"
                 android:textSize="16dip"
+                android:textColor="@color/white"
                 android:layout_marginLeft="@dimen/general_margin_very_very_large"
                 android:textAppearance="@style/AppTheme.Text.LatoBold.darkgray.14.67"
                 android:text="cliente" />

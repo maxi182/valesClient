@@ -24,7 +24,6 @@ public class ComandaClientApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-
         // Realm.init(this);
 
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getApplicationContext())

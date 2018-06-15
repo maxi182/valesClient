@@ -166,6 +166,16 @@ public class ComandaSearchActivity extends MainSearchActivity implements Comanda
     }
 
     @Override
+    public void setOnSearchviewOpen() {
+
+    }
+
+    @Override
+    public void handleSerchView(MaterialSearchView searchView) {
+
+    }
+
+    @Override
     public void setInputType(MaterialSearchView searchView) {
         searchView.setInputType(InputType.TYPE_CLASS_NUMBER);
     }

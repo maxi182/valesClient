@@ -92,10 +92,10 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
         Comanda comanda = new Comanda();
         comanda.comandaId = mComandaId;
         comanda.isPrinted = isPrinted;
-        Client client = new Client();
-        client.mName = clientName;
-        client.clientId = clientId;
-        comanda.mCliente = client;
+       // Client client = new Client();
+      //  client.mName = clientName;
+       comanda.mClientId = clientId;
+       comanda.mClientName = clientName;
 
         ComandaItem comandaItem = new ComandaItem();
         comandaItem.itemId = lastItemId + 1;
@@ -148,6 +148,8 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
         Comanda comanda = new Comanda();
         comanda.comandaId = cmd.comandaId;
         comanda.isPrinted = true;
+        comanda.mClientName = cmd.mClientName;
+        comanda.mClientId = cmd.mClientId;
         comanda.date =  Utils.getCurrentDate("ddMMyy");
 
         comanda.comandaItemList = new RealmList<>();

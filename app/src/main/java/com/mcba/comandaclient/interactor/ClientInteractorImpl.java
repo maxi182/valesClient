@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.mcba.comandaclient.model.Client;
 
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmAsyncTask;
 import io.realm.RealmList;
@@ -47,6 +48,15 @@ public class ClientInteractorImpl extends RealmManager implements ClientInteract
 
     }
 
+    @Override
+    public void filterClietsByName(RequestCallback requestCallback, String name) {
+        RealmList<Client> listClients = new RealmList<>();
+
+        final RealmResults<Client> results = mRealm.where(Client.class).contains("mName", name, Case.INSENSITIVE).findAllSorted("clientId", Sort.DESCENDING);
+        listClients.addAll(results);
+        requestCallback.onClientsFetched(listClients);
+    }
+
     private int lastClientId() {
 
         Number nextID = mRealm.where(Client.class).max("clientId");
@@ -68,6 +78,7 @@ public class ClientInteractorImpl extends RealmManager implements ClientInteract
         requestCallback.onClientsFetched(listClients);
 
     }
+
 
     @Override
     public void attachView() {

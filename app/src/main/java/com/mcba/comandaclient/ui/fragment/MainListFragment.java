@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.epson.epos2.printer.PrinterStatusInfo;
 import com.mcba.comandaclient.R;
@@ -293,6 +294,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         mPresenter.storeComanda(mComandaId, getArguments().getInt(LASTITEM_ID), 1, getArguments().getInt(CANT),
                 getArguments().getDouble(PRICE), getArguments().getInt(PRUDUCT_ID), getArguments().getInt(PROVIDER_ID), mItemFullName,
                 getArguments().getDouble(PACKAGE_PRICE), mComandaItemList, getBaseActivity().getClientName(), false);
+
     }
 
 
@@ -307,8 +309,9 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
                 if (!validateIsNewComanda() || isRestoreMain()) {
 
                     if (mAdapter.getItemCount() > 0) {
-                       printSuccess();
-                      //  printComanda();
+                        //todo change this
+                        printSuccess();
+                        //  printComanda();
                     }
                 }
                 break;

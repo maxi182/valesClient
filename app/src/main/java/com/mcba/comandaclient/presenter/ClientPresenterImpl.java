@@ -36,6 +36,11 @@ public class ClientPresenterImpl implements ClientPresenter, ClientInteractorCal
     }
 
     @Override
+    public void filterClientByName(String name) {
+        mClientInteractorCallback.filterClietsByName(this, name);
+    }
+
+    @Override
     public void storeClient(String name) {
         mClientInteractorCallback.storeClient(this, name);
     }

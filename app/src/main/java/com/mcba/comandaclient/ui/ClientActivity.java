@@ -34,7 +34,6 @@ import br.com.mauker.materialsearchview.MaterialSearchView;
 
 public class ClientActivity extends MainSearchClientActivity implements ClientView, ClientAdapter.AdapterCallbacks, IAddClientDialogCallbacks {
 
-
     private ClientPresenter mPresenter;
     private RecyclerView mRecyclerview;
     private ClientAdapter mAdapter;

@@ -39,13 +39,15 @@ public class AddProviderPresenterImpl implements AddProviderPresenter, AddProvid
     @Override
     public void fetchProducts() {
 
-        List<NameId> products = new ArrayList<>();
-        products.add(new NameId(1, "Bandeja"));
-        products.add(new NameId(2, "Jaulon"));
-        products.add(new NameId(3, "Torito"));
-        if (addProviderView != null) {
-            getView().onProductsFetched(products);
-        }
+        mAddProviderInteractorCallback.fetchProducts(this);
+
+//        List<NameId> products = new ArrayList<>();
+//        products.add(new NameId(1, "Bandeja"));
+//        products.add(new NameId(2, "Jaulon"));
+//        products.add(new NameId(3, "Torito"));
+//        if (addProviderView != null) {
+//            getView().onProductsFetched(products);
+//        }
 
     }
 
