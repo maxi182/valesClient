@@ -1,33 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/root_relative"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/frame_toolbar"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/frame_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toptoolbar">
+
+            <include layout="@layout/layout_toolbar" />
+
+        </FrameLayout>
+
+        <include layout="@layout/item_dates"></include>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="@color/colorPrimary"></View>
+
+        <include layout="@layout/empty_vales_search"></include>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_comandas"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+
+    </LinearLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/multiple_actions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toptoolbar">
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|right"
+        android:layout_marginEnd="@dimen/general_margin"
+        android:layout_marginRight="@dimen/general_margin"
+        android:layout_marginBottom="@dimen/general_margin"
+        fab:fab_addButtonColorNormal="@color/zh_slate_grey"
+        fab:fab_addButtonColorPressed="@color/zh_dark_slate_gray"
+        fab:fab_addButtonPlusIconColor="@color/white">
 
-        <include layout="@layout/layout_toolbar" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_file_upload"
+            fab:fab_title="Enviar listado"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_colorPressed="@color/zh_slate_grey"
+   />
 
-    </FrameLayout>
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
-    <include layout="@layout/item_dates"></include>
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:background="@color/colorPrimary"></View>
-
-    <include layout="@layout/empty_vales_search"></include>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_comandas"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
-
-
-</LinearLayout>
+ </RelativeLayout>

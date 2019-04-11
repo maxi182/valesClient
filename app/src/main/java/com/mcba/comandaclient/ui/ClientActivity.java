@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ public class ClientActivity extends MainSearchClientActivity implements ClientVi
     private ClientAdapter mAdapter;
     private TextView mSearchHint;
     private Toolbar mToolbar;
+    private LinearLayout mLinearDates;
 
     private AddClientDialogFragment addClientDialogFragment;
     private List<Client> mList = new ArrayList<>();
@@ -60,12 +62,15 @@ public class ClientActivity extends MainSearchClientActivity implements ClientVi
 
 
         mRecyclerview = (RecyclerView) findViewById(R.id.recycler_comandas);
+        mLinearDates = (LinearLayout)findViewById(R.id.linear_since);
         mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new ClientAdapter(this, this);
         mRecyclerview.setAdapter(mAdapter);
+        mLinearDates.setVisibility(View.GONE);
 
         mSearchHint = (TextView) findViewById(R.id.txt_hint);
         mSearchHint.setText("Cliente");
+
 
 
         mPresenter.fetchClients();

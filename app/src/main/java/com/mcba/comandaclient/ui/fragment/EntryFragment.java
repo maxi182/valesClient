@@ -120,7 +120,7 @@ public class EntryFragment extends BaseNavigationFragment<EntryFragment.EntryFra
     }
 
     @Override
-    public void onFetchComandaItemsForPrint(StringBuilder stringBuilderItems, StringBuilder stringBuilderSubTotales, StringBuilder stringBuilderTotal, StringBuilder stringBuilderCopyItems) {
+    public void onFetchComandaItemsForPrint(StringBuilder stringBuilderItems, StringBuilder stringBuilderSubTotales, StringBuilder stringBuilderTotal, StringBuilder stringBuilderCopyItems, String clientName) {
 
     }
 

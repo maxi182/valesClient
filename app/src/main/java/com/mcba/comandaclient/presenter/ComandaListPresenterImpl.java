@@ -56,35 +56,32 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
                     + comandaItem.mProductItem.typeName;
 
             textItems.append(String.valueOf(Utils.setDecimalFormat(comandaItem.mCant)) + " "
-                    + Utils.padBlanks(product, 30) + " "
-                    + String.valueOf(comandaItem.mPrice) + " "
-                    + String.valueOf(comandaItem.mTotal) + "\n");
+                    + Utils.padBlanks(product, 30));
 
-            textItemsCopy.append(String.valueOf(Utils.setDecimalFormat(comandaItem.mCant)) + " "
-                    + Utils.padBlanks(product, 35) + " "
-                    + "\n");
+
 
             if (!comandaItem.mProductItem.packaging.isFree) {
-                String vacio = "Vacio con seña";
-                textItems.append(String.valueOf(Utils.setDecimalFormat(comandaItem.mCant)) + " "
-                        + Utils.padBlanks(vacio, 33) + comandaItem.mProductItem.packaging.value + " "
+                //String vacio = "Vacio con seña";
+                textItems.append( " "
+                        + comandaItem.mProductItem.packaging.value + " "
                         + String.valueOf(comandaItem.mProductItem.packaging.value * comandaItem.mCant + "\n"));
             }
         }
 
-        textSubTotales.append("------------------------------\n");
-        textSubTotales.append("SUBTOTAL" + Utils.padLeft(String.valueOf(comanda.mTotal - comanda.mSenia), 22) + "\n");
-        textSubTotales.append("SEÑA" + Utils.padLeft(String.valueOf(comanda.mSenia), 26) + "\n");
+        textSubTotales.append("******************************\n");
+        textSubTotales.append("SUBTOTAL" + Utils.padLeft(String.valueOf(comanda.mSenia), 22) + "\n");
+        //textSubTotales.append("SEÑA" + Utils.padLeft(String.valueOf(comanda.mSenia), 26) + "\n");
 
         textTotal.append("TOTAL" + Utils.padLeft(String.valueOf(comanda.mTotal), 11) + "\n");
 
         if (comandaListView != null) {
-            getView().onFetchComandaItemsForPrint(textItems, textSubTotales, textTotal, textItemsCopy);
+            getView().onFetchComandaItemsForPrint(textItems, textSubTotales, textTotal, textItemsCopy, comanda.mClientName);
         }
     }
 
+
     @Override
-    public void storeComanda(int mComandaId, int lastItemId, int clientId, int cant, double price, int productId, int providerId, ItemFullName itemFullName, double packagePrice, List<ComandaItem> mComandaItemList, String clientName, boolean isPrinted) {
+    public void storeComanda(int mComandaId, int clientId, String clientName, int lastItemId, int cant, double price, int productId, int providerId, ItemFullName itemFullName, double packagePrice, List<ComandaItem> mComandaItemList, boolean isPrinted) {
 
         double total = 0;
         double totalSenia = 0;

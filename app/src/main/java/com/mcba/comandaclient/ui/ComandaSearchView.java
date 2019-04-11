@@ -1,5 +1,7 @@
 package com.mcba.comandaclient.ui;
 
+import android.content.Intent;
+
 import com.mcba.comandaclient.model.Comanda;
 import com.mcba.comandaclient.model.ComandaItem;
 
@@ -17,5 +19,7 @@ public interface ComandaSearchView {
     void onItemsFetched(RealmList<ComandaItem> items, int id, double cantBultos, double total, double senia, long timestamp);
 
     void onComandasByIdFetched(RealmResults<Comanda> listComandas);
+
+    void onSendEmail(Intent emaildata);
 
 }

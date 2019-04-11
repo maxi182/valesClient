@@ -47,18 +47,8 @@ public class ItemOptionDialogFragment extends DialogFragment {
         dialog.show();
 
         mBtnDelete = (LinearLayout) dialog.findViewById(R.id.btn_dialog_delete);
-        mBtnDeleteVacio = (LinearLayout) dialog.findViewById(R.id.btn_dialog_delete_vacio);
 
-        mBtnDeleteVacio.setVisibility(mShowDeleteSenia ? View.VISIBLE : View.GONE);
 
-        mBtnDeleteVacio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                mCallbacks.onDeleteVacioPress(dialog, mItemId);
-
-            }
-        });
 
         mBtnDelete.setOnClickListener(new View.OnClickListener() {
             @Override

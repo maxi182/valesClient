@@ -5,6 +5,9 @@ package com.mcba.comandaclient.utils;
  */
 public class Constants {
 
+
+    public static final int WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 120;
+
     public static final String PRODUCT_ID = "product_id";
     public static final String PROVIDER_ID = "provider_id";
     public static final String PRODUCTTYPE_ID = "type_id";
@@ -18,6 +21,8 @@ public class Constants {
     public static final String TIMEDATEFORMAT = "dd/MM/yyyy hh:mm";
     public static final String LASTUPDATE = "lastupdate";
 
+    public static final String CLIENT_NAME = "clientname";
+    public static final String CLIENT_ID = "clientid";
 
 
 

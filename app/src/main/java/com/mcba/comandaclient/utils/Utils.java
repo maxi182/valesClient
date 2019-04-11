@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,11 +41,25 @@ public class Utils {
         return formattedDate;
     }
 
+    public static Date stringToDate(String date) {
+
+        Date dateConverted = null;
+        SimpleDateFormat format = new SimpleDateFormat("ddMMyy");
+        try {
+            dateConverted = format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return dateConverted;
+    }
+
+
     public static long getCurrentDateInMillis(String format, String date) {
         long timeInMilliseconds = 0;
         SimpleDateFormat df = new SimpleDateFormat(format);
         try {
-            Date mDate = df.parse(date.replace(" ",""));
+            Date mDate = df.parse(date.replace(" ", ""));
             timeInMilliseconds = mDate.getTime();
             System.out.println("Date in milli :: " + timeInMilliseconds);
         } catch (ParseException e) {
@@ -54,6 +69,21 @@ public class Utils {
         return timeInMilliseconds;
     }
 
+    public static String getFormattedStrinDate(String strCurrentDate,String myformat)
+    {
+        SimpleDateFormat format = new SimpleDateFormat(myformat);
+        Date newDate = null;
+        try {
+            newDate = format.parse(strCurrentDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        format = new SimpleDateFormat("MMM dd,yyyy hh:mm a");
+        String date = format.format(newDate);
+
+        return date;
+    }
     public static String setDecimalFormat(double value) {
 
         DecimalFormat decimalFormat = new DecimalFormat("#");

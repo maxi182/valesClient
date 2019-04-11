@@ -14,6 +14,7 @@ import com.epson.epos2.printer.PrinterStatusInfo;
 import com.mcba.comandaclient.R;
 import com.mcba.comandaclient.helper.IPrintCallbacks;
 import com.mcba.comandaclient.helper.PrintComandaHelper;
+import com.mcba.comandaclient.model.Client;
 import com.mcba.comandaclient.model.Comanda;
 import com.mcba.comandaclient.model.ComandaItem;
 import com.mcba.comandaclient.model.ItemFullName;
@@ -27,6 +28,10 @@ import com.mcba.comandaclient.ui.fragment.dialog.ItemOptionDialogFragment;
 import com.mcba.comandaclient.ui.fragment.dialog.PrintDialogFragment;
 import com.mcba.comandaclient.utils.Constants;
 import com.mcba.comandaclient.utils.StorageProvider;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +68,9 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     private TextView mCantBultos;
     private ItemFullName mItemFullName;
     private int mComandaId;
+    private int mClientId;
+    private String mClientName;
+
 
     private PrintDialogFragment dialog = new PrintDialogFragment();
 
@@ -171,6 +179,8 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         mTxtTotalComanda.setText("-");
         mTxtSenia.setText("-");
         mCantBultos.setText("-");
+        mClientName = "";
+        mClientId = -1;
         getBaseActivity().setClientName("");
 
     }
@@ -233,9 +243,9 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     }
 
     @Override
-    public void onFetchComandaItemsForPrint(StringBuilder stringBuilderItems, StringBuilder stringBuilderSubTotales, StringBuilder stringBuilderTotal, StringBuilder stringBuilderCopyItems) {
+    public void onFetchComandaItemsForPrint(StringBuilder stringBuilderItems, StringBuilder stringBuilderSubTotales, StringBuilder stringBuilderTotal, StringBuilder stringBuilderCopyItems, String clientname) {
 
-        String clientname = getBaseActivity().getClientName();
+
         PrintComandaHelper printComandaHelper = new PrintComandaHelper(getActivity(), this, stringBuilderItems, stringBuilderSubTotales, stringBuilderTotal, stringBuilderCopyItems, mComanda.comandaId, clientname, this);
         printComandaHelper.print();
 
@@ -288,13 +298,30 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
 
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(Client client) {
+        mClientId = client.clientId;
+        mClientName = client.mName;
+        StorageProvider.savePreferences(Constants.CLIENT_ID, mClientId);
+        StorageProvider.savePreferences(Constants.CLIENT_NAME, mClientName);
+        storeComanda();
+    }
+
     private void storeComanda() {
 
         //todo change client id
-        mPresenter.storeComanda(mComandaId, getArguments().getInt(LASTITEM_ID), 1, getArguments().getInt(CANT),
-                getArguments().getDouble(PRICE), getArguments().getInt(PRUDUCT_ID), getArguments().getInt(PROVIDER_ID), mItemFullName,
-                getArguments().getDouble(PACKAGE_PRICE), mComandaItemList, getBaseActivity().getClientName(), false);
+//        mPresenter.storeComanda(mComandaId, getArguments().getInt(LASTITEM_ID), 1, getArguments().getInt(CANT),
+//                getArguments().getDouble(PRICE), getArguments().getInt(PRUDUCT_ID), getArguments().getInt(PROVIDER_ID), mItemFullName,
+//                getArguments().getDouble(PACKAGE_PRICE), mComandaItemList, getBaseActivity().getClientName(), false);
 
+
+        mClientName = StorageProvider.getPreferencesString(Constants.CLIENT_NAME);
+        mClientId = StorageProvider.getPreferencesInt(Constants.CLIENT_ID);
+
+        mPresenter.storeComanda(mComandaId, mClientId, mClientName, getArguments().getInt(LASTITEM_ID), getArguments().getInt(CANT),
+                getArguments().getDouble(PRICE), getArguments().getInt(PRUDUCT_ID), getArguments().getInt(PROVIDER_ID), mItemFullName,
+                getArguments().getDouble(PACKAGE_PRICE), mComandaItemList, false);
     }
 
 
@@ -309,9 +336,15 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
                 if (!validateIsNewComanda() || isRestoreMain()) {
 
                     if (mAdapter.getItemCount() > 0) {
+                        mClientId = StorageProvider.getPreferencesInt(Constants.CLIENT_ID);
+
                         //todo change this
-                        printSuccess();
-                        //  printComanda();
+                        if (mClientId != -1) {
+                           // printSuccess();
+                            printComanda();
+                        } else {
+                            Toast.makeText(getActivity(), "Ingreso nombre Cliente", Toast.LENGTH_SHORT).show();
+                        }//  printComanda();
                     }
                 }
                 break;
@@ -319,11 +352,6 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         }
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-
-    }
 
     @Override
     public void onDestroy() {
@@ -365,6 +393,8 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     @Override
     public void printSuccess() {
 
+        StorageProvider.savePreferences(Constants.CLIENT_ID, -1);
+        StorageProvider.savePreferences(Constants.CLIENT_NAME, "");
         mPresenter.storeComanda(mComanda);
 
     }
@@ -406,6 +436,19 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
             }
         };
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
 
     public interface MainListFragmentCallbacks {
         void onGoToSelectProduct(int currentComandaId);

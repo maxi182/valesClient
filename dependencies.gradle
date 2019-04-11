@@ -14,14 +14,18 @@ ext {
             retrofitConverterGson: "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofitVersion",
 
             circleImageView      : 'de.hdodenhof:circleimageview:2.1.0',
- 
+
 
             okhttp               : "com.squareup.okhttp3:okhttp:$okhttpVersion",
             okhttpInterceptor    : "com.squareup.okhttp3:logging-interceptor:$okhttpVersion",
 
 
- 
-            caligraphy           : 'uk.co.chrisjenx:calligraphy:2.2.0'
+            eventbus             : "org.greenrobot:eventbus:3.1.1",
+
+            caligraphy           : 'uk.co.chrisjenx:calligraphy:2.2.0',
+
+            exportcsv            : 'com.github.adesigns:csv-creator:1.0.2'
+
 
     ]
 }

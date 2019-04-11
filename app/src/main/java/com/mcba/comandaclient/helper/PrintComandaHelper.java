@@ -197,7 +197,7 @@ public class PrintComandaHelper implements Handler.Callback, ReceiveListener {
         }
 
         try {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 1; i++) {
                 method = "addTextAlign";
                 mPrinter.addTextAlign(Printer.ALIGN_CENTER);
 

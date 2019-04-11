@@ -16,21 +16,28 @@
 
         <LinearLayout
             android:id="@+id/btn_new_comanda"
-            style="@style/AppTheme.Button.Large.DarkSlategray"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/general_margin_medium"
+            android:gravity="center_vertical"
+            android:background="@drawable/textview_square_border"
             android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_playlist_add" />
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/general_margin"
                 android:layout_centerHorizontal="true"
-                android:drawableLeft="@drawable/ic_playlist_add"
-                android:drawablePadding="@dimen/general_margin"
-                android:gravity="center"
-                android:text="Ingresar Vacios"
-                android:textColor="@color/white"
+                android:text="Nuevo Vale"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="20sp" />
 
 
@@ -38,54 +45,71 @@
 
         <LinearLayout
             android:id="@+id/btn_comanda_list"
-            style="@style/AppTheme.Button.Large.DarkSlategray"
+            android:background="@drawable/textview_square_border"
             android:layout_width="match_parent"
+            android:padding="@dimen/general_margin_medium"
+
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:layout_marginTop="@dimen/general_margin"
             android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_description_greeen" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:drawableLeft="@drawable/ic_description"
-                android:drawablePadding="@dimen/general_margin"
+                android:layout_marginLeft="@dimen/general_margin"
                 android:gravity="center"
-                android:text="Listado de Vales"
-                android:textColor="@color/white"
+                android:text="Listado de Vales Emitidos"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="20sp" />
 
 
         </LinearLayout>
 
+
         <LinearLayout
             android:id="@+id/btn_clientes"
-            style="@style/AppTheme.Button.Large.DarkSlategray"
+            android:background="@drawable/textview_square_border"
             android:layout_width="match_parent"
+            android:padding="@dimen/general_margin_medium"
+
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:layout_marginTop="@dimen/general_margin"
             android:orientation="horizontal">
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:drawableLeft="@drawable/ic_person_green"
-                android:drawablePadding="@dimen/general_margin_very_very_very_large"
+                android:drawablePadding="@dimen/general_margin"
                 android:gravity="center"
-                android:text="@string/clentes"
-                android:textColor="@color/white"
+                android:text="@string/clientes"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="20sp" />
 
 
         </LinearLayout>
 
 
+
         <LinearLayout
             android:id="@+id/btn_settings"
-            style="@style/AppTheme.Button.Large.DarkSlategray"
+            android:background="@drawable/textview_square_border"
             android:layout_width="match_parent"
+            android:padding="@dimen/general_margin_medium"
+
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:layout_marginTop="@dimen/general_margin"
             android:orientation="horizontal">
 
@@ -97,11 +121,12 @@
                 android:drawablePadding="@dimen/general_margin"
                 android:gravity="center"
                 android:text="@string/settings"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="20sp" />
 
 
         </LinearLayout>
+
 
 
     </LinearLayout>

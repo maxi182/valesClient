@@ -1,6 +1,7 @@
 package com.mcba.comandaclient;
 
 import android.app.Application;
+import android.os.StrictMode;
 import android.util.Log;
 
 import com.mcba.comandaclient.api.RestClient;
@@ -36,6 +37,9 @@ public class ComandaClientApplication extends Application {
         StorageProvider.init(this);
         RestClient.init(this);
         initializeCalligraphy();
+
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
     }
 
     private void initializeCalligraphy() {

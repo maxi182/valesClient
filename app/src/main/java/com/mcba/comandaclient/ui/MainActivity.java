@@ -38,6 +38,8 @@ import com.mcba.comandaclient.utils.StorageProvider;
 import com.mcba.comandaclient.utils.Utils;
 
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,7 +140,7 @@ public class MainActivity extends MainSearchActivity implements ClientView, Main
     }
 
     public void setClientName(String clientName) {
-        // mClientName = clientName;
+        // mClientName = clientName;x
     }
 
     @Override
@@ -155,6 +157,9 @@ public class MainActivity extends MainSearchActivity implements ClientView, Main
         mClientRecyclerView = (RecyclerView) findViewById(R.id.client_recyclerview);
         mSearchHint = (TextView) findViewById(R.id.txt_hint);
         mSearchHint.setText("Buscar Cliente..");
+
+        StorageProvider.savePreferences(Constants.CLIENT_ID, -1);
+        StorageProvider.savePreferences(Constants.CLIENT_NAME, "");
 
         mClientRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new ClientAdapter(this, this);
@@ -199,6 +204,7 @@ public class MainActivity extends MainSearchActivity implements ClientView, Main
     public void onDestroy() {
         //StorageProvider.savePreferences(Constants.OPEN_COMANDA, false);
         super.onDestroy();
+
         //StorageProvider.deletePreferences(Constants.RESTORE_FRAGMENT_TAG);
     }
 
@@ -390,7 +396,11 @@ public class MainActivity extends MainSearchActivity implements ClientView, Main
     public void onItemPress(Client client) {
 
         mSearchHint.setText(client != null ? client.mName : "");
-        mClient = client;
+        //  mClient = client;
+       EventBus.getDefault().post(new Client(client.clientId, client.mName));
+        StorageProvider.savePreferences(Constants.CLIENT_ID, client.clientId);
+        StorageProvider.savePreferences(Constants.CLIENT_NAME, client.mName);
+
         closeSearch();
 
     }
