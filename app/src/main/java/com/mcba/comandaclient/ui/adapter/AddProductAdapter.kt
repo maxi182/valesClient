@@ -16,6 +16,7 @@ import java.util.*
 class AddProductAdapter(context: Context, callback: adapterCallbacks) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+
     var partItemList: List<ListModel> = ArrayList()
     var mContext: Context = context
     var mAdapterCallbacks: adapterCallbacks = callback
@@ -71,7 +72,7 @@ class AddProductAdapter(context: Context, callback: adapterCallbacks) :
         return type
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as ListMoldelViewHolder).bindViews(partItemList[position], mContext, mAdapterCallbacks)
 
 
