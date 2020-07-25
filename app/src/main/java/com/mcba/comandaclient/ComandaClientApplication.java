@@ -34,6 +34,7 @@ public class ComandaClientApplication extends Application {
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
 
+
         StorageProvider.init(this);
         RestClient.init(this);
         initializeCalligraphy();

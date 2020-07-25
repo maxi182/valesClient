@@ -3,8 +3,8 @@ package com.mcba.comandaclient.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by maximiliano.ferraiuolo on 07/11/2016.

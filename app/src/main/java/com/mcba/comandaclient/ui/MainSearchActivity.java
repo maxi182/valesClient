@@ -1,12 +1,11 @@
 package com.mcba.comandaclient.ui;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;

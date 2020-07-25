@@ -1,12 +1,10 @@
 package com.mcba.comandaclient.ui.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,8 +13,6 @@ import com.mcba.comandaclient.model.Product;
 
 import java.util.Collections;
 import java.util.List;
-
-import io.realm.RealmList;
 
 /**
  * Created by mac on 01/06/2017.

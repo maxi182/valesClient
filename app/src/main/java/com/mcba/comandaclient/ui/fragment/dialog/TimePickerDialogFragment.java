@@ -3,10 +3,8 @@ package com.mcba.comandaclient.ui.fragment.dialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import androidx.fragment.app.DialogFragment;
 import android.widget.DatePicker;
-
-import com.mcba.comandaclient.utils.Utils;
 
 import java.util.Calendar;
 

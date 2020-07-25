@@ -1,7 +1,7 @@
 package com.mcba.comandaclient.ui.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.View
@@ -14,7 +14,7 @@ import java.util.*
  * Created by mac on 10/05/2018.
  */
 class AddProductAdapter(context: Context, callback: adapterCallbacks) :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
 
     var partItemList: List<ListModel> = ArrayList()
@@ -38,13 +38,13 @@ class AddProductAdapter(context: Context, callback: adapterCallbacks) :
         fun bindViews(listModel: ListModel, context: Context, adapterCallbacks: adapterCallbacks)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
 
         val inflater = LayoutInflater.from(parent.context)
         // Inflate XML. Last parameter: don't immediately attach new view to the parent view group
         val viewItem = inflater.inflate(R.layout.item_list, parent, false)
         val viewHeader = inflater.inflate(R.layout.item_add_header, parent, false)
-        val viewHolder: RecyclerView.ViewHolder = when (viewType) {
+        val viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder = when (viewType) {
             TYPE_PROVIDER -> ItemViewHolder(viewItem)
             TYPE_PRODUCT -> ProductViewHolder(viewItem)
             TYPE_PRODUCTTYPE -> ProductTypeViewHolder(viewItem)
@@ -72,7 +72,7 @@ class AddProductAdapter(context: Context, callback: adapterCallbacks) :
         return type
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         (holder as ListMoldelViewHolder).bindViews(partItemList[position], mContext, mAdapterCallbacks)
 
 
@@ -82,7 +82,7 @@ class AddProductAdapter(context: Context, callback: adapterCallbacks) :
 
 
     class ItemViewHolder(itemView: View)
-        : RecyclerView.ViewHolder(itemView), ListMoldelViewHolder {
+        : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), ListMoldelViewHolder {
 
         override fun bindViews(update: ListModel, context: Context, adapterCallbacks: adapterCallbacks) {
             val data = update as ProviderListModel
@@ -96,7 +96,7 @@ class AddProductAdapter(context: Context, callback: adapterCallbacks) :
     }
 
     class ProductViewHolder(itemView: View)
-        : RecyclerView.ViewHolder(itemView), ListMoldelViewHolder {
+        : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), ListMoldelViewHolder {
 
         // get the views reference from itemView...
 
@@ -108,7 +108,7 @@ class AddProductAdapter(context: Context, callback: adapterCallbacks) :
     }
 
     class HeaderViewHolder(itemView: View)
-        : RecyclerView.ViewHolder(itemView), ListMoldelViewHolder {
+        : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), ListMoldelViewHolder {
 
         // get the views reference from itemView...
 
@@ -126,7 +126,7 @@ class AddProductAdapter(context: Context, callback: adapterCallbacks) :
     }
 
     class ProductTypeViewHolder(itemView: View)
-        : RecyclerView.ViewHolder(itemView), ListMoldelViewHolder {
+        : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), ListMoldelViewHolder {
 
         // get the views reference from itemView...
 

@@ -1,11 +1,10 @@
 package com.mcba.comandaclient.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatEditText;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;

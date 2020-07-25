@@ -20,7 +20,7 @@ import retrofit2.Retrofit;
 
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static android.support.test.espresso.core.deps.guava.net.HttpHeaders.CACHE_CONTROL;
+
 /**
  * Created by maximiliano.ferraiuolo on 08/11/2016.
  */
@@ -68,7 +68,7 @@ public class RestClient {
                         .build();
 
                 return response.newBuilder()
-                        .header(CACHE_CONTROL, cacheControl.toString())
+                        .header("Cache-Control", cacheControl.toString())
                         .build();
             }
         };

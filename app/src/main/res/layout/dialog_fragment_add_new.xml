@@ -16,7 +16,7 @@
         android:padding="@dimen/general_margin">
 
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/cant_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             android:hint=""
             android:textColorHint="@color/zh_dark_slate_gray_alpha_50">
 
-            <android.support.v7.widget.AppCompatEditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
                 android:textAppearance="@style/AppTheme.Text.LatoBold.white.14.67"
                 android:translationY="@dimen/sign_up_edit_text_translation" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

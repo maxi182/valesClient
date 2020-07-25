@@ -5,17 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.ActionBar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.util.CrashUtils;
 import com.mcba.comandaclient.R;
 import com.mcba.comandaclient.model.Client;
 import com.mcba.comandaclient.presenter.ClientPresenter;
@@ -57,6 +58,8 @@ public class ClientActivity extends MainSearchClientActivity implements ClientVi
         setContentView(R.layout.activity_search_comanda);
 
 
+
+
         mPresenter = new ClientPresenterImpl(this);
         mPresenter.attachView();
 
@@ -71,8 +74,7 @@ public class ClientActivity extends MainSearchClientActivity implements ClientVi
         mSearchHint = (TextView) findViewById(R.id.txt_hint);
         mSearchHint.setText("Cliente");
 
-
-
+        mPresenter=null;
         mPresenter.fetchClients();
 
         setupToolbar();

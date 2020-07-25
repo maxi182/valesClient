@@ -1,22 +1,18 @@
 package com.mcba.comandaclient.ui.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mcba.comandaclient.R;
 import com.mcba.comandaclient.model.Client;
-import com.mcba.comandaclient.model.Comanda;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by mac on 15/01/2018.
