@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "70662265129",
+    "firebase_url": "https://comandacentral.firebaseio.com",
+    "project_id": "comandacentral",
+    "storage_bucket": "comandacentral.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70662265129:android:15c1cdb5ceed9138",
+        "android_client_info": {
+          "package_name": "com.mcba.comandaclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "70662265129-fr12d52diav2utnn7kka2nig69v16q5l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3u-JrKcxujGzIcF85sADdNW4hVqLaFEw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "70662265129-fr12d52diav2utnn7kka2nig69v16q5l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

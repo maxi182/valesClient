@@ -46,6 +46,8 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
         StringBuilder textSubTotales = new StringBuilder();
         StringBuilder textTotal = new StringBuilder();
         StringBuilder textItemsCopy = new StringBuilder();
+        StringBuilder textNota = new StringBuilder();
+
 
         int itemLen = comanda.comandaItemList.size();
         for (int i = 0; i < itemLen; i++) {
@@ -59,10 +61,9 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
                     + Utils.padBlanks(product, 30));
 
 
-
             if (!comandaItem.mProductItem.packaging.isFree) {
                 //String vacio = "Vacio con seña";
-                textItems.append( " "
+                textItems.append(" "
                         + comandaItem.mProductItem.packaging.value + " "
                         + String.valueOf(comandaItem.mProductItem.packaging.value * comandaItem.mCant + "\n"));
             }
@@ -72,10 +73,14 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
         textSubTotales.append("SUBTOTAL" + Utils.padLeft(String.valueOf(comanda.mSenia), 22) + "\n");
         //textSubTotales.append("SEÑA" + Utils.padLeft(String.valueOf(comanda.mSenia), 26) + "\n");
 
-        textTotal.append("TOTAL" + Utils.padLeft(String.valueOf(comanda.mTotal), 11) + "\n");
+        textTotal.append("TOTAL" + Utils.padLeft(String.valueOf(comanda.mTotal), 11) + "\n\n");
+
+
+        textNota.append("NOTA: Este vale debera ir a nombre del comprador y sera abonado al mismo.\n A los 30 dias de emision caduca su valor.");
+
 
         if (comandaListView != null) {
-            getView().onFetchComandaItemsForPrint(textItems, textSubTotales, textTotal, textItemsCopy, comanda.mClientName);
+            getView().onFetchComandaItemsForPrint(textItems, textSubTotales, textTotal, textItemsCopy, textNota, comanda.mClientName);
         }
     }
 
@@ -89,10 +94,10 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
         Comanda comanda = new Comanda();
         comanda.comandaId = mComandaId;
         comanda.isPrinted = isPrinted;
-       // Client client = new Client();
-      //  client.mName = clientName;
-       comanda.mClientId = clientId;
-       comanda.mClientName = clientName;
+        // Client client = new Client();
+        //  client.mName = clientName;
+        comanda.mClientId = clientId;
+        comanda.mClientName = clientName;
 
         ComandaItem comandaItem = new ComandaItem();
         comandaItem.itemId = lastItemId + 1;
@@ -110,6 +115,7 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
         comandaProductItem.typeName = itemFullName.productTypeName;
         comandaProductItem.packaging = new Packaging();
         comandaProductItem.packaging.value = packagePrice;
+        if(comandaProductItem.packaging!=null )
         comandaProductItem.packaging.isFree = comandaProductItem.packaging.value > 0 ? false : true;
 
         comandaItem.mProductItem = comandaProductItem;
@@ -147,7 +153,7 @@ public class ComandaListPresenterImpl implements ComandaListPresenter, ComandaIn
         comanda.isPrinted = true;
         comanda.mClientName = cmd.mClientName;
         comanda.mClientId = cmd.mClientId;
-        comanda.date =  Utils.getCurrentDate("ddMMyy");
+        comanda.date = Utils.getCurrentDate("ddMMyy");
 
         comanda.comandaItemList = new RealmList<>();
 

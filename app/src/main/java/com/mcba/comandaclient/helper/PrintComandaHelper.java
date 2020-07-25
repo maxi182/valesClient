@@ -32,19 +32,22 @@ public class PrintComandaHelper implements Handler.Callback, ReceiveListener {
     private StringBuilder mComandaItems;
     private StringBuilder mSubTotales;
     private StringBuilder mTotal;
+    private StringBuilder mNota;
+
     private StringBuilder copyItems;
     private String name;
 
 
     private Handler mHandler = new Handler(this);
 
-    public PrintComandaHelper(Activity context, IDialogCallbacks iDialogCallbacks, StringBuilder comandaItems, StringBuilder mSubTotales, StringBuilder total, StringBuilder copyItems, int comandaId, String name, IPrintCallbacks printCallbacks) {
+    public PrintComandaHelper(Activity context, IDialogCallbacks iDialogCallbacks, StringBuilder comandaItems, StringBuilder mSubTotales, StringBuilder total, StringBuilder copyItems, int comandaId, StringBuilder nota, String name, IPrintCallbacks printCallbacks) {
         this.mContext = context;
         this.mPrintCallbacks = printCallbacks;
         this.mComandaItems = comandaItems;
         this.mComandaId = comandaId;
         this.mSubTotales = mSubTotales;
         this.mTotal = total;
+        this.mNota = nota;
         this.copyItems = copyItems;
         this.mIDialogCallbacks = iDialogCallbacks;
         this.name = name;
@@ -197,7 +200,7 @@ public class PrintComandaHelper implements Handler.Callback, ReceiveListener {
         }
 
         try {
-            for (int i = 0; i < 1; i++) {
+            for (int i = 0; i < 2; i++) {
                 method = "addTextAlign";
                 mPrinter.addTextAlign(Printer.ALIGN_CENTER);
 
@@ -222,7 +225,7 @@ public class PrintComandaHelper implements Handler.Callback, ReceiveListener {
                 method = "addText";
                 mPrinter.addText(textData.toString());
 
-                mPrinter.addText(i == 0 ? mComandaItems.toString() : copyItems.toString());
+                mPrinter.addText(mComandaItems.toString());
 
                 method = "addText";
                 mPrinter.addFeedPosition(0);
@@ -230,17 +233,19 @@ public class PrintComandaHelper implements Handler.Callback, ReceiveListener {
 
 
                 method = "addText";
-                mPrinter.addText(i == 0 ? mSubTotales.toString() : "\n");
+                mPrinter.addText( mSubTotales.toString());
                 textData.delete(0, textData.length());
 
                 method = "addTextSize";
                 mPrinter.addTextSize(2, 2);
                 method = "addText";
-                mPrinter.addText(i == 0 ? mTotal.toString() : "\n");
+                mPrinter.addText(mTotal.toString());
                 method = "addTextSize";
                 mPrinter.addTextSize(1, 1);
                 method = "addFeedLine";
                 mPrinter.addFeedLine(1);
+
+                mPrinter.addText(i == 0 ? mNota.toString(): "Este comprobante es valido solo para control interno, NO debe ser entregado al cliente.");
 
                 method = "addText";
                 mPrinter.addText(textData.toString());
@@ -257,7 +262,7 @@ public class PrintComandaHelper implements Handler.Callback, ReceiveListener {
                     mPrinter.addText("\n");
                 }
                 method = "addCut";
-                mPrinter.addCut(Printer.CUT_FEED);
+               // mPrinter.addCut(Printer.CUT_FEED);
             }
         } catch (Exception e) {
             runWarningsOnMainThread(e, method);

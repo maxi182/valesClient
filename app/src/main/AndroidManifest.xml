@@ -13,8 +13,10 @@
     <application
         android:name=".ComandaClientApplication"
         android:allowBackup="true"
+        android:label="@string/ap_name"
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.MainActivity"

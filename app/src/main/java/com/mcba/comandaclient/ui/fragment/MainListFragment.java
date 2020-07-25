@@ -236,17 +236,16 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
         if (!validateRestoreComanda()) {
             storeComanda();
         } else {
-
             mPresenter.fetchComandaById(mComandaId);
         }
 
     }
 
     @Override
-    public void onFetchComandaItemsForPrint(StringBuilder stringBuilderItems, StringBuilder stringBuilderSubTotales, StringBuilder stringBuilderTotal, StringBuilder stringBuilderCopyItems, String clientname) {
+    public void onFetchComandaItemsForPrint(StringBuilder stringBuilderItems, StringBuilder stringBuilderSubTotales, StringBuilder stringBuilderTotal, StringBuilder stringBuilderCopyItems,StringBuilder nota, String clientname) {
 
 
-        PrintComandaHelper printComandaHelper = new PrintComandaHelper(getActivity(), this, stringBuilderItems, stringBuilderSubTotales, stringBuilderTotal, stringBuilderCopyItems, mComanda.comandaId, clientname, this);
+        PrintComandaHelper printComandaHelper = new PrintComandaHelper(getActivity(), this, stringBuilderItems, stringBuilderSubTotales, stringBuilderTotal, stringBuilderCopyItems, mComanda.comandaId, nota, clientname, this);
         printComandaHelper.print();
 
     }
@@ -337,11 +336,10 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
 
                     if (mAdapter.getItemCount() > 0) {
                         mClientId = StorageProvider.getPreferencesInt(Constants.CLIENT_ID);
-
                         //todo change this
                         if (mClientId != -1) {
-                           // printSuccess();
-                            printComanda();
+                         // printSuccess();
+                           printComanda();
                         } else {
                             Toast.makeText(getActivity(), "Ingreso nombre Cliente", Toast.LENGTH_SHORT).show();
                         }//  printComanda();

@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Comandaclient</string>
+    <string name="ap_name">Vales App</string>
+
 
     <string name="dialog_ok">OK</string>
 
