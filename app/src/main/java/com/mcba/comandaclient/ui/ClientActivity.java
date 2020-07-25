@@ -74,7 +74,6 @@ public class ClientActivity extends MainSearchClientActivity implements ClientVi
         mSearchHint = (TextView) findViewById(R.id.txt_hint);
         mSearchHint.setText("Cliente");
 
-        mPresenter=null;
         mPresenter.fetchClients();
 
         setupToolbar();
