@@ -23,6 +23,8 @@ public class Constants {
 
     public static final String CLIENT_NAME = "clientname";
     public static final String CLIENT_ID = "clientid";
+    public static final String PRINT_SUCCESS = "print_success";
+
 
 
 

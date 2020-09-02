@@ -170,6 +170,7 @@ public class MainActivity extends MainSearchActivity implements ClientView, Main
 
         StorageProvider.getPreferencesString(Constants.RESTORE_FRAGMENT_TAG);
         StorageProvider.savePreferences(Constants.OPEN_COMANDA, false);
+        StorageProvider.savePreferences(Constants.PRINT_SUCCESS, false);
         openEntryFragment();
 
     }
@@ -178,8 +179,10 @@ public class MainActivity extends MainSearchActivity implements ClientView, Main
     public void onResume() {
         super.onResume();
         Fragment currentFragment = getCurrentFragment(ENTRY_FRAGMENT);
+        boolean isPrinted = StorageProvider.getPreferencesBoolean(Constants.PRINT_SUCCESS);
 
-        if (currentFragment != null && currentFragment.isVisible()) {
+        if ((currentFragment != null && currentFragment.isVisible()) || isPrinted) {
+            StorageProvider.savePreferences(Constants.PRINT_SUCCESS, false);
             openEntryFragment();
 
         } else {

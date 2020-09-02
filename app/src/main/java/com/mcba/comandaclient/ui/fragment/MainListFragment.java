@@ -3,8 +3,10 @@ package com.mcba.comandaclient.ui.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -242,7 +244,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     }
 
     @Override
-    public void onFetchComandaItemsForPrint(StringBuilder stringBuilderItems, StringBuilder stringBuilderSubTotales, StringBuilder stringBuilderTotal, StringBuilder stringBuilderCopyItems,StringBuilder nota, String clientname) {
+    public void onFetchComandaItemsForPrint(StringBuilder stringBuilderItems, StringBuilder stringBuilderSubTotales, StringBuilder stringBuilderTotal, StringBuilder stringBuilderCopyItems, StringBuilder nota, String clientname) {
 
 
         PrintComandaHelper printComandaHelper = new PrintComandaHelper(getActivity(), this, stringBuilderItems, stringBuilderSubTotales, stringBuilderTotal, stringBuilderCopyItems, mComanda.comandaId, nota, clientname, this);
@@ -338,8 +340,8 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
                         mClientId = StorageProvider.getPreferencesInt(Constants.CLIENT_ID);
                         //todo change this
                         if (mClientId != -1) {
-                         // printSuccess();
-                           printComanda();
+                            // printSuccess();
+                            printComanda();
                         } else {
                             Toast.makeText(getActivity(), "Ingreso nombre Cliente", Toast.LENGTH_SHORT).show();
                         }//  printComanda();
@@ -391,6 +393,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
     @Override
     public void printSuccess() {
 
+        StorageProvider.savePreferences(Constants.PRINT_SUCCESS, true);
         StorageProvider.savePreferences(Constants.CLIENT_ID, -1);
         StorageProvider.savePreferences(Constants.CLIENT_NAME, "");
         mPresenter.storeComanda(mComanda);
@@ -406,6 +409,7 @@ public class MainListFragment extends BaseNavigationFragment<MainListFragment.Ma
             return;
         }
     }
+
 
     @Override
     public void onDeletePress(Dialog dialog, int itemId) {

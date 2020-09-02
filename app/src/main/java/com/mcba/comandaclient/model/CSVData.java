@@ -8,7 +8,7 @@ import java.util.Date;
 public class CSVData {
 
     @CsvColumn(title = "ID comanda")
-    private int idColumn;
+    private String idColumn;
 
     @CsvColumn(title = "Date Column", dateFormat = "dd/MM/yy")
     // dateFormat is optional.  See CsvColumn for default format.
@@ -23,7 +23,7 @@ public class CSVData {
     @CsvColumn(title = "Total")
     private String totalColumn;
 
-    public CSVData(int idColumn, Date dateColumn, String clienteColumn, String productColumn, String totalColumn) {
+    public CSVData(String idColumn, Date dateColumn, String clienteColumn, String productColumn, String totalColumn) {
         this.idColumn = idColumn;
         this.dateColumn = dateColumn;
         this.clienteColumn = clienteColumn;
@@ -45,11 +45,11 @@ public class CSVData {
 
     }
 
-    public int getIdColumn() {
+    public String getIdColumn() {
         return idColumn;
     }
 
-    public void setIdColumn(int idColumn) {
+    public void setIdColumn(String idColumn) {
         this.idColumn = idColumn;
     }
 

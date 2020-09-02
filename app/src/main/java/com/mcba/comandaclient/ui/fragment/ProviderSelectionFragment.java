@@ -80,7 +80,6 @@ public class ProviderSelectionFragment extends BaseNavigationFragment<ProviderSe
         mRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mTxtPosProvider.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.bg_green));
-        mTxtPosProduct.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.bg_green));
 
         mProductId = getArguments().getInt(PRODUCT_ID);
         mCurrentComandaId = getArguments().getInt(COMANDA_ID);

@@ -72,23 +72,34 @@ public class ComandaSearchPresenterImpl implements ComandaSearchPresenter, Coman
         List<CSVData> pojoList = new LinkedList<CSVData>();
         Date fecha = null;
         double totaldia = 0;
-        if (listadoVales.size() > 0) {
-            fecha = Utils.stringToDate(listadoVales.get(0).date);
-        }
-        for (int i = 0; i < listadoVales.size(); i++) {
-            CSVData csvData = new CSVData();
-            csvData.setIdColumn(listadoVales.get(i).comandaId);
-            csvData.setDateColumn(Utils.stringToDate(listadoVales.get(i).date));
-            csvData.setClienteColumn(listadoVales.get(i).mClientName);
-            csvData.setTotalColumn(String.valueOf(listadoVales.get(i).mTotal));
-            totaldia = totaldia + listadoVales.get(i).mTotal;
-            pojoList.add(csvData);
-            // csvData.setIntegerColumn(listadoVales.get(i).);
-        }
-        pojoList.add(new CSVData("TOTAL", fecha, String.valueOf(totaldia)));
 
-        saveFile(pojoList, fecha);
+        if (listadoVales != null) {
+            if (listadoVales.size() > 0) {
+                fecha = Utils.stringToDate(listadoVales.get(0).date);
+            }
+            CSVData csvdataHeader = new CSVData();
 
+            csvdataHeader.setIdColumn("ID comanda");
+            csvdataHeader.setClienteColumn("Cliente");
+            csvdataHeader.setTotalColumn("Total");
+            pojoList.add(csvdataHeader);
+
+            for (int i = 0; i < listadoVales.size(); i++) {
+                CSVData csvData = new CSVData();
+                csvData.setIdColumn(String.valueOf(listadoVales.get(i).comandaId));
+                csvData.setDateColumn(Utils.stringToDate(listadoVales.get(i).date));
+                csvData.setClienteColumn(listadoVales.get(i).mClientName);
+                csvData.setTotalColumn(String.valueOf(listadoVales.get(i).mTotal));
+
+                totaldia = totaldia + listadoVales.get(i).mTotal;
+
+                pojoList.add(csvData);
+                // csvData.setIntegerColumn(listadoVales.get(i).);
+            }
+            pojoList.add(new CSVData("TOTAL", fecha, String.valueOf(totaldia)));
+
+            saveFile(pojoList, fecha);
+        }
 
     }
 
